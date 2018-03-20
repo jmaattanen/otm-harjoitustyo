@@ -1,0 +1,116 @@
+commit 3cbdc769debac93aaa7ad4c8a43241906068d5ec
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:54:20 2018 +0200
+
+    file1 poistettu, file2 nimetty file22
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit afb78484fee66c9d0c9d17b431374630b1c5d6eb
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:46:42 2018 +0200
+
+    uusia tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 2f515077e80383289864a389fb75c0cc0ed15455
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:40:03 2018 +0200
+
+    muutoksia eka.txt ja kolmas.txt
+
+ eka.txt    | 10 ++++++++--
+ kolmas.txt |  5 ++++-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+commit 6d1e54adb18ba0910261d745cdb0cfc1311d617f
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:36:21 2018 +0200
+
+    tiedosto.txt nimetty eka.txt
+
+ eka.txt      | 2 ++
+ tiedosto.txt | 2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 673d6bb5176864887f4aae40563131b7a9d7d6b3
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:34:55 2018 +0200
+
+    toinen.txt poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 5fe5b459bd67cb8c520254b1478da43fd23b9198
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:31:41 2018 +0200
+
+    tiedosto.txt muokattu
+
+ tiedosto.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 7dbe0e09e7d96590878c8be93c421060bb354d27
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:30:16 2018 +0200
+
+    tiedosto.txt lihosi
+
+ tiedosto.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit c1858322648d050278fc343b9eef1ba55a6ec6d5
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:25:15 2018 +0200
+
+    neljäs.txt uudessa kansiossa
+
+ "stuff/nelj\303\244s.txt" | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 9b2bf57ad92740b6c0d5a268afdbcdbfe6235af3
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:23:38 2018 +0200
+
+    muutoksia
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit f66e93f58d79423b0c1c54bd683e4a1e53bf7beb
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:22:25 2018 +0200
+
+    kolmas.txt luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit c0f8aa7eeace8679dc92a3df105b38f50b687bf6
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:18:58 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 8283aefda08fdb6bb765cea4dea0d239ed6754d0
+Author: Juha Määttänen <juha.maattanen@helsinki.fi>
+Date:   Tue Mar 20 14:16:21 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
