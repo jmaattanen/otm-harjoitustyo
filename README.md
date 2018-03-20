@@ -1,5 +1,5 @@
 # OTM kevät 2018
-## LUE MINUT
+## Ensimmäiset harjoitukset
 
 Tämä *tiedosto* on luotu **harjoituskäyttöön**.
 
