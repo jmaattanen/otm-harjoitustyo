@@ -13,7 +13,7 @@ commit afb78484fee66c9d0c9d17b431374630b1c5d6eb
 Author: Juha Määttänen <juha.maattanen@helsinki.fi>
 Date:   Tue Mar 20 14:46:42 2018 +0200
 
-    uusia tiedostoja
+    uUsIa TiEdOsToJa
 
  tiedostoja/file1 | 0
  tiedostoja/file2 | 0
