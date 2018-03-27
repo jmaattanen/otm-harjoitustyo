@@ -23,6 +23,8 @@ Alustavasti sovelluksella on vain yksi käyttäjärooli.
 - sovelluksen näkymäksi voi valita vaihtoehtoisesti joko virkekohtaisen näkymän tai jatkuvan tekstin, jolloin luokittelukentät poistuvat näkymästä
 - käyttäjä voi siirtyä hakupuunäkymään, missä näkyviin suodatetaan haettavaan luokkaan kuuluvat virkkeet
 
+![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/nakymat.jpg "Näkymät")
+
 ### Mahdollisia laajennuksia toiminnallisuuksiin
 
 - äänitallenteen toistoa voi hidastaa esimerkiksi 1/2- tai 1/4-kertaiseksi, jotta yhtäaikainen kirjoittaminen helpottuu
