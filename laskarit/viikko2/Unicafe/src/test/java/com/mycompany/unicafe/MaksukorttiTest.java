@@ -46,4 +46,9 @@ public class MaksukorttiTest {
         boolean otto = kortti.otaRahaa(10);
         assertEquals(true, otto);
     }
+    
+    @Test
+    public void toStringToimiiOikein() {
+        assertEquals("saldo: 0.10", kortti.toString());
+    }
 }
