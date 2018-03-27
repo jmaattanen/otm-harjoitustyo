@@ -23,7 +23,7 @@ Alustavasti sovelluksella on vain yksi käyttäjärooli.
 - sovelluksen näkymäksi voi valita vaihtoehtoisesti joko virkekohtaisen näkymän tai jatkuvan tekstin, jolloin luokittelukentät poistuvat näkymästä
 - käyttäjä voi siirtyä hakupuunäkymään, missä näkyviin suodatetaan haettavaan luokkaan kuuluvat virkkeet
 
-![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/nakymat.jpg "Näkymät")
+![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/nakymat.png "Näkymät")
 
 ### Mahdollisia laajennuksia toiminnallisuuksiin
 
