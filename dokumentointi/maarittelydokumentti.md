@@ -13,16 +13,18 @@ Alustavasti sovelluksella on vain yksi käyttäjärooli.
 
 ## Toiminnallisuus
 
-- käyttäjä voi avata tallenteen levymuistista ja samalla luoda uuden litterointiprojektin
-- olemassa oleva projektin voi avata uudelleen
+- käyttäjä voi avata äänitallenteen levymuistista ja samalla luoda uuden litterointiprojektin
+- olemassa olevan projektin voi avata uudelleen
 - nauhoitteen toiston voi aloittaa ja pysäyttää pikanäppäimellä tai hiirellä näkymän painikkeista
 - käyttäjä voi kirjoittaa ja muokata tekstiä kaiken aikaa projektin ollessa avoinna
 - käyttäjä voi merkitä meneillä olevan virkkeen päättymiskohdan, jolloin sovellus linkittää virkkeen äänitallenteen osaväliin
 - äänitallenteen toistoa voi hallinnoida aikahyppäyksillä eteen ja taakse pikanäppäimillä tai näkymän painikkeilla
 - käyttäjä voi luokitella virkkeen vapaasti kirjoittamalla näkymän luokittelukenttiin
 - sovelluksen näkymäksi voi valita vaihtoehtoisesti joko virkekohtaisen näkymän tai jatkuvan tekstin, jolloin luokittelukentät poistuvat näkymästä
+- käyttäjä voi siirtyä hakupuunäkymään, missä näkyviin suodatetaan haettavaan luokkaan kuuluvat virkkeet
 
 ### Mahdollisia laajennuksia toiminnallisuuksiin
 
 - äänitallenteen toistoa voi hidastaa esimerkiksi 1/2- tai 1/4-kertaiseksi, jotta yhtäaikainen kirjoittaminen helpottuu
 - luokittelukenttiin kirjoitettaessa avautuu pikavalintalista projektissa aiemmin käytetyistä luokista
+- sovelluksella tuotettu teksti voidaan viedä esimerkiksi tekstitiedostoon tai taulukoksi html-tiedostoon
