@@ -2,7 +2,7 @@
 
 ## Määrittelydokumentti
 
-[Linkki määrittelydokumentti](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/maarittelydokumentti.md)
+[Linkki määrittelydokumenttiin](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/maarittelydokumentti.md)
 
 ## Ensimmäiset harjoitukset
 
