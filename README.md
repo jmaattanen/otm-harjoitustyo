@@ -4,13 +4,12 @@
 
 [Linkki määrittelydokumenttiin](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/maarittelydokumentti.md)
 
-## Ensimmäiset harjoitukset
+## Viikon 3 laskarit
 
-Tämä *tiedosto* on luotu **harjoituskäyttöön**.
-
-[Linkki komentorivitehtävään](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
-
-[Linkki gitlogiin](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+[Linkki luokkakaavioon 1](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/luokkakaavio1.jpg)
+[Linkki luokkakaavioon 2](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/luokkakaavio2.jpg)
+[Linkki sekvenssikaavioon 3](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/sekvenssikaavio3.png)
+[Linkki sekvenssikaavioon 4](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/sekvenssikaavio4.png)
 
 ## Työaikakirjanpito
 
