@@ -1,15 +1,10 @@
-﻿# OTM kevät 2018
+﻿# TranscribeBuddy
+
+Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018. Harjoitustyö toteutetaan maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä.
 
 ## Määrittelydokumentti
 
 [Linkki määrittelydokumenttiin](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/maarittelydokumentti.md)
-
-## Viikon 3 laskarit
-
-[Linkki luokkakaavioon 1](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/luokkakaavio1.jpg)
-[Linkki luokkakaavioon 2](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/luokkakaavio2.jpg)
-[Linkki sekvenssikaavioon 3](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/sekvenssikaavio3.png)
-[Linkki sekvenssikaavioon 4](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/laskarit/viikko3/sekvenssikaavio4.png)
 
 ## Työaikakirjanpito
 
