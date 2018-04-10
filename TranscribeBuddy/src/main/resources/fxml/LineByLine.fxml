@@ -55,12 +55,22 @@
                  <Label fx:id="audioName" BorderPane.alignment="TOP_LEFT" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
+                        <Button mnemonicParsing="false" onAction="#jumpBackward" text="&lt;&lt;">
+                           <HBox.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#stopAudio" text="Pause">
+                           <HBox.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </HBox.margin>
+                        </Button>
                         <Button mnemonicParsing="false" onAction="#playAudio" text="Play">
                            <HBox.margin>
                               <Insets left="2.0" right="2.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#stopAudio" text="Stop">
+                        <Button mnemonicParsing="false" onAction="#jumpForward" text="&gt;&gt;">
                            <HBox.margin>
                               <Insets left="2.0" right="2.0" />
                            </HBox.margin>

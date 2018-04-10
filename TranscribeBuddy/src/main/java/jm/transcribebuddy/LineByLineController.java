@@ -55,6 +55,14 @@ public class LineByLineController implements Initializable {
                                     audioPlayer.stop();
                                 else audioPlayer.play();
                             }   break;
+                        case LEFT:
+                            if( audioPlayer != null ) {
+                                audioPlayer.jumpBackward();
+                            }   break;
+                        case RIGHT:
+                            if( audioPlayer != null ) {
+                                audioPlayer.jumpForward();
+                            }   break;
                         default:
                             break;
                     }
@@ -110,5 +118,17 @@ public class LineByLineController implements Initializable {
     private void stopAudio(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.stop();
+    }
+    
+    @FXML
+    private void jumpBackward(/*ActionEvent event*/) {
+        if(audioPlayer != null)
+            audioPlayer.jumpBackward();
+    }
+    
+    @FXML
+    private void jumpForward(/*ActionEvent event*/) {
+        if(audioPlayer != null)
+            audioPlayer.jumpForward();
     }
 }

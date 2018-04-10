@@ -1,46 +1,25 @@
 package jm.transcribebuddy;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import javafx.scene.media.AudioClip;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class AudioPlayer {
     
     final private String audioFilePath;
-    final private AudioClip audioClip;
+    private MediaPlayer mediaPlayer;
+    private Duration duration;
+    private Duration jumpTime;
     
     public AudioPlayer(String filePath) {
-        /*
-        File audioFile = new File(filePath);
-        try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream( audioFile.toURI().toURL() );
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            //clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }//*/
-        /*
-        final URL resource = getClass().getResource(filePath);//"Recording.m4a");
-        if( resource != null ) {
+        if(filePath != null ) {
+            Media media = new Media(filePath);
+            mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;
-            //audioClip = new AudioClip(resource.toExternalForm());
-        }//*/
-        audioClip = new AudioClip(filePath);
-        if( audioClip == null )
-            audioFilePath = "Ei audiota";
-        else audioFilePath = filePath;
+            duration = mediaPlayer.getCurrentTime();
+            jumpTime = Duration.seconds(5);
+        }
+        else audioFilePath = "Ei audiota";
     }
     
     public String getFilePath() {
@@ -48,17 +27,31 @@ public class AudioPlayer {
     }
     
     public void play() {
-        if(audioClip != null) {
-            audioClip.stop();
-            audioClip.play();
-        }
+        mediaPlayer.play();
     }
     
     public void stop() {
-        audioClip.stop();
+        mediaPlayer.pause();
+        duration = mediaPlayer.getCurrentTime();
+    }
+    
+    public void jumpBackward() {
+        duration = mediaPlayer.getCurrentTime();
+        if( duration.greaterThan(jumpTime))
+            duration = duration.subtract(jumpTime);
+        else duration = mediaPlayer.getStartTime();
+        mediaPlayer.seek(duration);
+    }
+    
+    public void jumpForward() {
+        duration = mediaPlayer.getCurrentTime();
+        duration = duration.add(jumpTime);
+        mediaPlayer.seek(duration);
     }
     
     public boolean isPlaying() {
-        return audioClip.isPlaying();
+        if( mediaPlayer == null )
+            return false;
+        return mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
     }
 }
