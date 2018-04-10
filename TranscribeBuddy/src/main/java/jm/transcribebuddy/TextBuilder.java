@@ -40,7 +40,7 @@ public class TextBuilder {
     public String getAll() {
         if( statements.isEmpty() )
             return null;
-        return statements.get(statements.size()-1);
+        return "Metodi on keskeneräinen";
     }
     
     public void set(String statement) {
