@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -22,16 +23,21 @@ import javafx.stage.Stage;
 public class ConstantTextController implements Initializable {
     
     static private AudioPlayer audioPlayer;
+    static private TextBuilder textBuilder;
     
     @FXML
     private Label audioName;
+    
+    @FXML
+    private TextArea workArea;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }    
 
-    public void setUpController(final Stage stage, AudioPlayer player) {
+    public void setUpController(final Stage stage, TextBuilder builder, AudioPlayer player) {
+        textBuilder = builder;
         audioPlayer = player;
         Scene scene = stage.getScene();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -57,11 +63,11 @@ public class ConstantTextController implements Initializable {
                             }   break;
                         case LEFT:
                             if( audioPlayer != null ) {
-                                audioPlayer.jumpBackward();
+                                audioPlayer.skipBackward();
                             }   break;
                         case RIGHT:
                             if( audioPlayer != null ) {
-                                audioPlayer.jumpForward();
+                                audioPlayer.skipForward();
                             }   break;
                         default:
                             break;
@@ -71,10 +77,16 @@ public class ConstantTextController implements Initializable {
         });
         if(audioPlayer != null)
             audioName.setText(audioPlayer.getFilePath());
+        String statement = textBuilder.getCurrent();
+        workArea.setText(statement);
     }
     
     // switch to LineByLine scene
     private void switchToLBLS(final Stage stage) throws IOException {
+        // save current text to TextBuilder
+        String statement = workArea.getText();
+        textBuilder.set(statement);
+        
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent lineByLineParent = fxmlLoader.load(getClass().getResource("/fxml/LineByLine.fxml").openStream());
         Scene lineByLineScene = new Scene(lineByLineParent);
@@ -83,7 +95,7 @@ public class ConstantTextController implements Initializable {
         stage.setScene(lineByLineScene);
         stage.show();
         LineByLineController fxmlController = (LineByLineController)fxmlLoader.getController();
-        fxmlController.setUpController(stage, audioPlayer);
+        fxmlController.setUpController(stage, textBuilder, audioPlayer);
     }
     
     @FXML
@@ -121,15 +133,15 @@ public class ConstantTextController implements Initializable {
     }
     
     @FXML
-    private void jumpBackward(/*ActionEvent event*/) {
+    private void skipBackward(/*ActionEvent event*/) {
         if(audioPlayer != null)
-            audioPlayer.jumpBackward();
+            audioPlayer.skipBackward();
     }
     
     @FXML
-    private void jumpForward(/*ActionEvent event*/) {
+    private void skipForward(/*ActionEvent event*/) {
         if(audioPlayer != null)
-            audioPlayer.jumpForward();
+            audioPlayer.skipForward();
     }
     
 }

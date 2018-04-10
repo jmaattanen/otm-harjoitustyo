@@ -23,8 +23,10 @@ public class MainApp extends Application {
         stage.setMinHeight(400);
         stage.show();
         
+        TextBuilder textBuilder = new TextBuilder();
+        
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
-        fxmlController.setUpController(stage,null);
+        fxmlController.setUpController(stage, textBuilder, null);
     }
 
     public static void main(String[] args) {

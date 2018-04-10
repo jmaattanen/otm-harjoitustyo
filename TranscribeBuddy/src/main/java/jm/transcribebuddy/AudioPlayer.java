@@ -35,7 +35,7 @@ public class AudioPlayer {
         duration = mediaPlayer.getCurrentTime();
     }
     
-    public void jumpBackward() {
+    public void skipBackward() {
         duration = mediaPlayer.getCurrentTime();
         if( duration.greaterThan(jumpTime))
             duration = duration.subtract(jumpTime);
@@ -43,7 +43,7 @@ public class AudioPlayer {
         mediaPlayer.seek(duration);
     }
     
-    public void jumpForward() {
+    public void skipForward() {
         duration = mediaPlayer.getCurrentTime();
         duration = duration.add(jumpTime);
         mediaPlayer.seek(duration);

@@ -27,7 +27,7 @@
             </Button>
          </right>
          <center>
-            <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="TOP_LEFT" />
+            <TextArea fx:id="workArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="TOP_LEFT" />
          </center>
          <bottom>
             <VBox prefHeight="84.0" prefWidth="175.0">
@@ -35,7 +35,7 @@
                  <Label fx:id="audioName" BorderPane.alignment="TOP_LEFT" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#jumpBackward" text="&lt;&lt;">
+                        <Button mnemonicParsing="false" onAction="#skipBackward" text="&lt;&lt;">
                            <HBox.margin>
                               <Insets left="2.0" right="2.0" />
                            </HBox.margin>
@@ -50,7 +50,7 @@
                               <Insets left="2.0" right="2.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#jumpForward" text="&gt;&gt;">
+                        <Button mnemonicParsing="false" onAction="#skipForward" text="&gt;&gt;">
                            <HBox.margin>
                               <Insets left="2.0" right="2.0" />
                            </HBox.margin>
