@@ -46,7 +46,7 @@ public class ConstantTextController implements Initializable {
             public void handle( KeyEvent keyEvent) {
                 if( keyEvent.isControlDown() ) {
                     if( null != keyEvent.getCode() ) switch (keyEvent.getCode()) {
-                        case PAGE_DOWN:
+                        case PERIOD:
                             try {
                                 switchToLBLS(stage);
                             } catch (IOException ex) {
@@ -61,11 +61,11 @@ public class ConstantTextController implements Initializable {
                                     audioPlayer.stop();
                                 else audioPlayer.play();
                             }   break;
-                        case LEFT:
+                        case B:
                             if( audioPlayer != null ) {
                                 audioPlayer.skipBackward();
                             }   break;
-                        case RIGHT:
+                        case N:
                             if( audioPlayer != null ) {
                                 audioPlayer.skipForward();
                             }   break;
@@ -77,8 +77,7 @@ public class ConstantTextController implements Initializable {
         });
         if(audioPlayer != null)
             audioName.setText(audioPlayer.getFilePath());
-        String statement = textBuilder.getCurrent();
-        workArea.setText(statement);
+        workArea.setText(textBuilder.getAll());
     }
     
     // switch to LineByLine scene
@@ -118,6 +117,8 @@ public class ConstantTextController implements Initializable {
         String audioFilePath = file.toURI().toString();
         audioPlayer = new AudioPlayer(audioFilePath);
         audioName.setText(audioPlayer.getFilePath());
+        textBuilder = new TextBuilder();
+        workArea.setText("");
     }
     
     @FXML

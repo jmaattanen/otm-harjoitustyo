@@ -46,7 +46,7 @@ public class LineByLineController implements Initializable {
             public void handle( KeyEvent keyEvent) {
                 if( keyEvent.isControlDown() ) {
                     if( null != keyEvent.getCode() ) switch (keyEvent.getCode()) {
-                        case PAGE_DOWN:
+                        case COMMA:
                             try {
                                 switchToCTS(stage);
                             } catch (IOException ex) {
@@ -61,11 +61,11 @@ public class LineByLineController implements Initializable {
                                     audioPlayer.stop();
                                 else audioPlayer.play();
                             }   break;
-                        case LEFT:
+                        case B:
                             if( audioPlayer != null ) {
                                 audioPlayer.skipBackward();
                             }   break;
-                        case RIGHT:
+                        case N:
                             if( audioPlayer != null ) {
                                 audioPlayer.skipForward();
                             }   break;
@@ -131,6 +131,20 @@ public class LineByLineController implements Initializable {
         String audioFilePath = file.toURI().toString();
         audioPlayer = new AudioPlayer(audioFilePath);
         audioName.setText(audioPlayer.getFilePath());
+        textBuilder = new TextBuilder();
+        // set up text areas
+        workArea.setText("");
+        prevArea.setText(textBuilder.getPrev());
+        nextArea.setText(textBuilder.getNext());
+    }
+    
+    @FXML
+    private void endStatement() {
+        String statement = workArea.getText();
+        textBuilder.endStatement(statement);
+        workArea.setText(textBuilder.getCurrent());
+        prevArea.setText(textBuilder.getPrev());
+        nextArea.setText(textBuilder.getNext());
     }
     
     @FXML
