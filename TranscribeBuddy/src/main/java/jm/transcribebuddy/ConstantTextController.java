@@ -77,15 +77,45 @@ public class ConstantTextController implements Initializable {
         });
         if(audioPlayer != null)
             audioName.setText(audioPlayer.getFilePath());
-        workArea.setText(textBuilder.getAll());
+        String text = textBuilder.getAll();
+        workArea.setText(text);
+        workArea.positionCaret(text.length());
+        workArea.requestFocus();
     }
     
-    // switch to LineByLine scene
+    // Switch to LineByLine scene
     private void switchToLBLS(final Stage stage) throws IOException {
         // save current text to TextBuilder
-        String statement = workArea.getText();
-        textBuilder.set(statement);
+        String text = workArea.getText();
+        String lastStatement = textBuilder.getLast();
+        final String firstLettersToSearch = lastStatement.substring(0, lastStatement.length()/4);
+        final int searchForCurrent = text.lastIndexOf(firstLettersToSearch);
+        if( lastStatement.equals("") || searchForCurrent < 0 || searchForCurrent >= text.length() ) {
+            // couldn't find a match for current statement
+            // try to find a match for the prev statement
+            final String secondLast = textBuilder.getSecondLast();
+            if( secondLast.equals("") ) {
+                // assume that the current statement is the first one
+                lastStatement = text;
+            }
+            else {
+                final int searchForPrev = text.lastIndexOf(secondLast);
+                if( searchForPrev < 0 || searchForPrev >= text.length() ) {
+                    // something terrible has happened
+                }
+                else {
+                    // the second last statement has been found
+                    // save all following text to the last statement
+                    lastStatement = text.substring(searchForPrev + secondLast.length());
+                }
+            }
+        }
+        else {
+            lastStatement = text.substring(searchForCurrent);
+        }
+        textBuilder.setLast(lastStatement);
         
+        // Load new scene
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent lineByLineParent = fxmlLoader.load(getClass().getResource("/fxml/LineByLine.fxml").openStream());
         Scene lineByLineScene = new Scene(lineByLineParent);

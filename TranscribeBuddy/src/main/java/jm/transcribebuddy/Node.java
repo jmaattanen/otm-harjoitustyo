@@ -17,4 +17,8 @@ public class Node {
     public String getStatement() {
         return statement;
     }
+    
+    public int getLength() {
+        return statement.length();
+    }
 }

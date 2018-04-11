@@ -55,6 +55,9 @@ public class LineByLineController implements Initializable {
                         case O:
                             openAudioFile();
                             break;
+                        case ENTER:
+                            endStatement();
+                            break;
                         case SPACE:
                             if( audioPlayer != null ) {
                                 if( audioPlayer.isPlaying() )
@@ -82,8 +85,10 @@ public class LineByLineController implements Initializable {
         
         // set up text areas
         String statement = textBuilder.getCurrent();
-        if(statement != null)
+        if(statement != null) {
             workArea.setText(statement);
+            workArea.positionCaret(statement.length());
+        }
         statement = textBuilder.getPrev();
         if(statement != null)
             prevArea.setText(statement);
@@ -92,6 +97,7 @@ public class LineByLineController implements Initializable {
         if(statement != null)
             nextArea.setText(statement);
         nextArea.setEditable(false);
+        workArea.requestFocus();
     }
     
     // switch to ConstantText scene

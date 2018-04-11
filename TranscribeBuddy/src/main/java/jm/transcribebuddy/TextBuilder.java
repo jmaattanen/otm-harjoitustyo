@@ -14,27 +14,33 @@ public class TextBuilder {
     }
     
     public String getCurrent() {
-        if( statements.isEmpty() )
-            return null;
-        if( workingIndex >= statements.size())
-            workingIndex = statements.size()-1;
+//        if( workingIndex >= statements.size())
+//            workingIndex = statements.size()-1;
         return statements.get(workingIndex).getStatement();
     }
     
     public String getPrev() {
-        if( statements.isEmpty() )
-            return null;
         if(workingIndex == 0)
             return "*Projektin alku*";
         return statements.get(workingIndex-1).getStatement();
     }
     
     public String getNext() {
-        if( statements.isEmpty() )
-            return null;
         if(workingIndex == statements.size()-1)
             return "*Projektin loppu*";
         return statements.get(workingIndex+1).getStatement();
+    }
+    
+    public String getLast() {
+        int lastIndex = statements.size()-1;
+        return statements.get(lastIndex).getStatement();
+    }
+    
+    public String getSecondLast() {
+        int index = statements.size()-2;
+        if(index < 0)
+            return "";
+        return statements.get(index).getStatement();
     }
     
     public String getAll() {
@@ -47,12 +53,20 @@ public class TextBuilder {
     }
     
     public void set(String statement) {
-        //statements.set(workingIndex, statement);
         Node node = statements.get(workingIndex);
-        node.setStatement(statement);
+        node.setStatement(statement.trim());
+    }
+    
+    public void setLast(String statement) {
+        workingIndex = statements.size()-1;
+        this.set(statement.trim());
     }
     
     public void endStatement(String statement) {
+        // delete whitespaces in the end of statement
+        for( int i = statement.length()-1; i >= 0 && statement.charAt(i) == ' '; i-- ) {
+            statement = statement.substring(0, i);
+        }
         Node node = statements.get(workingIndex);
         node.setStatement(statement);
         if(workingIndex == statements.size()-1) {
