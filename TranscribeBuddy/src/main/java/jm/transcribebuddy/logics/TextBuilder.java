@@ -42,6 +42,7 @@ public class TextBuilder {
     }
     
     public String getAll() {
+        workingIndex = statements.size()-1;
         String text = "";
         for(Statement node : statements)
             text += node.toString() + " ";
@@ -61,20 +62,27 @@ public class TextBuilder {
         this.set(statement.trim());
     }
     
+    public void selectPrev() {
+        if(workingIndex > 0)
+            workingIndex--;
+    }
+    
+    public void selectNext() {
+        if(workingIndex < statements.size()-1)
+            workingIndex++;
+    }
+    
     public void endStatement(String statement) {
-        // delete whitespaces in the end of statement
-        for( int i = statement.length()-1; i >= 0 && statement.charAt(i) == ' '; i-- ) {
-            statement = statement.substring(0, i);
-        }
         Statement node = statements.get(workingIndex);
-        node.set(statement);
-        if(workingIndex == statements.size()-1) {
+        node.set(statement.trim());
+        workingIndex++;
+        if(workingIndex == statements.size()) {
             // add a new node to the end
             statements.add(new Statement());
-            workingIndex++;
         }
         else {
             // insert a new node
+            statements.add(workingIndex, new Statement());
         }
     }
     

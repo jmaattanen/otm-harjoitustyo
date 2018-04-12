@@ -25,7 +25,20 @@
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_RIGHT">
                <children>
                   <Region prefHeight="200.0" prefWidth="100.0" />
-                   <Button mnemonicParsing="false" onAction="#endStatement" text="Päätä virke" />
+                  <Button mnemonicParsing="false" onAction="#selectPrevStatement" text="Edellinen">
+                     <VBox.margin>
+                        <Insets bottom="2.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#selectNextStatement" text="Seuraava">
+                     <VBox.margin>
+                        <Insets bottom="2.0" top="2.0" />
+                     </VBox.margin>
+                  </Button>
+                   <Button mnemonicParsing="false" onAction="#endStatement" text="Päätä virke">
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin></Button>
                   <Region prefHeight="300.0" prefWidth="100.0" />
                    <Button mnemonicParsing="false" onAction="#switchToCTS" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>

@@ -37,7 +37,16 @@ public class LineByLineController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }    
-
+    
+    private void setUpTextAreas() {
+        prevArea.setText(textBuilder.getPrev());
+        nextArea.setText(textBuilder.getNext());
+        final String statement = textBuilder.getCurrent();
+        workArea.setText(statement);
+        workArea.positionCaret(statement.length());
+        workArea.requestFocus();
+    }
+    
     public void setUpController(final Stage stage, TextBuilder builder, AudioPlayer player) {
         textBuilder = builder;
         audioPlayer = player;
@@ -58,6 +67,12 @@ public class LineByLineController implements Initializable {
                             }   break;
                         case O:
                             openAudioFile(null);
+                            break;
+                        case PAGE_UP:
+                            selectPrevStatement();
+                            break;
+                        case PAGE_DOWN:
+                            selectNextStatement();
                             break;
                         case ENTER:
                             endStatement();
@@ -87,21 +102,9 @@ public class LineByLineController implements Initializable {
         if(audioPlayer != null)
             audioName.setText(audioPlayer.getFilePath());
         
-        // set up text areas
-        String statement = textBuilder.getCurrent();
-        if(statement != null) {
-            workArea.setText(statement);
-            workArea.positionCaret(statement.length());
-        }
-        statement = textBuilder.getPrev();
-        if(statement != null)
-            prevArea.setText(statement);
+        setUpTextAreas();
         prevArea.setEditable(false);
-        statement = textBuilder.getNext();
-        if(statement != null)
-            nextArea.setText(statement);
         nextArea.setEditable(false);
-        workArea.requestFocus();
     }
     
     // switch to ConstantText scene
@@ -143,20 +146,31 @@ public class LineByLineController implements Initializable {
             audioPlayer = new AudioPlayer(audioFilePath);
             audioName.setText(audioPlayer.getFilePath());
             textBuilder = new TextBuilder();
-            // set up text areas
-            workArea.setText("");
-            prevArea.setText(textBuilder.getPrev());
-            nextArea.setText(textBuilder.getNext());
+            setUpTextAreas();
         }
+    }
+    
+    @FXML
+    private void selectPrevStatement() {
+        String statement = workArea.getText();
+        textBuilder.set(statement);
+        textBuilder.selectPrev();
+        setUpTextAreas();
+    }
+    
+    @FXML
+    private void selectNextStatement() {
+        String statement = workArea.getText();
+        textBuilder.set(statement);
+        textBuilder.selectNext();
+        setUpTextAreas();
     }
     
     @FXML
     private void endStatement() {
         String statement = workArea.getText();
         textBuilder.endStatement(statement);
-        workArea.setText(textBuilder.getCurrent());
-        prevArea.setText(textBuilder.getPrev());
-        nextArea.setText(textBuilder.getNext());
+        setUpTextAreas();
     }
     
     @FXML
