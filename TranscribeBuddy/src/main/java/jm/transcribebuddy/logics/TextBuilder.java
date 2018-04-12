@@ -14,8 +14,6 @@ public class TextBuilder {
     }
     
     public String getCurrent() {
-//        if( workingIndex >= statements.size())
-//            workingIndex = statements.size()-1;
         return statements.get(workingIndex).toString();
     }
     
@@ -32,24 +30,25 @@ public class TextBuilder {
     }
     
     public String getLast() {
-        int lastIndex = statements.size()-1;
-        return statements.get(lastIndex).toString();
+        final int index = statements.size()-1;
+        return statements.get(index).toString();
     }
     
     public String getSecondLast() {
-        int index = statements.size()-2;
+        final int index = statements.size()-2;
         if(index < 0)
             return "";
         return statements.get(index).toString();
     }
     
     public String getAll() {
-        if( statements.isEmpty() )
-            return null;
         String text = "";
         for(Statement node : statements)
             text += node.toString() + " ";
-        return text;
+        if( text.isEmpty() )
+            return "";
+        // remove the last whitespace
+        return text.substring(0, text.length()-1);
     }
     
     public void set(String statement) {
@@ -77,5 +76,36 @@ public class TextBuilder {
         else {
             // insert a new node
         }
+    }
+    
+    /* This method tries to separate the new input */
+    public void parseFromAll(final String text) {
+        String lastStatement = this.getLast();
+        final String firstLettersToSearch = lastStatement.substring(0, lastStatement.length()/4);
+        final int searchForCurrent = text.lastIndexOf(firstLettersToSearch);
+        if( lastStatement.equals("") || searchForCurrent < 0 || searchForCurrent >= text.length() ) {
+            // couldn't find a match for current statement
+            // try to find a match for the prev statement
+            final String secondLast = this.getSecondLast();
+            if( secondLast.equals("") ) {
+                // assume that the current statement is the first one
+                lastStatement = text;
+            }
+            else {
+                final int searchForPrev = text.lastIndexOf(secondLast);
+                if( searchForPrev < 0 || searchForPrev >= text.length() ) {
+                    // something terrible has happened
+                }
+                else {
+                    // the second last statement has been found
+                    // save all following text to the last statement
+                    lastStatement = text.substring(searchForPrev + secondLast.length());
+                }
+            }
+        }
+        else {
+            lastStatement = text.substring(searchForCurrent);
+        }
+        this.setLast(lastStatement);
     }
 }

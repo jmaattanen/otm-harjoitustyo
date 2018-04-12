@@ -42,6 +42,8 @@ public class LineByLineController implements Initializable {
         textBuilder = builder;
         audioPlayer = player;
         Scene scene = stage.getScene();
+        
+        // set up hotkeys
         scene.setOnKeyPressed( new EventHandler<KeyEvent>() {
             
             @Override
@@ -55,7 +57,7 @@ public class LineByLineController implements Initializable {
                                 Logger.getLogger(LineByLineController.class.getName()).log(Level.SEVERE, null, ex);
                             }   break;
                         case O:
-                            openAudioFile();
+                            openAudioFile(null);
                             break;
                         case ENTER:
                             endStatement();
@@ -126,7 +128,7 @@ public class LineByLineController implements Initializable {
     }
 
     @FXML
-    private void openAudioFile(/*ActionEvent event*/) {
+    private void openAudioFile(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.stop();
         FileChooser fileChooser = new FileChooser();
@@ -158,7 +160,7 @@ public class LineByLineController implements Initializable {
     }
     
     @FXML
-    private void playAudio(/*ActionEvent event*/) {
+    private void playAudio(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.play();
     }
@@ -170,13 +172,13 @@ public class LineByLineController implements Initializable {
     }
     
     @FXML
-    private void skipBackward(/*ActionEvent event*/) {
+    private void skipBackward(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.skipBackward();
     }
     
     @FXML
-    private void skipForward(/*ActionEvent event*/) {
+    private void skipForward(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.skipForward();
     }

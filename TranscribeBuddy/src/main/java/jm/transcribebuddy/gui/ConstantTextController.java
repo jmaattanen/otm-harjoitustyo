@@ -42,6 +42,8 @@ public class ConstantTextController implements Initializable {
         textBuilder = builder;
         audioPlayer = player;
         Scene scene = stage.getScene();
+        
+        // set up hotkeys
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             
             @Override
@@ -55,7 +57,7 @@ public class ConstantTextController implements Initializable {
                                 Logger.getLogger(ConstantTextController.class.getName()).log(Level.SEVERE, null, ex);
                             }   break;
                         case O:
-                            openAudioFile();
+                            openAudioFile(null);
                             break;
                         case SPACE:
                             if( audioPlayer != null ) {
@@ -89,33 +91,7 @@ public class ConstantTextController implements Initializable {
     private void switchToLBLS(final Stage stage) throws IOException {
         // save current text to TextBuilder
         String text = workArea.getText();
-        String lastStatement = textBuilder.getLast();
-        final String firstLettersToSearch = lastStatement.substring(0, lastStatement.length()/4);
-        final int searchForCurrent = text.lastIndexOf(firstLettersToSearch);
-        if( lastStatement.equals("") || searchForCurrent < 0 || searchForCurrent >= text.length() ) {
-            // couldn't find a match for current statement
-            // try to find a match for the prev statement
-            final String secondLast = textBuilder.getSecondLast();
-            if( secondLast.equals("") ) {
-                // assume that the current statement is the first one
-                lastStatement = text;
-            }
-            else {
-                final int searchForPrev = text.lastIndexOf(secondLast);
-                if( searchForPrev < 0 || searchForPrev >= text.length() ) {
-                    // something terrible has happened
-                }
-                else {
-                    // the second last statement has been found
-                    // save all following text to the last statement
-                    lastStatement = text.substring(searchForPrev + secondLast.length());
-                }
-            }
-        }
-        else {
-            lastStatement = text.substring(searchForCurrent);
-        }
-        textBuilder.setLast(lastStatement);
+        textBuilder.parseFromAll(text);
         
         // Load new scene
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -136,7 +112,7 @@ public class ConstantTextController implements Initializable {
     }
     
     @FXML
-    private void openAudioFile(/*ActionEvent event*/) {
+    private void openAudioFile(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.stop();
         FileChooser fileChooser = new FileChooser();
@@ -156,25 +132,25 @@ public class ConstantTextController implements Initializable {
     }
     
     @FXML
-    private void playAudio(/*ActionEvent event*/) {
+    private void playAudio(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.play();
     }
     
     @FXML
-    private void stopAudio(/*ActionEvent event*/) {
+    private void stopAudio(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.stop();
     }
     
     @FXML
-    private void skipBackward(/*ActionEvent event*/) {
+    private void skipBackward(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.skipBackward();
     }
     
     @FXML
-    private void skipForward(/*ActionEvent event*/) {
+    private void skipForward(ActionEvent event) {
         if(audioPlayer != null)
             audioPlayer.skipForward();
     }

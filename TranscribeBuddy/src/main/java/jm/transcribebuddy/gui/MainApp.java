@@ -11,6 +11,9 @@ import jm.transcribebuddy.logics.TextBuilder;
 
 public class MainApp extends Application {
 
+    private TextBuilder textBuilder;
+    static private AudioPlayer audioPlayer;
+    
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -25,10 +28,10 @@ public class MainApp extends Application {
         stage.setMinHeight(400);
         stage.show();
         
-        TextBuilder textBuilder = new TextBuilder();
+        textBuilder = new TextBuilder();
         
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
-        fxmlController.setUpController(stage, textBuilder, null);
+        fxmlController.setUpController(stage, textBuilder, audioPlayer);
     }
 
     public static void main(String[] args) {
