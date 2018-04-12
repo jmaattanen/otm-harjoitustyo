@@ -1,4 +1,4 @@
-package jm.transcribebuddy;
+package jm.transcribebuddy.logics;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

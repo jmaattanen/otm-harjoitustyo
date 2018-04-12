@@ -1,4 +1,4 @@
-package jm.transcribebuddy;
+package jm.transcribebuddy.gui;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jm.transcribebuddy.logics.AudioPlayer;
+import jm.transcribebuddy.logics.TextBuilder;
 
 public class ConstantTextController implements Initializable {
     
@@ -144,11 +146,13 @@ public class ConstantTextController implements Initializable {
                         "*.m4a", "*.mp3", "*.wav" );
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
-        String audioFilePath = file.toURI().toString();
-        audioPlayer = new AudioPlayer(audioFilePath);
-        audioName.setText(audioPlayer.getFilePath());
-        textBuilder = new TextBuilder();
-        workArea.setText("");
+        if(file != null ) {
+            String audioFilePath = file.toURI().toString();
+            audioPlayer = new AudioPlayer(audioFilePath);
+            audioName.setText(audioPlayer.getFilePath());
+            textBuilder = new TextBuilder();
+            workArea.setText("");
+        }
     }
     
     @FXML

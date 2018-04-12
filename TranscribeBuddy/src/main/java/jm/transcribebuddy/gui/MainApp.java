@@ -1,4 +1,4 @@
-package jm.transcribebuddy;
+package jm.transcribebuddy.gui;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jm.transcribebuddy.logics.AudioPlayer;
+import jm.transcribebuddy.logics.TextBuilder;
 
 public class MainApp extends Application {
 

@@ -1,60 +1,60 @@
-package jm.transcribebuddy;
+package jm.transcribebuddy.logics;
 
 import java.util.ArrayList;
 
 public class TextBuilder {
-    private ArrayList<Node> statements;
+    private ArrayList<Statement> statements;
     private int workingIndex;
     
     public TextBuilder() {
         statements = new ArrayList<>();
-        Node first = new Node();
-        statements.add(first);
+        Statement firstStatement = new Statement();
+        statements.add(firstStatement);
         workingIndex = 0;
     }
     
     public String getCurrent() {
 //        if( workingIndex >= statements.size())
 //            workingIndex = statements.size()-1;
-        return statements.get(workingIndex).getStatement();
+        return statements.get(workingIndex).toString();
     }
     
     public String getPrev() {
         if(workingIndex == 0)
             return "*Projektin alku*";
-        return statements.get(workingIndex-1).getStatement();
+        return statements.get(workingIndex-1).toString();
     }
     
     public String getNext() {
         if(workingIndex == statements.size()-1)
             return "*Projektin loppu*";
-        return statements.get(workingIndex+1).getStatement();
+        return statements.get(workingIndex+1).toString();
     }
     
     public String getLast() {
         int lastIndex = statements.size()-1;
-        return statements.get(lastIndex).getStatement();
+        return statements.get(lastIndex).toString();
     }
     
     public String getSecondLast() {
         int index = statements.size()-2;
         if(index < 0)
             return "";
-        return statements.get(index).getStatement();
+        return statements.get(index).toString();
     }
     
     public String getAll() {
         if( statements.isEmpty() )
             return null;
         String text = "";
-        for(Node node : statements)
-            text += node.getStatement() + " ";
+        for(Statement node : statements)
+            text += node.toString() + " ";
         return text;
     }
     
     public void set(String statement) {
-        Node node = statements.get(workingIndex);
-        node.setStatement(statement.trim());
+        Statement node = statements.get(workingIndex);
+        node.set(statement.trim());
     }
     
     public void setLast(String statement) {
@@ -67,12 +67,11 @@ public class TextBuilder {
         for( int i = statement.length()-1; i >= 0 && statement.charAt(i) == ' '; i-- ) {
             statement = statement.substring(0, i);
         }
-        Node node = statements.get(workingIndex);
-        node.setStatement(statement);
+        Statement node = statements.get(workingIndex);
+        node.set(statement);
         if(workingIndex == statements.size()-1) {
             // add a new node to the end
-            node = new Node();
-            statements.add(node);
+            statements.add(new Statement());
             workingIndex++;
         }
         else {

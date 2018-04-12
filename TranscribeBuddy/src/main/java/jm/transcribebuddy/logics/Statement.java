@@ -1,24 +1,26 @@
-package jm.transcribebuddy;
+package jm.transcribebuddy.logics;
 
 import javafx.util.Duration;
 
-public class Node {
+public class Statement {
     private String statement;
     Duration start, end;
     
-    public Node() {
+    public Statement() {
         statement = "";
     }
     
-    public void setStatement(String statement) {
+    public void set(String statement) {
         this.statement = statement;
     }
     
-    public String getStatement() {
+    @Override
+    public String toString() {
         return statement;
     }
     
     public int getLength() {
         return statement.length();
     }
+    
 }
