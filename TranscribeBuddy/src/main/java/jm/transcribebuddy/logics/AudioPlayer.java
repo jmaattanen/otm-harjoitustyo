@@ -12,14 +12,15 @@ public class AudioPlayer {
     private Duration jumpTime;
     
     public AudioPlayer(String filePath) {
-        if(filePath != null ) {
+        if (filePath != null) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;
             duration = mediaPlayer.getCurrentTime();
             jumpTime = Duration.seconds(5);
+        } else {
+            audioFilePath = "Ei audiota";
         }
-        else audioFilePath = "Ei audiota";
     }
     
     public String getFilePath() {
@@ -37,9 +38,11 @@ public class AudioPlayer {
     
     public void skipBackward() {
         duration = mediaPlayer.getCurrentTime();
-        if( duration.greaterThan(jumpTime))
+        if (duration.greaterThan(jumpTime)) {
             duration = duration.subtract(jumpTime);
-        else duration = mediaPlayer.getStartTime();
+        } else {
+            duration = mediaPlayer.getStartTime();
+        }
         mediaPlayer.seek(duration);
     }
     
@@ -50,8 +53,9 @@ public class AudioPlayer {
     }
     
     public boolean isPlaying() {
-        if( mediaPlayer == null )
+        if (mediaPlayer == null) {
             return false;
+        }
         return mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING);
     }
 }
