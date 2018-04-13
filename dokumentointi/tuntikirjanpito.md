@@ -15,5 +15,6 @@
 | 12.4. | 4    | Arkkitehtuurin muokkaus |
 |       |      | Lausumien selaustoiminto |
 |       |      | Testauksen laajentaminen ja jacoco:n sekä checkstylen konfigurointi |
-| 13.4. | 1    | Dokumentointia |
-| yht   | 20   | | 
+| 13.4. | 2    | Dokumentointia |
+|       |      | Lausumien poisto- ja jakotoiminnot |
+| yht   | 21   | | 

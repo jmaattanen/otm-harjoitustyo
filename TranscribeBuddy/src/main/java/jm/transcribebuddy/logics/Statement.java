@@ -4,10 +4,14 @@ import javafx.util.Duration;
 
 public class Statement {
     private String statement;
-    Duration start, end;
+    Duration start;
     
     public Statement() {
         statement = "";
+    }
+    
+    public Statement(String statement) {
+        this.statement = statement;
     }
     
     public void set(String statement) {

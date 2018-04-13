@@ -67,6 +67,35 @@ public class TextBuilder {
         this.set(statement.trim());
     }
     
+    public void deleteStatement() {
+        statements.remove(workingIndex);
+        if (statements.isEmpty()) {
+            Statement first = new Statement();
+            statements.add(first);
+        } else if (workingIndex == statements.size()) {
+            // statement in the end of list has been deleted
+            // so index must move to prev
+            workingIndex--;
+        }
+    }
+    
+    /* This method divides statement into two parts */
+    public boolean splitStatement(String statement, int splitIndex) {
+        if (splitIndex <= 0 || splitIndex >= statement.length()) {
+            // invalid parameters
+            return false;
+        }
+        Statement currentNode = statements.get(workingIndex);
+        currentNode.set(statement.substring(0, splitIndex).trim());
+        // create a new node
+        final int endIndex = statement.length();
+        String newStatement = statement.substring(splitIndex, endIndex).trim();
+        Statement newNode = new Statement(newStatement);
+        workingIndex++;
+        statements.add(workingIndex, newNode);
+        return true;
+    }
+    
     public void selectPrev() {
         if (workingIndex > 0) {
             workingIndex--;
@@ -82,14 +111,9 @@ public class TextBuilder {
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement.trim());
+        Statement newNode = new Statement();
         workingIndex++;
-        if (workingIndex == statements.size()) {
-            // add a new node to the end
-            statements.add(new Statement());
-        } else {
-            // insert a new node
-            statements.add(workingIndex, new Statement());
-        }
+        statements.add(workingIndex, newNode);
     }
     
     /* This method tries to separate the new input */

@@ -151,6 +151,20 @@ public class LineByLineController implements Initializable {
     }
     
     @FXML
+    private void deleteStatement() {
+        textBuilder.deleteStatement();
+        setUpTextAreas();
+    }
+    
+    @FXML
+    private void splitStatement(ActionEvent event) {
+        String statement = workArea.getText();
+        int index = workArea.getCaretPosition();
+        textBuilder.splitStatement(statement, index);
+        setUpTextAreas();
+    }
+    
+    @FXML
     private void selectPrevStatement() {
         String statement = workArea.getText();
         textBuilder.set(statement);

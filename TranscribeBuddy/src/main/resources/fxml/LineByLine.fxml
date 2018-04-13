@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jm.transcribebuddy.gui.LineByLineController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jm.transcribebuddy.gui.LineByLineController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -25,6 +25,16 @@
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_RIGHT">
                <children>
                   <Region prefHeight="200.0" prefWidth="100.0" />
+                  <Button mnemonicParsing="false" onAction="#deleteStatement" text="Poista virke">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#splitStatement" text="Katkaise virke">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#selectPrevStatement" text="Edellinen">
                      <VBox.margin>
                         <Insets bottom="2.0" />
@@ -37,7 +47,7 @@
                   </Button>
                    <Button mnemonicParsing="false" onAction="#endStatement" text="Päätä virke">
                      <VBox.margin>
-                        <Insets top="2.0" />
+                        <Insets top="10.0" />
                      </VBox.margin></Button>
                   <Region prefHeight="300.0" prefWidth="100.0" />
                    <Button mnemonicParsing="false" onAction="#switchToCTS" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
