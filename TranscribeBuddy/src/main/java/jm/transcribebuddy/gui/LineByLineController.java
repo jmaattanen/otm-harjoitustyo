@@ -1,6 +1,5 @@
 package jm.transcribebuddy.gui;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,18 +16,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jm.transcribebuddy.logics.AudioPlayer;
-import jm.transcribebuddy.logics.TextBuilder;
+import jm.transcribebuddy.logics.MainController;
 
 public class LineByLineController implements Initializable {
     
-    static private AudioPlayer audioPlayer;
-    static private TextBuilder textBuilder;
+    static private MainController mainController;
     
     @FXML
-    private Label audioName;
+    private Label audioNameLabel;
     
     @FXML
     private TextArea workArea, prevArea, nextArea;
@@ -39,17 +35,16 @@ public class LineByLineController implements Initializable {
     }    
     
     private void setUpTextAreas() {
-        prevArea.setText(textBuilder.getPrev());
-        nextArea.setText(textBuilder.getNext());
-        final String statement = textBuilder.getCurrent();
+        prevArea.setText(mainController.getPrevStatement());
+        nextArea.setText(mainController.getNextStatement());
+        final String statement = mainController.getCurrentStatement();
         workArea.setText(statement);
         workArea.positionCaret(statement.length());
         workArea.requestFocus();
     }
     
-    public void setUpController(final Stage stage, TextBuilder builder, AudioPlayer player) {
-        textBuilder = builder;
-        audioPlayer = player;
+    public void setUpController(final Stage stage, MainController controller) {
+        mainController = controller;
         Scene scene = stage.getScene();
         
         // set up hotkeys
@@ -57,8 +52,8 @@ public class LineByLineController implements Initializable {
             
             @Override
             public void handle( KeyEvent keyEvent) {
-                if( keyEvent.isControlDown() ) {
-                    if( null != keyEvent.getCode() ) switch (keyEvent.getCode()) {
+                if (keyEvent.isControlDown()) {
+                    if (null != keyEvent.getCode()) switch (keyEvent.getCode()) {
                         case COMMA:
                             try {
                                 switchToCTS(stage);
@@ -78,19 +73,18 @@ public class LineByLineController implements Initializable {
                             endStatement();
                             break;
                         case SPACE:
-                            if( audioPlayer != null ) {
-                                if( audioPlayer.isPlaying() )
-                                    audioPlayer.stop();
-                                else audioPlayer.play();
-                            }   break;
+                            if (keyEvent.isShiftDown()) {
+                                // [ctrl+shift+space] starts playing from last mark
+                                mainController.seekBeginningOfCurrentStatement();
+                                mainController.playAudio();
+                            } else mainController.changePlayingStatus();
+                            break;
                         case B:
-                            if( audioPlayer != null ) {
-                                audioPlayer.skipBackward();
-                            }   break;
+                            mainController.skipBackward();
+                            break;
                         case N:
-                            if( audioPlayer != null ) {
-                                audioPlayer.skipForward();
-                            }   break;
+                            mainController.skipForward();
+                            break;
                         default:
                             break;
                     }
@@ -98,10 +92,8 @@ public class LineByLineController implements Initializable {
             }
         });
         
-        // set up audio file label
-        if(audioPlayer != null)
-            audioName.setText(audioPlayer.getFilePath());
-        
+        // set up audio file label and text areas
+        audioNameLabel.setText(mainController.getAudioFilePath());
         setUpTextAreas();
         prevArea.setEditable(false);
         nextArea.setEditable(false);
@@ -111,7 +103,7 @@ public class LineByLineController implements Initializable {
     private void switchToCTS(final Stage stage) throws IOException {
         // save current text to TextBuilder
         String statement = workArea.getText();
-        textBuilder.set(statement);
+        mainController.setCurrentStatement(statement);
         
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent constantTextParent = fxmlLoader.load(getClass().getResource("/fxml/ConstantText.fxml").openStream());
@@ -121,7 +113,7 @@ public class LineByLineController implements Initializable {
         stage.setScene(constantTextScene);
         stage.show();
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
-        fxmlController.setUpController(stage, textBuilder, audioPlayer);
+        fxmlController.setUpController(stage, mainController);
     }
     
     @FXML
@@ -132,27 +124,15 @@ public class LineByLineController implements Initializable {
 
     @FXML
     private void openAudioFile(ActionEvent event) {
-        if(audioPlayer != null)
-            audioPlayer.stop();
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter =
-                new FileChooser.ExtensionFilter(
-                        "Select a file (*.m4a),(*.mp3),(*.wav)",
-                        "*.m4a", "*.mp3", "*.wav" );
-        fileChooser.getExtensionFilters().add(filter);
-        File file = fileChooser.showOpenDialog(null);
-        if(file != null) {
-            String audioFilePath = file.toURI().toString();
-            audioPlayer = new AudioPlayer(audioFilePath);
-            audioName.setText(audioPlayer.getFilePath());
-            textBuilder = new TextBuilder();
+        if (mainController.openAudioFile()) {
+            audioNameLabel.setText(mainController.getAudioFilePath());
             setUpTextAreas();
         }
     }
     
     @FXML
     private void deleteStatement() {
-        textBuilder.deleteStatement();
+        mainController.deleteCurrentStatement();
         setUpTextAreas();
     }
     
@@ -160,54 +140,55 @@ public class LineByLineController implements Initializable {
     private void splitStatement(ActionEvent event) {
         String statement = workArea.getText();
         int index = workArea.getCaretPosition();
-        textBuilder.splitStatement(statement, index);
+        mainController.splitStatement(statement, index);
         setUpTextAreas();
     }
     
     @FXML
     private void selectPrevStatement() {
         String statement = workArea.getText();
-        textBuilder.set(statement);
-        textBuilder.selectPrev();
+        mainController.setCurrentStatement(statement);
+        mainController.selectPrevStatement();
         setUpTextAreas();
     }
     
     @FXML
     private void selectNextStatement() {
         String statement = workArea.getText();
-        textBuilder.set(statement);
-        textBuilder.selectNext();
+        mainController.setCurrentStatement(statement);
+        mainController.selectNextStatement();
         setUpTextAreas();
     }
     
     @FXML
     private void endStatement() {
         String statement = workArea.getText();
-        textBuilder.endStatement(statement);
+        mainController.endStatement(statement);
         setUpTextAreas();
     }
     
     @FXML
+    private void seekBeginning(ActionEvent event) {
+        mainController.seekBeginningOfCurrentStatement();
+    }
+    
+    @FXML
     private void playAudio(ActionEvent event) {
-        if(audioPlayer != null)
-            audioPlayer.play();
+        mainController.playAudio();
     }
     
     @FXML
     private void stopAudio(ActionEvent event) {
-        if(audioPlayer != null)
-            audioPlayer.stop();
+        mainController.stopAudio();
     }
     
     @FXML
     private void skipBackward(ActionEvent event) {
-        if(audioPlayer != null)
-            audioPlayer.skipBackward();
+        mainController.skipBackward();
     }
     
     @FXML
     private void skipForward(ActionEvent event) {
-        if(audioPlayer != null)
-            audioPlayer.skipForward();
+        mainController.skipForward();
     }
 }

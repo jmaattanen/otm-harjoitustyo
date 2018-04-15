@@ -7,12 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jm.transcribebuddy.logics.AudioPlayer;
+import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class MainApp extends Application {
 
-    private TextBuilder textBuilder;
-    static private AudioPlayer audioPlayer;
+    static private MainController mainController;
+    
+    @Override
+    public void init() {
+        mainController = new MainController();
+    }
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,10 +33,8 @@ public class MainApp extends Application {
         stage.setMinHeight(400);
         stage.show();
         
-        textBuilder = new TextBuilder();
-        
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
-        fxmlController.setUpController(stage, textBuilder, audioPlayer);
+        fxmlController.setUpController(stage, mainController);
     }
 
     public static void main(String[] args) {

@@ -6,20 +6,33 @@ import javafx.util.Duration;
 
 public class AudioPlayer {
     
-    final private String audioFilePath;
+    private String audioFilePath;
     private MediaPlayer mediaPlayer;
-    private Duration duration;
     private Duration jumpTime;
+    
+    public AudioPlayer() {
+        jumpTime = Duration.seconds(5);
+        audioFilePath = "Ei audiota";
+    }
     
     public AudioPlayer(String filePath) {
         if (filePath != null) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;
-            duration = mediaPlayer.getCurrentTime();
             jumpTime = Duration.seconds(5);
         } else {
             audioFilePath = "Ei audiota";
+        }
+    }
+    
+    public void openAudioFile(String filePath) {
+        this.stop();
+        if (filePath != null) {
+            Media media = new Media(filePath);
+            mediaPlayer = new MediaPlayer(media);
+            audioFilePath = filePath;
+            jumpTime = Duration.seconds(5);
         }
     }
     
@@ -27,29 +40,63 @@ public class AudioPlayer {
         return audioFilePath;
     }
     
+    public Duration getCurrentTime() {
+        if (mediaPlayer == null) {
+            return Duration.seconds(0);
+        } else return mediaPlayer.getCurrentTime();
+    }
+    
     public void play() {
-        mediaPlayer.play();
+        if (mediaPlayer != null) {
+            mediaPlayer.play();
+        }
     }
     
     public void stop() {
-        mediaPlayer.pause();
-        duration = mediaPlayer.getCurrentTime();
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+    
+    public void changePlayingStatus() {
+        if (mediaPlayer != null) {
+            if( isPlaying() )
+                mediaPlayer.pause();
+            else mediaPlayer.play();
+        }
+    }
+    
+    public void seekBeginning() {
+        if (mediaPlayer != null) {
+            mediaPlayer.seek(Duration.seconds(0));
+        }
+    }
+    
+    public void seekBeginning(TextBuilder textBuilder) {
+        if (mediaPlayer != null) {
+            Duration startTime = textBuilder.getStartTime();
+            mediaPlayer.seek(startTime);
+        }
     }
     
     public void skipBackward() {
-        duration = mediaPlayer.getCurrentTime();
-        if (duration.greaterThan(jumpTime)) {
-            duration = duration.subtract(jumpTime);
-        } else {
-            duration = mediaPlayer.getStartTime();
+        if (mediaPlayer != null) {
+            Duration duration = mediaPlayer.getCurrentTime();
+            if (duration.greaterThan(jumpTime)) {
+                duration = duration.subtract(jumpTime);
+            } else {
+                duration = mediaPlayer.getStartTime();
+            }
+            mediaPlayer.seek(duration);
         }
-        mediaPlayer.seek(duration);
     }
     
     public void skipForward() {
-        duration = mediaPlayer.getCurrentTime();
-        duration = duration.add(jumpTime);
-        mediaPlayer.seek(duration);
+        if (mediaPlayer != null) {
+            Duration duration = mediaPlayer.getCurrentTime();
+            duration = duration.add(jumpTime);
+            mediaPlayer.seek(duration);
+        }
     }
     
     public boolean isPlaying() {

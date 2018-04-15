@@ -16,5 +16,7 @@
 |       |      | Lausumien selaustoiminto |
 |       |      | Testauksen laajentaminen ja jacoco:n sekä checkstylen konfigurointi |
 | 13.4. | 2    | Dokumentointia |
-|       |      | Lausumien poisto- ja jakotoiminnot |
-| yht   | 21   | | 
+|       |      | Lausumien poisto- ja katkaisutoiminnot |
+| 15.4. | 4,5  | Lausumien linkitys ääniraitaan |
+|       |      | Käyttöliittymän ja sovelluslogiikan rajapinnan uudistus |
+| yht   | 32,5 | | 

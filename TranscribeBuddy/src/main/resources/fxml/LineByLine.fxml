@@ -84,22 +84,27 @@
          <bottom>
             <VBox prefHeight="84.0" prefWidth="175.0">
              <children>
-                 <Label fx:id="audioName" BorderPane.alignment="TOP_LEFT" />
+                 <Label fx:id="audioNameLabel" BorderPane.alignment="TOP_LEFT" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
+                        <Button mnemonicParsing="false" onAction="#seekBeginning" text="Alkuun">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
                         <Button mnemonicParsing="false" onAction="#skipBackward" text="&lt;&lt;">
                            <HBox.margin>
-                              <Insets left="2.0" right="2.0" />
+                              <Insets right="4.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#stopAudio" text="Pause">
                            <HBox.margin>
-                              <Insets left="2.0" right="2.0" />
+                              <Insets right="4.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#playAudio" text="Play">
                            <HBox.margin>
-                              <Insets left="2.0" right="2.0" />
+                              <Insets right="4.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#skipForward" text="&gt;&gt;">

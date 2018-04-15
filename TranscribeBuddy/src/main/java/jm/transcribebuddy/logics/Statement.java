@@ -4,18 +4,33 @@ import javafx.util.Duration;
 
 public class Statement {
     private String statement;
-    Duration start;
+    private Duration start;
     
     public Statement() {
         statement = "";
+        start = Duration.seconds(0);
     }
     
-    public Statement(String statement) {
+    public Statement(Duration startTime) {
+        statement = "";
+        start = startTime;
+    }
+    
+    public Statement(String statement, Duration startTime) {
         this.statement = statement;
+        this.start = startTime;
     }
     
     public void set(String statement) {
         this.statement = statement;
+    }
+    
+    public void setStartTime(Duration startTime) {
+        start = startTime;
+    }
+    
+    public Duration getStartTime() {
+        return start;
     }
     
     @Override

@@ -1,6 +1,7 @@
 package jm.transcribebuddy.logics;
 
 import java.util.ArrayList;
+import javafx.util.Duration;
 
 public class TextBuilder {
     final private ArrayList<Statement> statements;
@@ -15,6 +16,11 @@ public class TextBuilder {
     
     public String getCurrent() {
         return statements.get(workingIndex).toString();
+    }
+    
+    public Duration getStartTime() {
+        Statement currentStatement = statements.get(workingIndex);
+        return currentStatement.getStartTime();
     }
     
     public String getPrev() {
@@ -62,6 +68,11 @@ public class TextBuilder {
         node.set(statement.trim());
     }
     
+    public void setStartTime(Duration startTime) {
+        Statement currentStatement = statements.get(workingIndex);
+        currentStatement.setStartTime(startTime);
+    }
+    
     public void setLast(String statement) {
         workingIndex = statements.size() - 1;
         this.set(statement.trim());
@@ -80,7 +91,7 @@ public class TextBuilder {
     }
     
     /* This method divides statement into two parts */
-    public boolean splitStatement(String statement, int splitIndex) {
+    public boolean splitStatement(String statement, int splitIndex, Duration splitTime) {
         if (splitIndex <= 0 || splitIndex >= statement.length()) {
             // invalid parameters
             return false;
@@ -90,7 +101,7 @@ public class TextBuilder {
         // create a new node
         final int endIndex = statement.length();
         String newStatement = statement.substring(splitIndex, endIndex).trim();
-        Statement newNode = new Statement(newStatement);
+        Statement newNode = new Statement(newStatement, splitTime);
         workingIndex++;
         statements.add(workingIndex, newNode);
         return true;
