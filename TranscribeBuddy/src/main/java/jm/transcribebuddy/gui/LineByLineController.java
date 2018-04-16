@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.logics.MainController;
@@ -27,6 +28,9 @@ public class LineByLineController implements Initializable {
     private Label audioNameLabel;
     
     @FXML
+    private TextField startTimeField;
+    
+    @FXML
     private TextArea workArea, prevArea, nextArea;
     
     @Override
@@ -35,6 +39,7 @@ public class LineByLineController implements Initializable {
     }    
     
     private void setUpTextAreas() {
+        startTimeField.setText(mainController.startTimeToString());
         prevArea.setText(mainController.getPrevStatement());
         nextArea.setText(mainController.getNextStatement());
         final String statement = mainController.getCurrentStatement();
@@ -46,6 +51,12 @@ public class LineByLineController implements Initializable {
     public void setUpController(final Stage stage, MainController controller) {
         mainController = controller;
         Scene scene = stage.getScene();
+        // retain the maximized stage
+        if (stage.isMaximized()) {
+            stage.hide();
+            stage.setMaximized(true);
+            stage.show();
+        }
         
         // set up hotkeys
         scene.setOnKeyPressed( new EventHandler<KeyEvent>() {
@@ -131,7 +142,15 @@ public class LineByLineController implements Initializable {
     }
     
     @FXML
-    private void deleteStatement() {
+    private void setStartTime(ActionEvent event) {
+        mainController.setStartTime();
+        startTimeField.setText(mainController.startTimeToString());
+        //workArea.positionCaret(statement.length());
+        workArea.requestFocus();
+    }
+    
+    @FXML
+    private void deleteStatement(ActionEvent event) {
         mainController.deleteCurrentStatement();
         setUpTextAreas();
     }
@@ -170,25 +189,30 @@ public class LineByLineController implements Initializable {
     @FXML
     private void seekBeginning(ActionEvent event) {
         mainController.seekBeginningOfCurrentStatement();
+        workArea.requestFocus();
     }
     
     @FXML
     private void playAudio(ActionEvent event) {
         mainController.playAudio();
+        workArea.requestFocus();
     }
     
     @FXML
     private void stopAudio(ActionEvent event) {
         mainController.stopAudio();
+        workArea.requestFocus();
     }
     
     @FXML
     private void skipBackward(ActionEvent event) {
         mainController.skipBackward();
+        workArea.requestFocus();
     }
     
     @FXML
     private void skipForward(ActionEvent event) {
         mainController.skipForward();
+        workArea.requestFocus();
     }
 }

@@ -63,6 +63,30 @@ public class TextBuilder {
         return text.substring(0, text.length() - 1);
     }
     
+    public String startTimeToString() {
+        Statement node = statements.get(workingIndex);
+        Duration duration = node.getStartTime();
+        Integer seconds = (int) duration.toSeconds();
+        String str = "";
+        // hours
+        if (seconds >= 3600) {
+            str += Integer.toString(seconds / 3600) + ":";
+            seconds = seconds % 3600;
+        }
+        // minutes
+        if (seconds < 600) {
+            str += "0";
+        }
+        str += Integer.toString(seconds / 60) + ":";
+        // seconds
+        seconds = seconds % 60;
+        if (seconds < 10) {
+            str += "0";
+        }
+        str += Integer.toString(seconds);
+        return str;
+    }
+    
     public void set(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement.trim());
@@ -142,7 +166,8 @@ public class TextBuilder {
             } else {
                 final int searchForPrev = text.lastIndexOf(secondLast);
                 if (searchForPrev < 0 || searchForPrev >= text.length()) {
-                    // something terrible has happened
+                    // Something terrible has happened :(
+                    System.out.println("Something terrible has happened :(");
                 } else {
                     // the second last statement has been found
                     // save all following text to the last statement

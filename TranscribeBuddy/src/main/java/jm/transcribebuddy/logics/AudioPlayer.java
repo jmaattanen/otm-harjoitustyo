@@ -43,7 +43,8 @@ public class AudioPlayer {
     public Duration getCurrentTime() {
         if (mediaPlayer == null) {
             return Duration.seconds(0);
-        } else return mediaPlayer.getCurrentTime();
+        }
+        return mediaPlayer.getCurrentTime();
     }
     
     public void play() {
@@ -60,9 +61,11 @@ public class AudioPlayer {
     
     public void changePlayingStatus() {
         if (mediaPlayer != null) {
-            if( isPlaying() )
+            if (isPlaying()) {
                 mediaPlayer.pause();
-            else mediaPlayer.play();
+            } else {
+                mediaPlayer.play();
+            }
         }
     }
     

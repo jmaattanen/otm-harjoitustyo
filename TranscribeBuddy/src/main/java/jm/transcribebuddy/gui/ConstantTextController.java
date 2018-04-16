@@ -37,6 +37,12 @@ public class ConstantTextController implements Initializable {
     public void setUpController(final Stage stage, MainController controller) {
         mainController = controller;
         Scene scene = stage.getScene();
+        // retain the maximized stage
+        if (stage.isMaximized()) {
+            stage.hide();
+            stage.setMaximized(true);
+            stage.show();
+        }
         
         // set up hotkeys
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -80,7 +86,7 @@ public class ConstantTextController implements Initializable {
     
     // Switch to LineByLine scene
     private void switchToLBLS(final Stage stage) throws IOException {
-        // save current text to TextBuilder
+        // save current work to TextBuilder
         String text = workArea.getText();
         mainController.parseLastStatement(text);
         
@@ -113,26 +119,31 @@ public class ConstantTextController implements Initializable {
     @FXML
     private void seekBeginning(ActionEvent event) {
         mainController.seekBeginningOfAudioTrack();
+        workArea.requestFocus();
     }
     
     @FXML
     private void playAudio(ActionEvent event) {
         mainController.playAudio();
+        workArea.requestFocus();
     }
     
     @FXML
     private void stopAudio(ActionEvent event) {
         mainController.stopAudio();
+        workArea.requestFocus();
     }
     
     @FXML
     private void skipBackward(ActionEvent event) {
         mainController.skipBackward();
+        workArea.requestFocus();
     }
     
     @FXML
     private void skipForward(ActionEvent event) {
         mainController.skipForward();
+        workArea.requestFocus();
     }
     
 }

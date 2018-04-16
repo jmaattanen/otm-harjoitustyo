@@ -29,9 +29,17 @@ public class MainController {
     public String getFullText() {
         return textBuilder.getAll();
     }
+    public String startTimeToString() {
+        return textBuilder.startTimeToString();
+    }
     
     public void setCurrentStatement(String statement) {
         textBuilder.set(statement);
+    }
+    
+    public void setStartTime() {
+        Duration startTime = audioPlayer.getCurrentTime();
+        textBuilder.setStartTime(startTime);
     }
     
     public void parseLastStatement(final String text) {
@@ -70,7 +78,7 @@ public class MainController {
         FileChooser.ExtensionFilter filter =
                 new FileChooser.ExtensionFilter(
                         "Select a file (*.m4a),(*.mp3),(*.wav)",
-                        "*.m4a", "*.mp3", "*.wav" );
+                        "*.m4a", "*.mp3", "*.wav");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
         if (file == null) {
