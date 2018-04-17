@@ -15,7 +15,7 @@ public class ProjectDao {
         if (!testDir.exists()) {
             try {
                 testDir.mkdir();
-            } catch(SecurityException se){
+            } catch (SecurityException se) {
                 System.out.println("Couldn't create testdata directory");
             }
         }
@@ -30,12 +30,11 @@ public class ProjectDao {
             }
             FileWriter writer = new FileWriter(file);
             ArrayList<Statement> statements = textBuilder.getList();
-            for( Statement s : statements ) {
+            for (Statement s : statements) {
                 String line  = s.toString();
                 line = line.replaceAll("\n", "<endl>");
                 writer.write(line + "\n");
-                
-                }
+            }
             writer.close();
         } catch (Exception e) {
             System.out.print(e);

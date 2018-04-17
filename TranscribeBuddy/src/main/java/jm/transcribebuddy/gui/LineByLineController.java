@@ -97,10 +97,16 @@ public class LineByLineController implements Initializable {
                             } else mainController.changePlayingStatus();
                             break;
                         case B:
-                            mainController.skipBackward();
+                            if (keyEvent.isShiftDown()) {
+                                // [ctrl+shift+B] uses longer skip time 
+                                mainController.skipBackwardLonger();
+                            } else mainController.skipBackward();
                             break;
                         case N:
-                            mainController.skipForward();
+                            if (keyEvent.isShiftDown()) {
+                                // [ctrl+shift+N] uses longer skip time 
+                                mainController.skipForwardLonger();
+                            } else mainController.skipForward();
                             break;
                         default:
                             break;

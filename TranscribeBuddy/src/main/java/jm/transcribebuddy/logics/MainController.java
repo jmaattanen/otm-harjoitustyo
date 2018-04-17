@@ -107,8 +107,14 @@ public class MainController {
     public void skipBackward() {
         audioPlayer.skipBackward();
     }
+    public void skipBackwardLonger() {
+        audioPlayer.skipBackwardLonger();
+    }
     public void skipForward() {
         audioPlayer.skipForward();
+    }
+    public void skipForwardLonger() {
+        audioPlayer.skipForwardLonger();
     }
     public void playAudio() {
         audioPlayer.play();

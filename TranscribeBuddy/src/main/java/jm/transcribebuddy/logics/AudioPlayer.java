@@ -8,11 +8,12 @@ public class AudioPlayer {
     
     private String audioFilePath;
     private MediaPlayer mediaPlayer;
-    private Duration jumpTime;
+    private Duration skipTime, longerSkipTime;
     
     public AudioPlayer() {
-        jumpTime = Duration.seconds(5);
         audioFilePath = "Ei audiota";
+        skipTime = Duration.seconds(5);
+        longerSkipTime = Duration.seconds(30);
     }
     
     public AudioPlayer(String filePath) {
@@ -20,10 +21,11 @@ public class AudioPlayer {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;
-            jumpTime = Duration.seconds(5);
         } else {
             audioFilePath = "Ei audiota";
         }
+        skipTime = Duration.seconds(5);
+        longerSkipTime = Duration.seconds(30);
     }
     
     public void openAudioFile(String filePath) {
@@ -32,7 +34,6 @@ public class AudioPlayer {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;
-            jumpTime = Duration.seconds(5);
         }
     }
     
@@ -84,22 +85,38 @@ public class AudioPlayer {
     
     public void skipBackward() {
         if (mediaPlayer != null) {
-            Duration duration = mediaPlayer.getCurrentTime();
-            if (duration.greaterThan(jumpTime)) {
-                duration = duration.subtract(jumpTime);
-            } else {
-                duration = mediaPlayer.getStartTime();
-            }
-            mediaPlayer.seek(duration);
+            skipBackward(skipTime);
         }
+    }
+    public void skipBackwardLonger() {
+        if (mediaPlayer != null) {
+            skipBackward(longerSkipTime);
+        }
+    }
+    private void skipBackward(Duration interval) {
+        Duration duration = mediaPlayer.getCurrentTime();
+        if (duration.greaterThan(interval)) {
+            duration = duration.subtract(interval);
+        } else {
+            duration = mediaPlayer.getStartTime();
+        }
+        mediaPlayer.seek(duration);
     }
     
     public void skipForward() {
         if (mediaPlayer != null) {
-            Duration duration = mediaPlayer.getCurrentTime();
-            duration = duration.add(jumpTime);
-            mediaPlayer.seek(duration);
+            skipForward(skipTime);
         }
+    }
+    public void skipForwardLonger() {
+        if (mediaPlayer != null) {
+            skipForward(longerSkipTime);
+        }
+    }
+    private void skipForward(Duration interval) {
+        Duration duration = mediaPlayer.getCurrentTime();
+        duration = duration.add(interval);
+        mediaPlayer.seek(duration);
     }
     
     public boolean isPlaying() {
