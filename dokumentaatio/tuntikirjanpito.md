@@ -19,7 +19,7 @@
 |       |      | Lausumien poisto- ja katkaisutoiminnot |
 | 15.4. | 4,5  | Lausumien linkitys ääniraitaan |
 |       |      | Käyttöliittymän ja sovelluslogiikan rajapinnan uudistus |
-| 16.4. | 2    | Parannuksia linkitykseen |
-| 17.4. | 2    | Ensimmäinen versio pysyväistallennuksesta |
+| 16.4. | 2    | Parannuksia äänen ja tekstin linkitykseen |
+| 17.4. | 3,5  | Ensimmäinen versio pysyväistallennuksesta |
 |       |      | Dokumentointia ja koodin siistimistä |
-| yht   | 34,5 | | 
+| yht   | 36 | | 
