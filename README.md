@@ -2,9 +2,13 @@
 
 Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018. Harjoitustyö toteutetaan maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä.
 
-## Määrittelydokumentti
+## Dokumentaatio
 
-[Linkki määrittelydokumenttiin](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/maarittelydokumentti.md)
+[Määrittelydokumentti](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/maarittelydokumentti.md)
+
+[Arkkitehtuurikuvaus](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
+[Työaikakirjanpito](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Komentorivitoiminnot
 
@@ -31,7 +35,3 @@ mvn jxr:jxr checkstyle:checkstyle
 Checkstyle-raportti löytyy polusta _/target/site/checkstyle.html_
 
 Checkstyle on konfiguroitu tiedostossa _checkstyle.xml_
-
-## Työaikakirjanpito
-
-[Linkki työaikakirjanpitoon](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
