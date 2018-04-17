@@ -58,6 +58,12 @@ public class LineByLineController implements Initializable {
             stage.show();
         }
         
+        // set up audio file label and text areas
+        audioNameLabel.setText(mainController.getAudioFilePath());
+        setUpTextAreas();
+        prevArea.setEditable(false);
+        nextArea.setEditable(false);
+        
         // set up hotkeys
         scene.setOnKeyPressed( new EventHandler<KeyEvent>() {
             
@@ -102,12 +108,6 @@ public class LineByLineController implements Initializable {
                 }
             }
         });
-        
-        // set up audio file label and text areas
-        audioNameLabel.setText(mainController.getAudioFilePath());
-        setUpTextAreas();
-        prevArea.setEditable(false);
-        nextArea.setEditable(false);
     }
     
     // switch to ConstantText scene

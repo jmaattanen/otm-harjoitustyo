@@ -44,6 +44,13 @@ public class ConstantTextController implements Initializable {
             stage.show();
         }
         
+        // set up audio file label and text areas
+        audioNameLabel.setText(mainController.getAudioFilePath());
+        String text = mainController.getFullText();
+        workArea.setText(text);
+        workArea.positionCaret(text.length());
+        workArea.requestFocus();
+        
         // set up hotkeys
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             
@@ -75,13 +82,6 @@ public class ConstantTextController implements Initializable {
                 }
             }
         });
-        
-        // set up audio file label and text areas
-        audioNameLabel.setText(mainController.getAudioFilePath());
-        String text = mainController.getFullText();
-        workArea.setText(text);
-        workArea.positionCaret(text.length());
-        workArea.requestFocus();
     }
     
     // Switch to LineByLine scene

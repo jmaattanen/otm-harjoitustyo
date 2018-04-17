@@ -20,5 +20,6 @@
 | 15.4. | 4,5  | Lausumien linkitys ääniraitaan |
 |       |      | Käyttöliittymän ja sovelluslogiikan rajapinnan uudistus |
 | 16.4. | 2    | Parannuksia linkitykseen |
-| 17.4. | 1    | Ensimmäinen versio pysyväistallennuksesta |
-| yht   | 33,5 | | 
+| 17.4. | 2    | Ensimmäinen versio pysyväistallennuksesta |
+|       |      | Dokumentointia ja koodin siistimistä |
+| yht   | 34,5 | | 
