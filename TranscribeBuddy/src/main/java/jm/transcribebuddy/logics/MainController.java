@@ -3,17 +3,27 @@ package jm.transcribebuddy.logics;
 import java.io.File;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import jm.transcribebuddy.dao.ProjectDao;
 
 public class MainController {
     private TextBuilder textBuilder;
     static private AudioPlayer audioPlayer;
+    private ProjectDao projectDao;
     
     public MainController() {
         textBuilder = new TextBuilder();
         audioPlayer = new AudioPlayer();
+        projectDao = new ProjectDao();
     }
     
+    /*******            DAO METHODS            *******/
     
+    public void loadProject() {
+        textBuilder = projectDao.readFile();
+    }
+    public void saveProject() {
+        projectDao.save(textBuilder);
+    }
     
     /*******            WORD PROCESSING METHODS            *******/
     

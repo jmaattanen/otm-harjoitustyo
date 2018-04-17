@@ -117,6 +117,21 @@ public class ConstantTextController implements Initializable {
     }
     
     @FXML
+    private void openFile(ActionEvent event) {
+        mainController.loadProject();
+        String text = mainController.getFullText();
+        workArea.setText(text);
+        workArea.positionCaret(text.length());
+        workArea.requestFocus();
+    }
+    
+    @FXML
+    private void saveToFile(ActionEvent event) {
+        mainController.saveProject();
+        workArea.requestFocus();
+    }
+    
+    @FXML
     private void seekBeginning(ActionEvent event) {
         mainController.seekBeginningOfAudioTrack();
         workArea.requestFocus();

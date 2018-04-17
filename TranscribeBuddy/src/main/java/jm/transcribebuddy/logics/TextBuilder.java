@@ -143,6 +143,10 @@ public class TextBuilder {
         }
     }
     
+    public ArrayList<Statement> getList() {
+        return statements;
+    }
+    
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement.trim());
