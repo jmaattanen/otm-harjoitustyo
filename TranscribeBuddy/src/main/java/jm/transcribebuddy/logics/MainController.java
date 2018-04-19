@@ -21,7 +21,8 @@ public class MainController {
     /*******            DAO METHODS            *******/
     
     public void loadProject() {
-        textBuilder = projectDao.readFile();
+        final int projectId = projectInfo.getId();
+        textBuilder = projectDao.readFile(projectId);
     }
     public void saveProject() {
         final int projectId = projectInfo.getId();

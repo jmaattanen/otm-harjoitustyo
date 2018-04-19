@@ -25,6 +25,16 @@ public class TextBuilder {
     public ArrayList<Statement> getAllStatements() {
         return statements;
     }
+    public void addNewStatement(Statement newStatement) {
+        statements.add(newStatement);
+    }
+    public void initialClear() {
+        statements.clear();
+    }
+    public boolean isValid() {
+        workingIndex = statements.size()-1;
+        return workingIndex >= 0;
+    }
     /* FOR DAO */
     
     public Duration getStartTime() {

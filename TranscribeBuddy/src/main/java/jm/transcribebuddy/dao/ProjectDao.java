@@ -16,9 +16,9 @@ public class ProjectDao {
         textInfoDao.save(projectId, textBuilder);
     }
     
-    public TextBuilder readFile() {
-        //((DBTextInfoDao)textInfoDao).testConnection();
+    public TextBuilder readFile(final int projectId) {
         TextBuilder textBuilder = textDao.readFile();
+        textBuilder = textInfoDao.load(projectId, textBuilder);
         return textBuilder;
     }
 }

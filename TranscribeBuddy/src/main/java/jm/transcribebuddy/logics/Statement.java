@@ -28,6 +28,12 @@ public class Statement {
     public void setStartTime(Duration startTime) {
         start = startTime;
     }
+    public void setStartTime(double startTimeInMillis) {
+        start = Duration.millis(startTimeInMillis);
+        if (start.lessThan(Duration.ZERO)) {
+            start = Duration.ZERO;
+        }
+    }
     
     public Duration getStartTime() {
         return start;

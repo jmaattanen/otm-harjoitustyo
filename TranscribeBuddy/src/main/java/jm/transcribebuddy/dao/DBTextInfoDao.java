@@ -36,6 +36,9 @@ public class DBTextInfoDao implements TextInfoDao {
         if (connectDatabase() == false) {
             return false;
         }
+        // delete old text info of the project
+        deleteAllProjectStatements(projectId);
+        
         boolean result = true;
         ArrayList<Statement> statements = textBuilder.getAllStatements();
         int statementId = 1;
@@ -51,8 +54,27 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     @Override
-    public TextBuilder loadTextInfo(final int projectId, TextBuilder textBuilder) {
-        return null;
+    public TextBuilder load(final int projectId, TextBuilder textBuilder) {
+        if (connectDatabase() == false) {
+            return textBuilder;
+        }
+        // construct a new TextBuilder with loaded text info
+        TextBuilder updatedTextBuilder = new TextBuilder();
+        updatedTextBuilder.initialClear();
+
+        ArrayList<Statement> statements = textBuilder.getAllStatements();
+        int statementId = 1;
+        for (Statement s : statements) {
+            Statement statement = loadStatement(projectId, statementId, s);
+            updatedTextBuilder.addNewStatement(statement);
+            statementId++;
+        }
+        closeConnection();
+        if (updatedTextBuilder.isValid()) {
+            // load ok
+            return updatedTextBuilder;
+        }
+        return textBuilder;
     }
     
     public boolean testConnection() {
@@ -124,6 +146,41 @@ public class DBTextInfoDao implements TextInfoDao {
             }
         }
         return false;
+    }
+    
+    private int deleteAllProjectStatements(final int projectId) {
+        if (tableExists(STATEMENT_TABLE)) {
+            String sqlQuery = "DELETE FROM " + STATEMENT_TABLE + " WHERE project_id = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                int result = ps.executeUpdate();
+                return result;
+            } catch (SQLException ex) {
+                System.out.println("Failed to delete from " + STATEMENT_TABLE + "\n" + ex);
+            }
+        }
+        return 0;
+    }
+    
+    private Statement loadStatement(final int projectId, final int statementId, Statement statement) {
+        if (tableExists(STATEMENT_TABLE)) {
+            String sqlQuery = "SELECT start_time FROM " + STATEMENT_TABLE + " WHERE project_id = ? AND id = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                ps.setInt(2, statementId);
+                ResultSet results = ps.executeQuery();
+                if (results.next()) {
+                    double startTimeInMillis = results.getDouble(1);
+                    //System.out.println("Select result value: " + startTimeInMillis);
+                    statement.setStartTime(startTimeInMillis);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to select from " + STATEMENT_TABLE + "\n" + ex);
+            }
+        }
+        return statement;
     }
     
     private boolean tableExists(String tableName) {
