@@ -29,7 +29,7 @@ public class FileTextDao {
                 file.createNewFile();
             }
             FileWriter writer = new FileWriter(file);
-            ArrayList<Statement> statements = textBuilder.getList();
+            ArrayList<Statement> statements = textBuilder.getAllStatements();
             for (Statement s : statements) {
                 String line  = s.toString();
                 line = line.replaceAll("\n", "<endl>");

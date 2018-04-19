@@ -109,6 +109,7 @@
                 <configuration>
                     <excludes>
                         <exclude>jm/transcribebuddy/gui/*</exclude>
+                        <exclude>**/org/postgresql/**/*.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

@@ -23,5 +23,6 @@
 | 17.4. | 3,5  | Ensimmäinen versio pysyväistallennuksesta |
 |       |      | Dokumentointia ja koodin siistimistä |
 | 18.4. | 2    | Perehtyminen tietokantoihin |
-| 19.4. | 3,5  | Tietokantayhteyden alustus |
-| yht   | 41,5 | | 
+| 19.4. | 4,5  | Tietokantayhteyden alustus |
+|       |      | Uusia testejä TextBuilder-luokkaan |
+| yht   | 42,5 | | 
