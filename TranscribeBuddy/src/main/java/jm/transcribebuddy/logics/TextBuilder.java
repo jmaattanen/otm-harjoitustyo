@@ -73,7 +73,12 @@ public class TextBuilder {
         workingIndex = statements.size() - 1;
         String text = "";
         for (Statement node : statements) {
-            text += node.toString() + " ";
+            String str = node.toString();
+            if (str.isEmpty()) {
+                // empty statements are decoded as line endings
+                str = "\n";
+            }
+            text += str + " ";
         }
         if (text.isEmpty()) {
             return "";
