@@ -9,11 +9,13 @@ public class MainController {
     private TextBuilder textBuilder;
     static private AudioPlayer audioPlayer;
     private ProjectDao projectDao;
+    private ProjectInfo projectInfo;
     
     public MainController() {
         textBuilder = new TextBuilder();
         audioPlayer = new AudioPlayer();
         projectDao = new ProjectDao();
+        projectInfo = new ProjectInfo();
     }
     
     /*******            DAO METHODS            *******/

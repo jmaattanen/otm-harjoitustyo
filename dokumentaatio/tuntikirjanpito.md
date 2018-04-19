@@ -22,4 +22,6 @@
 | 16.4. | 2    | Parannuksia ‰‰nen ja tekstin linkitykseen |
 | 17.4. | 3,5  | Ensimm‰inen versio pysyv‰istallennuksesta |
 |       |      | Dokumentointia ja koodin siistimist‰ |
-| yht   | 36 | | 
+| 18.4. | 2    | Perehtyminen tietokantoihin |
+| 19.4. | 1    | Tietokantayhteyden alustus |
+| yht   | 39 | | 
