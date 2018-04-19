@@ -24,7 +24,8 @@ public class MainController {
         textBuilder = projectDao.readFile();
     }
     public void saveProject() {
-        projectDao.save(textBuilder);
+        final int projectId = projectInfo.getId();
+        projectDao.save(projectId, textBuilder);
     }
     
     /*******            WORD PROCESSING METHODS            *******/

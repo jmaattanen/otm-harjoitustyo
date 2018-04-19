@@ -23,5 +23,5 @@
 | 17.4. | 3,5  | Ensimmäinen versio pysyväistallennuksesta |
 |       |      | Dokumentointia ja koodin siistimistä |
 | 18.4. | 2    | Perehtyminen tietokantoihin |
-| 19.4. | 1    | Tietokantayhteyden alustus |
-| yht   | 39 | | 
+| 19.4. | 2    | Tietokantayhteyden alustus |
+| yht   | 40 | | 

@@ -18,6 +18,15 @@ public class TextBuilder {
         return statements.get(workingIndex).toString();
     }
     
+    /* FOR DAO */
+    public Statement getCurrentStatement() {
+        return statements.get(workingIndex);
+    }
+    public ArrayList<Statement> getAllStatements() {
+        return statements;
+    }
+    /* FOR DAO */
+    
     public Duration getStartTime() {
         Statement currentStatement = statements.get(workingIndex);
         return currentStatement.getStartTime();
@@ -64,39 +73,8 @@ public class TextBuilder {
     }
     
     public String startTimeToString() {
-        Statement node = statements.get(workingIndex);
-        Duration duration = node.getStartTime();
-        Integer seconds = (int) duration.toSeconds();
-        String time = "";
-        if (seconds >= 3600) {
-            time += hoursToString(seconds) + ":";
-        }
-        time += minutesToString(seconds) + ":" + secondsToString(seconds);
-        return time;
-    }
-    private String hoursToString(int seconds) {
-        if (seconds >= 3600) {
-            return Integer.toString(seconds / 3600);
-        }
-        return "";
-    }
-    private String minutesToString(int seconds) {
-        seconds = seconds % 3600;
-        String time = "";
-        if (seconds < 600) {
-            time += "0";
-        }
-        time += Integer.toString(seconds / 60);
-        return time;
-    }
-    private String secondsToString(int seconds) {
-        String time = "";
-        seconds = seconds % 60;
-        if (seconds < 10) {
-            time += "0";
-        }
-        time += Integer.toString(seconds);
-        return time;
+        Statement statement = statements.get(workingIndex);
+        return statement.startTimeToString();
     }
     
     public void set(String statement) {
