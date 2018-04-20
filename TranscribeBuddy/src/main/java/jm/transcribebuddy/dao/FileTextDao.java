@@ -1,14 +1,15 @@
 package jm.transcribebuddy.dao;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import jm.transcribebuddy.logics.Statement;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class FileTextDao {
-    private final String testFile = "testdata/myfile.txt";
     
     public FileTextDao() {
         File testDir = new File("testdata");
@@ -21,9 +22,9 @@ public class FileTextDao {
         }
     }
     
-    public void save(TextBuilder textBuilder) {
+    public void save(final String textFilePath, TextBuilder textBuilder) {
         try {
-            File file = new File(testFile);
+            File file = new File(textFilePath);
             if (file.exists()) {
                 file.delete();
                 file.createNewFile();
@@ -36,16 +37,16 @@ public class FileTextDao {
                 writer.write(line + "\n");
             }
             writer.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.print(e);
         }
     }
     
-    public TextBuilder readFile() {
+    public TextBuilder readFile(final String textFilePath) {
         TextBuilder textBuilder = new TextBuilder();
         
         try {
-            Scanner reader = new Scanner(new File(testFile));
+            Scanner reader = new Scanner(new File(textFilePath));
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
                 line = line.replaceAll("<endl>", "\n");
@@ -54,8 +55,8 @@ public class FileTextDao {
             reader.close();
             // delete empty statement
             textBuilder.deleteStatement();
-        } catch (Exception e) {
-            System.out.print(e);
+        } catch (FileNotFoundException e) {
+            System.out.println("Couldn't read file " + textFilePath + "\n" + e);
         }
         
         return textBuilder;

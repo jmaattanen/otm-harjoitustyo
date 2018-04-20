@@ -25,7 +25,7 @@ public class LineByLineController implements Initializable {
     static private MainController mainController;
     
     @FXML
-    private Label audioNameLabel;
+    private Label projectNameLabel, audioNameLabel;
     
     @FXML
     private TextField startTimeField;
@@ -58,7 +58,8 @@ public class LineByLineController implements Initializable {
             stage.show();
         }
         
-        // set up audio file label and text areas
+        // set up labels and text areas
+        projectNameLabel.setText(mainController.getProjectName());
         audioNameLabel.setText(mainController.getAudioFilePath());
         setUpTextAreas();
         prevArea.setEditable(false);
@@ -145,6 +146,27 @@ public class LineByLineController implements Initializable {
             audioNameLabel.setText(mainController.getAudioFilePath());
             setUpTextAreas();
         }
+    }
+    
+    @FXML
+    private void openFile(ActionEvent event) {
+        mainController.loadProject();
+        projectNameLabel.setText(mainController.getProjectName());
+        setUpTextAreas();
+    }
+    
+    @FXML
+    private void saveToFile(ActionEvent event) {
+        String statement = workArea.getText();
+        mainController.set(statement);
+        mainController.saveProject();
+        workArea.requestFocus();
+    }
+    
+    @FXML
+    private void editProjectInfo(ActionEvent event) {
+        // edit
+        workArea.requestFocus();
     }
     
     @FXML

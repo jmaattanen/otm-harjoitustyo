@@ -25,4 +25,5 @@
 | 18.4. | 2    | Perehtyminen tietokantoihin |
 | 19.4. | 4,5  | Tietokantayhteyden alustus |
 |       |      | Uusia testejä TextBuilder-luokkaan |
-| yht   | 42,5 | | 
+| 20.4. | 1    | Koodin siistimistä ja parannuksia käyttöliittymän näkymiin |
+| yht   | 43,5 | | 

@@ -22,11 +22,19 @@ public class MainController {
     
     public void loadProject() {
         final int projectId = projectInfo.getId();
-        textBuilder = projectDao.readFile(projectId);
+        final String textFilePath = projectInfo.getTextFilePath();
+        textBuilder = projectDao.readFile(projectId, textFilePath);
     }
     public void saveProject() {
         final int projectId = projectInfo.getId();
-        projectDao.save(projectId, textBuilder);
+        final String textFilePath = projectInfo.getTextFilePath();
+        projectDao.save(projectId, textFilePath, textBuilder);
+    }
+    
+    /*******            PROJECT INFO METHODS            *******/
+    
+    public String getProjectName() {
+        return projectInfo.getName();
     }
     
     /*******            WORD PROCESSING METHODS            *******/
@@ -48,6 +56,10 @@ public class MainController {
     }
     
     public void setCurrentStatement(String statement) {
+        textBuilder.set(statement);
+    }
+    
+    public void set(String statement) {
         textBuilder.set(statement);
     }
     

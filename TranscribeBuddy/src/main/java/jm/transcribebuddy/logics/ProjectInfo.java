@@ -11,7 +11,7 @@ public class ProjectInfo {
         id = 1;
         name = "My Test Project";
         description = "The application is being developed.";
-        textFilePath = "";
+        textFilePath = "testdata/myfile.txt";
         audioFilePath = "";
     }
     
@@ -21,5 +21,9 @@ public class ProjectInfo {
     
     public String getName() {
         return name;
+    }
+    
+    public String getTextFilePath() {
+        return textFilePath;
     }
 }

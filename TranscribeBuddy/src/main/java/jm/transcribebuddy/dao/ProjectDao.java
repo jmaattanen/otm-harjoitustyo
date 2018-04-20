@@ -11,13 +11,13 @@ public class ProjectDao {
         textInfoDao = new DBTextInfoDao();
     }
     
-    public void save(final int projectId, TextBuilder textBuilder) {
-        textDao.save(textBuilder);
+    public void save(final int projectId, final String textFilePath, TextBuilder textBuilder) {
+        textDao.save(textFilePath, textBuilder);
         textInfoDao.save(projectId, textBuilder);
     }
     
-    public TextBuilder readFile(final int projectId) {
-        TextBuilder textBuilder = textDao.readFile();
+    public TextBuilder readFile(final int projectId, final String textFilePath) {
+        TextBuilder textBuilder = textDao.readFile(textFilePath);
         textBuilder = textInfoDao.load(projectId, textBuilder);
         return textBuilder;
     }

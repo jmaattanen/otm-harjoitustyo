@@ -24,7 +24,7 @@ public class ConstantTextController implements Initializable {
     static private MainController mainController;
     
     @FXML
-    private Label audioNameLabel;
+    private Label projectNameLabel, audioNameLabel;
     
     @FXML
     private TextArea workArea;
@@ -44,7 +44,8 @@ public class ConstantTextController implements Initializable {
             stage.show();
         }
         
-        // set up audio file label and text areas
+        // set up labels and text areas
+        projectNameLabel.setText(mainController.getProjectName());
         audioNameLabel.setText(mainController.getAudioFilePath());
         String text = mainController.getFullText();
         workArea.setText(text);
@@ -92,7 +93,7 @@ public class ConstantTextController implements Initializable {
     
     // Switch to LineByLine scene
     private void switchToLBLS(final Stage stage) throws IOException {
-        // save current work to TextBuilder
+        // save current work
         String text = workArea.getText();
         mainController.parseLastStatement(text);
         
@@ -133,7 +134,16 @@ public class ConstantTextController implements Initializable {
     
     @FXML
     private void saveToFile(ActionEvent event) {
+        // save current work
+        String text = workArea.getText();
+        mainController.parseLastStatement(text);
         mainController.saveProject();
+        workArea.requestFocus();
+    }
+    
+    @FXML
+    private void editProjectInfo(ActionEvent event) {
+        // edit
         workArea.requestFocus();
     }
     
