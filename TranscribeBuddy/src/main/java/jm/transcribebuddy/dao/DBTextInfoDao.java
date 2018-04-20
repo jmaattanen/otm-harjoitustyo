@@ -17,7 +17,7 @@ public class DBTextInfoDao implements TextInfoDao {
     private String databaseUser;
     private String databasePass;
     
-    private final String STATEMENT_TABLE = "tb_statement";
+    private final String dbTableNameForStatements = "tb_statements";
     
     public DBTextInfoDao() {
         databaseUrl = "jdbc:postgresql://localhost:5432/mytestdb";
@@ -26,7 +26,7 @@ public class DBTextInfoDao implements TextInfoDao {
         
         // create database table if not exists
         if (connectDatabase()) {
-            createStatementTable();
+            createStatementsTable();
             closeConnection();
         }
     }
@@ -90,8 +90,7 @@ public class DBTextInfoDao implements TextInfoDao {
             return dbConnection != null;
         } catch (SQLException ex) {
             System.out.println("Failed to connect database\n" + ex);
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.getMessage();
         }
         return false;
@@ -107,12 +106,12 @@ public class DBTextInfoDao implements TextInfoDao {
         }
     }
     
-    private boolean createStatementTable() {
+    private boolean createStatementsTable() {
         if (dbConnection == null) {
             return false;
         }
         try {
-            String qs = "CREATE TABLE IF NOT EXISTS " + STATEMENT_TABLE + " (\n"
+            String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForStatements + " (\n"
                     + "project_id integer NOT NULL, \n"
                     + "id integer NOT NULL, \n"
                     + "text varchar(8192) NOT NULL, \n"
@@ -123,14 +122,14 @@ public class DBTextInfoDao implements TextInfoDao {
             ps.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Failed to create " + STATEMENT_TABLE + " table\n" + ex);
+            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
         }
         return false;
     }
     
     private boolean insertStatement(final int projectId, final int statementId, Statement statement) {
-        if (tableExists(STATEMENT_TABLE)) {
-            String sqlQuery = "INSERT INTO " + STATEMENT_TABLE
+        if (tableExists(dbTableNameForStatements)) {
+            String sqlQuery = "INSERT INTO " + dbTableNameForStatements
                     + " (project_id, id, text, start_time) VALUES (?, ?, ?, ?) "
                     + "ON CONFLICT DO NOTHING";
             try {
@@ -142,30 +141,30 @@ public class DBTextInfoDao implements TextInfoDao {
                 int result = ps.executeUpdate();
                 return true;
             } catch (SQLException ex) {
-                System.out.println("Failed to insert into " + STATEMENT_TABLE + "\n" + ex);
+                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return false;
     }
     
     private int deleteAllProjectStatements(final int projectId) {
-        if (tableExists(STATEMENT_TABLE)) {
-            String sqlQuery = "DELETE FROM " + STATEMENT_TABLE + " WHERE project_id = ?";
+        if (tableExists(dbTableNameForStatements)) {
+            String sqlQuery = "DELETE FROM " + dbTableNameForStatements + " WHERE project_id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
                 int result = ps.executeUpdate();
                 return result;
             } catch (SQLException ex) {
-                System.out.println("Failed to delete from " + STATEMENT_TABLE + "\n" + ex);
+                System.out.println("Failed to delete from " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return 0;
     }
     
     private Statement loadStatement(final int projectId, final int statementId, Statement statement) {
-        if (tableExists(STATEMENT_TABLE)) {
-            String sqlQuery = "SELECT start_time FROM " + STATEMENT_TABLE + " WHERE project_id = ? AND id = ?";
+        if (tableExists(dbTableNameForStatements)) {
+            String sqlQuery = "SELECT start_time FROM " + dbTableNameForStatements + " WHERE project_id = ? AND id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
@@ -177,7 +176,7 @@ public class DBTextInfoDao implements TextInfoDao {
                     statement.setStartTime(startTimeInMillis);
                 }
             } catch (SQLException ex) {
-                System.out.println("Failed to select from " + STATEMENT_TABLE + "\n" + ex);
+                System.out.println("Failed to select from " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return statement;

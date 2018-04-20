@@ -32,7 +32,7 @@ public class TextBuilder {
         statements.clear();
     }
     public boolean isValid() {
-        workingIndex = statements.size()-1;
+        workingIndex = statements.size() - 1;
         return workingIndex >= 0;
     }
     /* FOR DAO */
