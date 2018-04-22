@@ -21,7 +21,7 @@ import jm.transcribebuddy.logics.MainController;
 
 public class ConstantTextController implements Initializable {
     
-    static private MainController mainController;
+    private MainController mainController;
     
     @FXML
     private Label projectNameLabel, audioNameLabel;
@@ -141,7 +141,13 @@ public class ConstantTextController implements Initializable {
         if (mainController.parseLastStatement(text) == false) {
             // report an error
         }
-        mainController.saveProject();
+        if (mainController.saveProject() == false) {
+            String daoError = mainController.getDaoError();
+            while (daoError != null) {
+                AlertBox.showSimpleAlert("Warning", daoError);
+                daoError = mainController.getDaoError();
+            }
+        }
         workArea.requestFocus();
     }
     

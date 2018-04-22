@@ -137,7 +137,7 @@
                  <Label fx:id="audioNameLabel" BorderPane.alignment="TOP_LEFT" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#seekBeginning" text="Alkuun">
+                        <Button mnemonicParsing="false" onAction="#seekBeginning" text="Toista merkistä">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>

@@ -17,7 +17,7 @@ import jm.transcribebuddy.logics.MainController;
 
 public class MainApp extends Application {
 
-    static private MainController mainController;
+    private MainController mainController;
     
     @Override
     public void init() throws IOException {
@@ -57,6 +57,13 @@ public class MainApp extends Application {
         
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);
+        
+        String daoError = mainController.getDaoError();
+        while (daoError != null) {
+            AlertBox.showSimpleAlert("Warning", daoError);
+            daoError = mainController.getDaoError();
+        }
+        
     }
 
     public static void main(String[] args) {

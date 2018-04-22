@@ -22,7 +22,7 @@ import jm.transcribebuddy.logics.MainController;
 
 public class LineByLineController implements Initializable {
     
-    static private MainController mainController;
+    private MainController mainController;
     
     @FXML
     private Label projectNameLabel, audioNameLabel;
@@ -159,7 +159,13 @@ public class LineByLineController implements Initializable {
     private void saveToFile(ActionEvent event) {
         String statement = workArea.getText();
         mainController.set(statement);
-        mainController.saveProject();
+        if (mainController.saveProject() == false) {
+            String daoError = mainController.getDaoError();
+            while (daoError != null) {
+                AlertBox.showSimpleAlert("Warning", daoError);
+                daoError = mainController.getDaoError();
+            }
+        }
         workArea.requestFocus();
     }
     
@@ -217,6 +223,7 @@ public class LineByLineController implements Initializable {
     @FXML
     private void seekBeginning(ActionEvent event) {
         mainController.seekBeginningOfCurrentStatement();
+        mainController.playAudio();
         workArea.requestFocus();
     }
     

@@ -26,6 +26,10 @@ public class MainController {
     
     /*******            DAO METHODS            *******/
     
+    public String getDaoError() {
+        return projectDao.getError();
+    }
+    
     public boolean loadProject() {
         this.stopAudio();
         final int projectId = projectInfo.getId();
@@ -51,7 +55,6 @@ public class MainController {
     
     public boolean saveProject() {
         this.stopAudio();
-        final int projectId = projectInfo.getId();
         final String saveDirectory = projectInfo.getSaveDirectory();
         final String initialFileName = projectInfo.getInitialFileName();
         // Save dialog
@@ -67,11 +70,17 @@ public class MainController {
             return false;
         }
         // Save project
-        final String textFilePath = file.toString();
-        projectDao.save(projectId, textFilePath, textBuilder);
+        boolean result = saveProject(file);
+        return result;
+    }
+    
+    private boolean saveProject(File textFile) {
+        final int projectId = projectInfo.getId();
+        final String textFilePath = textFile.toString();
+        boolean result = projectDao.save(projectId, textFilePath, textBuilder);
         // Update project information
-        projectInfo.setUpFilePaths(file);
-        return true;
+        projectInfo.setUpFilePaths(textFile);
+        return result;
     }
     
     /*******            PROJECT INFO METHODS            *******/

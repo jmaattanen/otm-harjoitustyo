@@ -5,6 +5,7 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+    <suppress files="jm.transcribebuddy.gui.AlertBox.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.ConstantTextController.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.LineByLineController.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.MainApp.java" checks="[a-zA-Z0-9]*"/>
