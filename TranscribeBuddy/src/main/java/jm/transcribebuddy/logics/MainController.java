@@ -68,8 +68,9 @@ public class MainController {
         textBuilder.setStartTime(startTime);
     }
     
-    public void parseLastStatement(final String text) {
-        textBuilder.parseFromAll(text);
+    public boolean parseLastStatement(final String text) {
+        boolean result = textBuilder.parseFromAll(text);
+        return result;
     }
     
     public void deleteCurrentStatement() {

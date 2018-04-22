@@ -95,7 +95,9 @@ public class ConstantTextController implements Initializable {
     private void switchToLBLS(final Stage stage) throws IOException {
         // save current work
         String text = workArea.getText();
-        mainController.parseLastStatement(text);
+        if (mainController.parseLastStatement(text) == false) {
+            // report an error
+        }
         
         // Load new scene
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -136,7 +138,9 @@ public class ConstantTextController implements Initializable {
     private void saveToFile(ActionEvent event) {
         // save current work
         String text = workArea.getText();
-        mainController.parseLastStatement(text);
+        if (mainController.parseLastStatement(text) == false) {
+            // report an error
+        }
         mainController.saveProject();
         workArea.requestFocus();
     }

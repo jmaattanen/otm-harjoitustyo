@@ -72,19 +72,19 @@ public class TextBuilder {
     public String getAll() {
         workingIndex = statements.size() - 1;
         String text = "";
+        int count = 0;
         for (Statement node : statements) {
             String str = node.toString();
-            if (str.isEmpty()) {
+            if (str.isEmpty() && count != workingIndex) {
                 // empty statements are decoded as line endings
+                // except the last statement
                 str = "\n";
             }
             text += str + " ";
+            count++;
         }
-        if (text.isEmpty()) {
-            return "";
-        }
-        // remove the last whitespace
-        return text.substring(0, text.length() - 1);
+        text = removeTheLastWhitespace(text);
+        return text;
     }
     
     public String startTimeToString() {
@@ -156,32 +156,40 @@ public class TextBuilder {
         statements.add(workingIndex, newNode);
     }
     
-    /* This method tries to separate the new input */
-    public void parseFromAll(final String text) {
-        String lastStatement = this.getLast();
-        final String firstLettersToSearch = lastStatement.substring(0, lastStatement.length() / 4);
-        final int searchForCurrent = text.lastIndexOf(firstLettersToSearch);
-        if (lastStatement.equals("") || searchForCurrent < 0 || searchForCurrent >= text.length()) {
-            // couldn't find a match for current statement
-            // try to find a match for the prev statement
-            final String secondLast = this.getSecondLast();
-            if (secondLast.equals("")) {
-                // assume that the current statement is the first one
-                lastStatement = text;
-            } else {
-                final int searchForPrev = text.lastIndexOf(secondLast);
-                if (searchForPrev < 0 || searchForPrev >= text.length()) {
-                    // Something terrible has happened :(
-                    System.out.println("Something terrible has happened :(");
-                } else {
-                    // the second last statement has been found
-                    // save all following text to the last statement
-                    lastStatement = text.substring(searchForPrev + secondLast.length());
-                }
-            }
+    /* This method analyses text modification over the last statement */
+    public boolean parseFromAll(final String text) {
+        String savedText = this.getAll();
+        // ignore the last statement
+        final int beginIndexOfLastStatement = savedText.length() - this.getLast().length();
+        savedText = savedText.substring(0, beginIndexOfLastStatement);
+        savedText = removeTheLastWhitespace(savedText);
+        
+        if (text.length() < savedText.length()) {
+            // Something is missing!!
+            // Do nothing here
+            return false;
+            
+        } else if (text.startsWith(savedText) == false) {
+            // Something has been edited illegally!!
+            // Copy everything into last statement
+            this.set(text);
+            return false;
+        } else if (text.length() == savedText.length()) {
+            // Everything ok
+            this.set("");
         } else {
-            lastStatement = text.substring(searchForCurrent);
+            // Everything ok
+            String lastStatement = text.substring(beginIndexOfLastStatement);
+            this.set(lastStatement);
         }
-        this.setLast(lastStatement);
+        return true;
+    }
+    
+    private String removeTheLastWhitespace(String text) {
+        int lastIndex = text.length() - 1;
+        if (lastIndex >= 0 && text.charAt(lastIndex) == ' ') {
+            text = text.substring(0, text.length() - 1);
+        }
+        return text;
     }
 }
