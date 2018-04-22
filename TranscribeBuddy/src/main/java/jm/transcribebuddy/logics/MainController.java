@@ -117,14 +117,10 @@ public class MainController {
         return textBuilder.startTimeToString();
     }
     
-    public void setCurrentStatement(String statement) {
-        textBuilder.set(statement);
-        workSaved = false;
-    }
-    
     public void set(String statement) {
-        textBuilder.set(statement);
-        workSaved = false;
+        if (textBuilder.set(statement)) {
+            workSaved = false;
+        }
     }
     
     public void setStartTime() {
@@ -133,9 +129,11 @@ public class MainController {
         workSaved = false;
     }
     
-    public boolean parseLastStatement(final String text) {
-        boolean result = textBuilder.parseFromAll(text);
-        workSaved = false;
+    public int parseLastStatement(final String text) {
+        int result = textBuilder.parseFromAll(text);
+        if (result != 0) {
+            workSaved = false;
+        }
         return result;
     }
     

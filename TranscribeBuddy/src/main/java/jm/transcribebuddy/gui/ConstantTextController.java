@@ -65,9 +65,6 @@ public class ConstantTextController implements Initializable {
                             } catch (IOException ex) {
                                 Logger.getLogger(ConstantTextController.class.getName()).log(Level.SEVERE, null, ex);
                             }   break;
-                        case O:
-                            openAudioFile(null);
-                            break;
                         case SPACE:
                             mainController.changePlayingStatus();
                             break;
@@ -95,7 +92,7 @@ public class ConstantTextController implements Initializable {
     private void switchToLBLS(final Stage stage) throws IOException {
         // save current work
         String text = workArea.getText();
-        if (mainController.parseLastStatement(text) == false) {
+        if (mainController.parseLastStatement(text) < 0) {
             // report an error
         }
         
@@ -119,18 +116,37 @@ public class ConstantTextController implements Initializable {
     
     @FXML
     private void openAudioFile(ActionEvent event) {
-        if (mainController.openAudioFile()) {
+        boolean confirmOpen = true;
+        if (mainController.isWorkSaved() == false) {
+            confirmOpen = AlertBox.confirmAction(
+                    "Warning",
+                    "Your work has not been saved.",
+                    "Do you want to start a new project anyway?"
+            );
+        }
+        if (confirmOpen && mainController.openAudioFile()) {
             audioNameLabel.setText(mainController.getAudioFilePath());
             workArea.setText("");
         }
+        workArea.requestFocus();
     }
     
     @FXML
     private void openFile(ActionEvent event) {
-        mainController.loadProject();
-        String text = mainController.getFullText();
-        workArea.setText(text);
-        workArea.positionCaret(text.length());
+        boolean confirmOpen = true;
+        if (mainController.isWorkSaved() == false) {
+            confirmOpen = AlertBox.confirmAction(
+                    "Warning",
+                    "Your work has not been saved.",
+                    "Do you want to open another project anyway?"
+            );
+        }
+        if (confirmOpen) {
+            mainController.loadProject();
+            String text = mainController.getFullText();
+            workArea.setText(text);
+            workArea.positionCaret(text.length());
+        }
         workArea.requestFocus();
     }
     
@@ -138,7 +154,7 @@ public class ConstantTextController implements Initializable {
     private void saveToFile(ActionEvent event) {
         // save current work
         String text = workArea.getText();
-        if (mainController.parseLastStatement(text) == false) {
+        if (mainController.parseLastStatement(text) < 0) {
             // report an error
         }
         if (mainController.saveProject() == false) {

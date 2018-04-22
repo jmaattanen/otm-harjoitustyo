@@ -92,9 +92,16 @@ public class TextBuilder {
         return statement.startTimeToString();
     }
     
-    public void set(String statement) {
+    public boolean set(String statement) {
+        statement = statement.trim();
         Statement node = statements.get(workingIndex);
-        node.set(statement.trim());
+        String oldStatement = node.toString();
+        if (oldStatement.equals(statement)) {
+            // return false when nothing has changed
+            return false;
+        }
+        node.set(statement);
+        return true;
     }
     
     public void setStartTime(Duration startTime) {
@@ -157,7 +164,7 @@ public class TextBuilder {
     }
     
     /* This method analyses text modification over the last statement */
-    public boolean parseFromAll(final String text) {
+    public int parseFromAll(final String text) {
         String savedText = this.getAll();
         // ignore the last statement
         final int beginIndexOfLastStatement = savedText.length() - this.getLast().length();
@@ -167,22 +174,24 @@ public class TextBuilder {
         if (text.length() < savedText.length()) {
             // Something is missing!!
             // Do nothing here
-            return false;
+            return -1;
             
         } else if (text.startsWith(savedText) == false) {
             // Something has been edited illegally!!
             // Copy everything into last statement
             this.set(text);
-            return false;
+            return -2;
         } else if (text.length() == savedText.length()) {
-            // Everything ok
+            // Nothing has changed, everything ok
             this.set("");
-        } else {
-            // Everything ok
-            String lastStatement = text.substring(beginIndexOfLastStatement);
-            this.set(lastStatement);
+            return 0;
+        } 
+        // Everything ok
+        String lastStatement = text.substring(beginIndexOfLastStatement);
+        if (this.set(lastStatement) == false) {
+            return 0;
         }
-        return true;
+        return 1;
     }
     
     private String removeTheLastWhitespace(String text) {

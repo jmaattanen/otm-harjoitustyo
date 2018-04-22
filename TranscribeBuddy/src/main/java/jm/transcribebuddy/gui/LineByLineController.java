@@ -78,9 +78,6 @@ public class LineByLineController implements Initializable {
                             } catch (IOException ex) {
                                 Logger.getLogger(LineByLineController.class.getName()).log(Level.SEVERE, null, ex);
                             }   break;
-                        case O:
-                            openAudioFile(null);
-                            break;
                         case PAGE_UP:
                             selectPrevStatement();
                             break;
@@ -121,7 +118,7 @@ public class LineByLineController implements Initializable {
     private void switchToCTS(final Stage stage) throws IOException {
         // save current text to TextBuilder
         String statement = workArea.getText();
-        mainController.setCurrentStatement(statement);
+        mainController.set(statement);
         
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent constantTextParent = fxmlLoader.load(getClass().getResource("/fxml/ConstantText.fxml").openStream());
@@ -142,17 +139,37 @@ public class LineByLineController implements Initializable {
 
     @FXML
     private void openAudioFile(ActionEvent event) {
-        if (mainController.openAudioFile()) {
+        boolean confirmOpen = true;
+        if (mainController.isWorkSaved() == false) {
+            confirmOpen = AlertBox.confirmAction(
+                    "Warning",
+                    "Your work has not been saved.",
+                    "Do you want to start a new project anyway?"
+            );
+        }
+        if (confirmOpen && mainController.openAudioFile()) {
             audioNameLabel.setText(mainController.getAudioFilePath());
             setUpTextAreas();
         }
+        workArea.requestFocus();
     }
     
     @FXML
     private void openFile(ActionEvent event) {
-        mainController.loadProject();
-        projectNameLabel.setText(mainController.getProjectName());
-        setUpTextAreas();
+        boolean confirmOpen = true;
+        if (mainController.isWorkSaved() == false) {
+            confirmOpen = AlertBox.confirmAction(
+                    "Warning",
+                    "Your work has not been saved.",
+                    "Do you want to open another project anyway?"
+            );
+        }
+        if (confirmOpen) {
+            mainController.loadProject();
+            projectNameLabel.setText(mainController.getProjectName());
+            setUpTextAreas();
+        }
+        workArea.requestFocus();
     }
     
     @FXML
@@ -200,7 +217,7 @@ public class LineByLineController implements Initializable {
     @FXML
     private void selectPrevStatement() {
         String statement = workArea.getText();
-        mainController.setCurrentStatement(statement);
+        mainController.set(statement);
         mainController.selectPrevStatement();
         setUpTextAreas();
     }
@@ -208,7 +225,7 @@ public class LineByLineController implements Initializable {
     @FXML
     private void selectNextStatement() {
         String statement = workArea.getText();
-        mainController.setCurrentStatement(statement);
+        mainController.set(statement);
         mainController.selectNextStatement();
         setUpTextAreas();
     }
