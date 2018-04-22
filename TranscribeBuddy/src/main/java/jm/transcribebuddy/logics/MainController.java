@@ -20,15 +20,52 @@ public class MainController {
     
     /*******            DAO METHODS            *******/
     
-    public void loadProject() {
+    public boolean loadProject() {
+        this.stopAudio();
         final int projectId = projectInfo.getId();
-        final String textFilePath = projectInfo.getTextFilePath();
+        String saveDirectory = projectInfo.getSaveDirectory();
+        // Open dialog
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter =
+                new FileChooser.ExtensionFilter("Select a TXT file (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setInitialDirectory(new File(saveDirectory));
+        File file = fileChooser.showOpenDialog(null);
+        if (file == null) {
+            // Load canceled
+            return false;
+        }
+        // Load project
+        final String textFilePath = file.toString();
         textBuilder = projectDao.readFile(projectId, textFilePath);
+        // Update project information
+        projectInfo.setUpFilePaths(file);
+        return true;
     }
-    public void saveProject() {
+    
+    public boolean saveProject() {
+        this.stopAudio();
         final int projectId = projectInfo.getId();
-        final String textFilePath = projectInfo.getTextFilePath();
+        final String saveDirectory = projectInfo.getSaveDirectory();
+        final String initialFileName = projectInfo.getInitialFileName();
+        // Save dialog
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setInitialDirectory(new File(saveDirectory));
+        fileChooser.setInitialFileName(initialFileName);
+        File file = fileChooser.showSaveDialog(null);
+        if (file == null) {
+            // Save canceled
+            return false;
+        }
+        // Save project
+        final String textFilePath = file.toString();
         projectDao.save(projectId, textFilePath, textBuilder);
+        // Update project information
+        projectInfo.setUpFilePaths(file);
+        return true;
     }
     
     /*******            PROJECT INFO METHODS            *******/
@@ -100,8 +137,9 @@ public class MainController {
     /*******            AUDIO PROCESSING METHODS            *******/
     
     public boolean openAudioFile() {
-        stopAudio();
+        this.stopAudio();
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open audio file");
         FileChooser.ExtensionFilter filter =
                 new FileChooser.ExtensionFilter(
                         "Select a file (*.m4a),(*.mp3),(*.wav)",

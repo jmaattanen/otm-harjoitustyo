@@ -26,5 +26,6 @@
 | 19.4. | 4,5  | Tietokantayhteyden alustus |
 |       |      | Uusia testejä TextBuilder-luokkaan |
 | 20.4. | 1    | Koodin siistimistä ja parannuksia käyttöliittymän näkymiin |
-| 22.4. | 1    | Parannuksia tekstin hallinnointiin |
-| yht   | 44,5 | | 
+| 22.4. | 2,5  | Parannuksia tekstin hallinnointiin |
+|       |      | Open- ja save-dialogit pysyväistallennukseen |
+| yht   | 46 | | 

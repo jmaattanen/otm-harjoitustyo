@@ -27,7 +27,7 @@ public class MainApp extends Application {
         
         stage.setTitle("TranscribeBuddy");
         stage.setScene(scene);
-        stage.setMinWidth(400);
+        stage.setMinWidth(600);
         stage.setMinHeight(400);
         stage.show();
         
