@@ -12,6 +12,8 @@ public class MainController {
     static private AudioPlayer audioPlayer;
     final private ProjectDao projectDao;
     
+    private boolean workSaved;
+    
     public MainController(AppSettings settings) {
         appSettings = settings;
         projectInfo = new ProjectInfo();
@@ -22,6 +24,12 @@ public class MainController {
         String databaseUser = settings.getDatabaseUser();
         String databasePass = settings.getDatabasePass();
         projectDao = new ProjectDao(databaseURL, databaseUser, databasePass);
+        
+        workSaved = true;
+    }
+    
+    public boolean isWorkSaved() {
+        return workSaved;
     }
     
     /*******            DAO METHODS            *******/
@@ -50,6 +58,7 @@ public class MainController {
         textBuilder = projectDao.readFile(projectId, textFilePath);
         // Update project information
         projectInfo.setUpFilePaths(file);
+        workSaved = true;
         return true;
     }
     
@@ -80,6 +89,7 @@ public class MainController {
         boolean result = projectDao.save(projectId, textFilePath, textBuilder);
         // Update project information
         projectInfo.setUpFilePaths(textFile);
+        workSaved = true;
         return result;
     }
     
@@ -109,24 +119,29 @@ public class MainController {
     
     public void setCurrentStatement(String statement) {
         textBuilder.set(statement);
+        workSaved = false;
     }
     
     public void set(String statement) {
         textBuilder.set(statement);
+        workSaved = false;
     }
     
     public void setStartTime() {
         Duration startTime = audioPlayer.getCurrentTime();
         textBuilder.setStartTime(startTime);
+        workSaved = false;
     }
     
     public boolean parseLastStatement(final String text) {
         boolean result = textBuilder.parseFromAll(text);
+        workSaved = false;
         return result;
     }
     
     public void deleteCurrentStatement() {
         textBuilder.deleteStatement();
+        workSaved = false;
     }
     
     public void selectPrevStatement() {
@@ -140,11 +155,14 @@ public class MainController {
         Duration startTime = audioPlayer.getCurrentTime();
         textBuilder.endStatement(statement);
         textBuilder.setStartTime(startTime);
+        workSaved = false;
     }
     
     public boolean splitStatement(String statement, int splitIndex) {
         Duration startTime = audioPlayer.getCurrentTime();
-        return textBuilder.splitStatement(statement, splitIndex, startTime);
+        boolean result = textBuilder.splitStatement(statement, splitIndex, startTime);
+        workSaved = false;
+        return result;
     }
     
     
@@ -167,6 +185,7 @@ public class MainController {
         String audioFilePath = file.toURI().toString();
         audioPlayer.openAudioFile(audioFilePath);
         textBuilder = new TextBuilder();
+        workSaved = true;
         return true;
     }
     

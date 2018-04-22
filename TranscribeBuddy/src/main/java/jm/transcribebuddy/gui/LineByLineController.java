@@ -162,7 +162,7 @@ public class LineByLineController implements Initializable {
         if (mainController.saveProject() == false) {
             String daoError = mainController.getDaoError();
             while (daoError != null) {
-                AlertBox.showSimpleAlert("Warning", daoError);
+                AlertBox.showWarning("Database error.", daoError);
                 daoError = mainController.getDaoError();
             }
         }

@@ -8,10 +8,13 @@ import java.io.OutputStream;
 import java.util.Properties;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import jm.transcribebuddy.logics.AppSettings;
 import jm.transcribebuddy.logics.MainController;
 
@@ -53,6 +56,26 @@ public class MainApp extends Application {
         stage.setScene(scene);
         stage.setMinWidth(600);
         stage.setMinHeight(400);
+        
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                boolean confirmExit = true;
+                if (mainController.isWorkSaved() == false) {
+                    confirmExit = AlertBox.confirmAction(
+                            "Warning",
+                            "Your work has not been saved.",
+                            "Do you want to quit anyway?"
+                    );
+                }
+                if (confirmExit) {
+                    Platform.exit();
+                } else {
+                    event.consume();
+                }
+            }
+        });
+        
         stage.show();
         
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
@@ -60,12 +83,12 @@ public class MainApp extends Application {
         
         String daoError = mainController.getDaoError();
         while (daoError != null) {
-            AlertBox.showSimpleAlert("Warning", daoError);
+            AlertBox.showWarning("Database error.", daoError);
             daoError = mainController.getDaoError();
         }
         
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
