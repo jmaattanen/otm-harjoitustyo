@@ -22,7 +22,7 @@ public class FileTextDao {
         }
     }
     
-    public void save(final String textFilePath, TextBuilder textBuilder) {
+    public boolean save(final String textFilePath, TextBuilder textBuilder) {
         try {
             File file = new File(textFilePath);
             if (file.exists()) {
@@ -38,8 +38,10 @@ public class FileTextDao {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.print(e);
+            //System.out.print(e);
+            return false;
         }
+        return true;
     }
     
     public TextBuilder readFile(final String textFilePath) {

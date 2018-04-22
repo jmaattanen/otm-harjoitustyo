@@ -1,6 +1,6 @@
 ﻿# TranscribeBuddy
 
-Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018. Harjoitustyö toteutetaan maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä.
+Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018. Harjoitustyö toteutetaan maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä. Sovelluksella on riippuvuus PostgreSQL-tietokantapalvelimeen.
 
 ## Dokumentaatio
 

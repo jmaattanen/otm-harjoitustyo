@@ -13,18 +13,18 @@ import jm.transcribebuddy.logics.TextBuilder;
 public class DBTextInfoDao implements TextInfoDao {
     
     private Connection dbConnection;
-    private String databaseUrl;
-    private String databaseUser;
-    private String databasePass;
+    final private String databaseURL;
+    final private String databaseUser;
+    final private String databasePass;
     
     private final String dbTableNameForStatements = "tb_statements";
     
-    public DBTextInfoDao() {
-        databaseUrl = "jdbc:postgresql://localhost:5432/mytestdb";
-        databaseUser = "postgres";
-        databasePass = "mayipass";
+    public DBTextInfoDao(String databaseURL, String databaseUser, String databasePass) {
+        this.databaseURL = databaseURL;
+        this.databaseUser = databaseUser;
+        this.databasePass = databasePass;
         
-        // create database table if not exists
+        // Create statements table if not exists
         if (connectDatabase()) {
             createStatementsTable();
             closeConnection();
@@ -86,12 +86,12 @@ public class DBTextInfoDao implements TextInfoDao {
     private boolean connectDatabase() {
         try {
             Class.forName("org.postgresql.Driver");
-            dbConnection = DriverManager.getConnection(databaseUrl, databaseUser, databasePass);
+            dbConnection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
             return dbConnection != null;
         } catch (SQLException ex) {
-            System.out.println("Failed to connect database\n" + ex);
+//            System.out.println("Failed to connect database\n" + ex);
         } catch (ClassNotFoundException e) {
-            e.getMessage();
+//            e.getMessage();
         }
         return false;
     }
@@ -101,7 +101,7 @@ public class DBTextInfoDao implements TextInfoDao {
             try {
                 dbConnection.close();
             } catch (SQLException ex) {
-                System.out.println("Failed to close database connection\n" + ex);
+//                System.out.println("Failed to close database connection\n" + ex);
             }
         }
     }
@@ -122,7 +122,7 @@ public class DBTextInfoDao implements TextInfoDao {
             ps.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
+//            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
         }
         return false;
     }
@@ -141,7 +141,7 @@ public class DBTextInfoDao implements TextInfoDao {
                 int result = ps.executeUpdate();
                 return true;
             } catch (SQLException ex) {
-                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
+//                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return false;
@@ -156,7 +156,7 @@ public class DBTextInfoDao implements TextInfoDao {
                 int result = ps.executeUpdate();
                 return result;
             } catch (SQLException ex) {
-                System.out.println("Failed to delete from " + dbTableNameForStatements + "\n" + ex);
+//                System.out.println("Failed to delete from " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return 0;
@@ -176,7 +176,7 @@ public class DBTextInfoDao implements TextInfoDao {
                     statement.setStartTime(startTimeInMillis);
                 }
             } catch (SQLException ex) {
-                System.out.println("Failed to select from " + dbTableNameForStatements + "\n" + ex);
+//                System.out.println("Failed to select from " + dbTableNameForStatements + "\n" + ex);
             }
         }
         return statement;
@@ -193,7 +193,7 @@ public class DBTextInfoDao implements TextInfoDao {
                 return true;
             }
         } catch (SQLException ex) {
-            System.out.println("Failed to check if " + tableName + " exists\n" + ex);
+//            System.out.println("Failed to check if " + tableName + " exists\n" + ex);
         }
         return false;
     }

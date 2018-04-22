@@ -6,9 +6,12 @@ public class ProjectDao {
     private final FileTextDao textDao;
     private TextInfoDao textInfoDao;
     
-    public ProjectDao() {
+    public ProjectDao(String databaseURL, String databaseUser, String databasePass) {
         textDao = new FileTextDao();
-        textInfoDao = new DBTextInfoDao();
+        textInfoDao = new DBTextInfoDao(databaseURL, databaseUser, databasePass);
+        if (((DBTextInfoDao)textInfoDao).testConnection() == false) {
+//            System.out.println("No connection to database");
+        }
     }
     
     public void save(final int projectId, final String textFilePath, TextBuilder textBuilder) {

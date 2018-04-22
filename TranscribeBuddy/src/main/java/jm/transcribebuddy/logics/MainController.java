@@ -6,16 +6,22 @@ import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
 
 public class MainController {
+    private AppSettings appSettings;
+    private ProjectInfo projectInfo;
     private TextBuilder textBuilder;
     static private AudioPlayer audioPlayer;
-    private ProjectDao projectDao;
-    private ProjectInfo projectInfo;
+    final private ProjectDao projectDao;
     
-    public MainController() {
+    public MainController(AppSettings settings) {
+        appSettings = settings;
+        projectInfo = new ProjectInfo();
         textBuilder = new TextBuilder();
         audioPlayer = new AudioPlayer();
-        projectDao = new ProjectDao();
-        projectInfo = new ProjectInfo();
+        
+        String databaseURL = settings.getDatabaseURL();
+        String databaseUser = settings.getDatabaseUser();
+        String databasePass = settings.getDatabasePass();
+        projectDao = new ProjectDao(databaseURL, databaseUser, databasePass);
     }
     
     /*******            DAO METHODS            *******/
