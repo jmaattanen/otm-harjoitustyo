@@ -5,7 +5,7 @@ import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class ProjectDao {
-    private ArrayDeque<String> errorLog;
+    final private ArrayDeque<String> errorLog;
     private DBProjectInfoDao projectInfoDao;
     private final FileTextDao textDao;
     private TextInfoDao textInfoDao;
@@ -48,10 +48,13 @@ public class ProjectDao {
     }
     
     public TextBuilder readFile(ProjectInfo projectInfo, final String textFilePath) {
+        // read text content from TXT file
         TextBuilder textBuilder = textDao.readFile(textFilePath);
+        // load project information from db
         projectInfo.setUpFilePaths(textFilePath);
         projectInfo = projectInfoDao.load(projectInfo);
-        int projectId = projectInfo.getId();
+        // load text information from db
+        final int projectId = projectInfo.getId();
         textBuilder = textInfoDao.load(projectId, textBuilder);
         return textBuilder;
     }

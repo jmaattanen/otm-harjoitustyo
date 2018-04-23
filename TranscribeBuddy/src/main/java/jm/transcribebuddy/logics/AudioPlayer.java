@@ -30,7 +30,7 @@ public class AudioPlayer {
     
     public void openAudioFile(String filePath) {
         this.stop();
-        if (filePath != null) {
+        if (filePath != null && !filePath.isEmpty()) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             audioFilePath = filePath;

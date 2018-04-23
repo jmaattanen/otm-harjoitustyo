@@ -54,7 +54,7 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     @Override
-    public TextBuilder load(final int projectId, TextBuilder textBuilder) {
+    public TextBuilder load(final int projectId, final TextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return textBuilder;
         }
@@ -63,11 +63,11 @@ public class DBTextInfoDao implements TextInfoDao {
         updatedTextBuilder.initialClear();
 
         ArrayList<Statement> statements = textBuilder.getAllStatements();
-        int statementId = 1;
+        int statementIndex = 1;
         for (Statement s : statements) {
-            Statement statement = loadStatement(projectId, statementId, s);
+            Statement statement = loadStatement(projectId, statementIndex, s);
             updatedTextBuilder.addNewStatement(statement);
-            statementId++;
+            statementIndex++;
         }
         closeConnection();
         if (updatedTextBuilder.isValid()) {

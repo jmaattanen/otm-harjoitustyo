@@ -30,6 +30,6 @@
 |       |      | Open- ja save-dialogit pysyväistallennukseen |
 |       |      | Sovelluksen ja tietokannan konfigurointi |
 |       |      | Käyttöliittymän virheilmoitukset |
-| 23.4. | 3    | Lomake projektin tietojen hallinnointiin |
+| 23.4. | 4    | Lomake projektin tietojen hallinnointiin |
 |       |      | Projektitietojen lataus ja tallennus tietokantaan |
-| yht   | 53   | | 
+| yht   | 54   | | 

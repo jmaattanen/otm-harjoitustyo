@@ -48,13 +48,10 @@ public class DBProjectInfoDao {
     }
     
     public ProjectInfo load(ProjectInfo projectInfo) {
-        if (connectDatabase() == false) {
-            return null;
+        if (connectDatabase() == true) {
+            projectInfo = loadProjectInfo(projectInfo);
+            closeConnection();
         }
-        
-        projectInfo = loadProjectInfo(projectInfo);
-        
-        closeConnection();
         return projectInfo;
     }
     
