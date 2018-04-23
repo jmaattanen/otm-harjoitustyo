@@ -94,6 +94,9 @@ public class ConstantTextController implements Initializable {
         String text = workArea.getText();
         if (mainController.parseLastStatement(text) < 0) {
             // report an error
+        } else {
+            int index = workArea.getCaretPosition();
+            mainController.selectStatementByCaretPosition(index);
         }
         
         // Load new scene

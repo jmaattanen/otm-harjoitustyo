@@ -14,10 +14,6 @@ public class TextBuilder {
         workingIndex = 0;
     }
     
-    public String getCurrent() {
-        return statements.get(workingIndex).toString();
-    }
-    
     /* FOR DAO */
     public Statement getCurrentStatement() {
         return statements.get(workingIndex);
@@ -36,6 +32,10 @@ public class TextBuilder {
         return workingIndex >= 0;
     }
     /* FOR DAO */
+    
+    public String getCurrent() {
+        return statements.get(workingIndex).toString();
+    }
     
     public Duration getStartTime() {
         Statement currentStatement = statements.get(workingIndex);
@@ -58,14 +58,6 @@ public class TextBuilder {
     
     public String getLast() {
         final int index = statements.size() - 1;
-        return statements.get(index).toString();
-    }
-    
-    public String getSecondLast() {
-        final int index = statements.size() - 2;
-        if (index < 0) {
-            return "";
-        }
         return statements.get(index).toString();
     }
     
@@ -126,6 +118,14 @@ public class TextBuilder {
         }
     }
     
+    public void endStatement(String statement) {
+        Statement node = statements.get(workingIndex);
+        node.set(statement.trim());
+        Statement newNode = new Statement();
+        workingIndex++;
+        statements.add(workingIndex, newNode);
+    }
+    
     /* This method divides statement into two parts */
     public boolean splitStatement(String statement, int splitIndex, Duration splitTime) {
         if (splitIndex <= 0 || splitIndex >= statement.length()) {
@@ -141,26 +141,6 @@ public class TextBuilder {
         workingIndex++;
         statements.add(workingIndex, newNode);
         return true;
-    }
-    
-    public void selectPrev() {
-        if (workingIndex > 0) {
-            workingIndex--;
-        }
-    }
-    
-    public void selectNext() {
-        if (workingIndex < statements.size() - 1) {
-            workingIndex++;
-        }
-    }
-    
-    public void endStatement(String statement) {
-        Statement node = statements.get(workingIndex);
-        node.set(statement.trim());
-        Statement newNode = new Statement();
-        workingIndex++;
-        statements.add(workingIndex, newNode);
     }
     
     /* This method analyses text modification over the last statement */
@@ -192,6 +172,36 @@ public class TextBuilder {
             return 0;
         }
         return 1;
+    }
+    
+    public void selectByCaretPosition(final int caretPosition) {
+        workingIndex = 0;
+        int charCount = 0;
+        for (Statement s : statements) {
+            String str = s.toString();
+            // Each statement is followed by a single whitespace
+            charCount += str.length() + 1;
+            if (caretPosition >= charCount) {
+                workingIndex++;
+            } else {
+                break;
+            }
+        }
+        if (workingIndex >= statements.size()) {
+            workingIndex = statements.size() - 1;
+        }
+    }
+    
+    public void selectPrev() {
+        if (workingIndex > 0) {
+            workingIndex--;
+        }
+    }
+    
+    public void selectNext() {
+        if (workingIndex < statements.size() - 1) {
+            workingIndex++;
+        }
     }
     
     private String removeTheLastWhitespace(String text) {
