@@ -172,7 +172,8 @@ public class ConstantTextController implements Initializable {
     
     @FXML
     private void editProjectInfo(ActionEvent event) {
-        // edit
+        mainController.editProjectInfo();
+        projectNameLabel.setText(mainController.getProjectName());
         workArea.requestFocus();
     }
     

@@ -9,4 +9,5 @@
     <suppress files="jm.transcribebuddy.gui.ConstantTextController.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.LineByLineController.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.MainApp.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="jm.transcribebuddy.gui.ProjectForm.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

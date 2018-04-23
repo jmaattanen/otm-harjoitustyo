@@ -28,13 +28,24 @@ public class ProjectInfo {
         return name;
     }
     
+    public String getDescription() {
+        return description;
+    }
+    
     public String getSaveDirectory() {
         return saveDirectory;
     }
     
     public String getTextFilePath() {
+        if (textFileName == null) {
+            return "";
+        }
         String textFilePath = saveDirectory + "\\" + textFileName;
         return textFilePath;
+    }
+    
+    public String getAudioFilePath() {
+        return audioFilePath;
     }
     
     public String getInitialFileName() {
@@ -42,6 +53,12 @@ public class ProjectInfo {
             return "*.txt";
         }
         return textFileName;
+    }
+    
+    public void setProjectName(String name) {
+        if (name != null && !name.isEmpty() && name.length() < 30) {
+            this.name = name;
+        }
     }
     
     public void setSaveDirectory(final String saveDirectory) {
@@ -57,5 +74,9 @@ public class ProjectInfo {
             saveDirectory = textFile.getParent();
             textFileName = textFile.getName();
         }
+    }
+    
+    public void setAudioFilePath(String audioFilePath) {
+        this.audioFilePath = audioFilePath;
     }
 }

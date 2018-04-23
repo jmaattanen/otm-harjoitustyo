@@ -4,6 +4,7 @@ import java.io.File;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
+import jm.transcribebuddy.gui.ProjectForm;
 
 public class MainController {
     private AppSettings appSettings;
@@ -99,6 +100,10 @@ public class MainController {
         return projectInfo.getName();
     }
     
+    public void editProjectInfo() {
+        projectInfo = ProjectForm.show(projectInfo);
+    }
+    
     /*******            WORD PROCESSING METHODS            *******/
     
     public String getPrevStatement() {
@@ -186,6 +191,7 @@ public class MainController {
         }
         String audioFilePath = file.toURI().toString();
         audioPlayer.openAudioFile(audioFilePath);
+        projectInfo.setAudioFilePath(audioFilePath);
         textBuilder = new TextBuilder();
         workSaved = true;
         return true;
