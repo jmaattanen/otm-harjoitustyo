@@ -146,6 +146,8 @@ public class ConstantTextController implements Initializable {
         }
         if (confirmOpen) {
             mainController.loadProject();
+            projectNameLabel.setText(mainController.getProjectName());
+            audioNameLabel.setText(mainController.getAudioFilePath());
             String text = mainController.getFullText();
             workArea.setText(text);
             workArea.positionCaret(text.length());

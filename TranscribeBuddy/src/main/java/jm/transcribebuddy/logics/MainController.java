@@ -41,7 +41,6 @@ public class MainController {
     
     public boolean loadProject() {
         this.stopAudio();
-        final int projectId = projectInfo.getId();
         String saveDirectory = projectInfo.getSaveDirectory();
         // Open dialog
         FileChooser fileChooser = new FileChooser();
@@ -56,9 +55,9 @@ public class MainController {
         }
         // Load project
         final String textFilePath = file.toString();
-        textBuilder = projectDao.readFile(projectId, textFilePath);
-        // Update project information
-        projectInfo.setUpFilePaths(file);
+        textBuilder = projectDao.readFile(projectInfo, textFilePath);
+        String audioFilePath = projectInfo.getAudioFilePath();
+        audioPlayer.openAudioFile(audioFilePath);
         workSaved = true;
         return true;
     }
@@ -85,9 +84,8 @@ public class MainController {
     }
     
     private boolean saveProject(File textFile) {
-        final int projectId = projectInfo.getId();
         final String textFilePath = textFile.toString();
-        boolean result = projectDao.save(projectId, textFilePath, textBuilder);
+        boolean result = projectDao.save(projectInfo, textFilePath, textBuilder);
         // Update project information
         projectInfo.setUpFilePaths(textFile);
         workSaved = true;

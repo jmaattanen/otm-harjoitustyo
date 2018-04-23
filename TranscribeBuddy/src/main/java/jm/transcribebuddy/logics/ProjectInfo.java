@@ -12,7 +12,7 @@ public class ProjectInfo {
     private String saveDirectory;
     
     public ProjectInfo() {
-        id = 1;
+        id = 0;
         name = "My Test Project";
         description = "The application is being developed.";
         textFileName = null;
@@ -55,10 +55,31 @@ public class ProjectInfo {
         return textFileName;
     }
     
-    public void setProjectName(String name) {
+    public boolean isNewProject() {
+        return id == 0;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public boolean setProjectName(String name) {
         if (name != null && !name.isEmpty() && name.length() < 30) {
             this.name = name;
+            return true;
         }
+        return false;
+    }
+    
+    public boolean setDescription(String description) {
+        if (description == null) {
+            this.description = "";
+            return true;
+        } else if (description.length() <= 512) {
+            this.description = description;
+            return true;
+        }
+        return false;
     }
     
     public void setSaveDirectory(final String saveDirectory) {
@@ -74,6 +95,11 @@ public class ProjectInfo {
             saveDirectory = textFile.getParent();
             textFileName = textFile.getName();
         }
+    }
+    
+    public void setUpFilePaths(String textFilePath) {
+        File file = new File(textFilePath);
+        setUpFilePaths(file);
     }
     
     public void setAudioFilePath(String audioFilePath) {

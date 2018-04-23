@@ -12,14 +12,7 @@ import jm.transcribebuddy.logics.TextBuilder;
 public class FileTextDao {
     
     public FileTextDao() {
-        File testDir = new File("testdata");
-        if (!testDir.exists()) {
-            try {
-                testDir.mkdir();
-            } catch (SecurityException se) {
-                System.out.println("Couldn't create testdata directory");
-            }
-        }
+        
     }
     
     public boolean save(final String textFilePath, TextBuilder textBuilder) {
@@ -58,7 +51,7 @@ public class FileTextDao {
             // delete empty statement
             textBuilder.deleteStatement();
         } catch (FileNotFoundException e) {
-            System.out.println("Couldn't read file " + textFilePath + "\n" + e);
+            //System.out.println("Couldn't read file " + textFilePath + "\n" + e);
         }
         
         return textBuilder;

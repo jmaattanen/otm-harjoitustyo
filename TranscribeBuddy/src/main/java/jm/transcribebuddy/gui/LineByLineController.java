@@ -167,6 +167,7 @@ public class LineByLineController implements Initializable {
         if (confirmOpen) {
             mainController.loadProject();
             projectNameLabel.setText(mainController.getProjectName());
+            audioNameLabel.setText(mainController.getAudioFilePath());
             setUpTextAreas();
         }
         workArea.requestFocus();
