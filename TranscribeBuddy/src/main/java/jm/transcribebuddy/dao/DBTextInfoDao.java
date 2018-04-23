@@ -88,11 +88,7 @@ public class DBTextInfoDao implements TextInfoDao {
             Class.forName("org.postgresql.Driver");
             dbConnection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
             return dbConnection != null;
-        } catch (SQLException ex) {
-//            System.out.println("Failed to connect database\n" + ex);
-        } catch (ClassNotFoundException e) {
-//            e.getMessage();
-        }
+        } catch (SQLException | ClassNotFoundException ex) { }
         return false;
     }
     
@@ -100,9 +96,7 @@ public class DBTextInfoDao implements TextInfoDao {
         if (dbConnection != null) {
             try {
                 dbConnection.close();
-            } catch (SQLException ex) {
-//                System.out.println("Failed to close database connection\n" + ex);
-            }
+            } catch (SQLException ex) { }
         }
     }
     
@@ -112,30 +106,30 @@ public class DBTextInfoDao implements TextInfoDao {
         }
         try {
             String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForStatements + " (\n"
-                    + "project_id integer NOT NULL, \n"
-                    + "id integer NOT NULL, \n"
+                    + "id serial PRIMARY KEY, \n"
+                    + "project_id serial REFERENCES tb_projects, \n"
+                    + "index integer NOT NULL, \n"
                     + "text varchar(8192) NOT NULL, \n"
-                    + "start_time double precision, \n"
-                    + "PRIMARY KEY(id) \n"
+                    + "start_time double precision \n"
                     + ");";
             PreparedStatement ps = dbConnection.prepareStatement(qs);
             ps.execute();
             return true;
         } catch (SQLException ex) {
-//            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
+            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
         }
         return false;
     }
     
-    private boolean insertStatement(final int projectId, final int statementId, Statement statement) {
+    private boolean insertStatement(final int projectId, final int statementIndex, Statement statement) {
         if (tableExists(dbTableNameForStatements)) {
             String sqlQuery = "INSERT INTO " + dbTableNameForStatements
-                    + " (project_id, id, text, start_time) VALUES (?, ?, ?, ?) "
+                    + " (project_id, index, text, start_time) VALUES (?, ?, ?, ?) "
                     + "ON CONFLICT DO NOTHING";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
-                ps.setInt(2, statementId);
+                ps.setInt(2, statementIndex);
                 ps.setString(3, statement.toString());
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
@@ -162,17 +156,16 @@ public class DBTextInfoDao implements TextInfoDao {
         return 0;
     }
     
-    private Statement loadStatement(final int projectId, final int statementId, Statement statement) {
+    private Statement loadStatement(final int projectId, final int statementIndex, Statement statement) {
         if (tableExists(dbTableNameForStatements)) {
-            String sqlQuery = "SELECT start_time FROM " + dbTableNameForStatements + " WHERE project_id = ? AND id = ?";
+            String sqlQuery = "SELECT start_time FROM " + dbTableNameForStatements + " WHERE project_id = ? AND index = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
-                ps.setInt(2, statementId);
+                ps.setInt(2, statementIndex);
                 ResultSet results = ps.executeQuery();
                 if (results.next()) {
                     double startTimeInMillis = results.getDouble(1);
-                    //System.out.println("Select result value: " + startTimeInMillis);
                     statement.setStartTime(startTimeInMillis);
                 }
             } catch (SQLException ex) {
