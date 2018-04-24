@@ -20,6 +20,8 @@ databaseURL=jdbc:postgresql://localhost:5432/_tietokantasinimi_
 
 ## N‰pp‰inkomennot
 
+| N‰pp‰inyhdistelm‰          | Toiminto                                                      |
+| :-------------------------:| :-------------------------------------------------------------|
 | _ctrl_ + _space_           | Aloita/keskeyt‰ ‰‰niraidan toisto                             |
 | _ctrl_ + _shift_ + _space_ | Aloita ‰‰niraidan toisto asetetusta merkist‰                  |
 | _ctrl_ + _shift_ + _N_     | Hypp‰‰ 30s eteenp‰in toistossa                                |
