@@ -22,7 +22,9 @@ public class Statement {
     }
     
     public void set(String statement) {
-        this.statement = statement;
+        if (statement != null) {
+            this.statement = statement;
+        }
     }
     
     public void setStartTime(Duration startTime) {

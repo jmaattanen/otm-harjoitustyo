@@ -32,7 +32,8 @@
 |       |      | Käyttöliittymän virheilmoitukset |
 | 23.4. | 4    | Lomake projektin tietojen hallinnointiin |
 |       |      | Projektitietojen lataus ja tallennus tietokantaan |
-| 24.4. | 2,5  | Korjaus tietokantatallennukseen |
+| 24.4. | 4    | Korjaus tietokantatallennukseen |
 |       |      | Uusia testejä |
 |       |      | Pieniä rakenteellisia muutoksia |
-| yht   | 56,5 | | 
+|       |      | Toiminnallisuutta kuvaavan sekvenssikaavion lisäys arkkitehtuuridokumenttiin |
+| yht   | 58 | | 

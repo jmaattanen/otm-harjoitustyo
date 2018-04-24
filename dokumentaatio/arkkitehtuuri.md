@@ -9,3 +9,9 @@ Sovelluksen rakenne jakaantuu kolmeen tasoon. Ylimmällä tasolla pakkauksen _jm.t
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/pakkauskaavio.png "Pakkauskaavio")
 
 Yllä on sovelluksen alustava pakkauskaavio. Käyttöjärjestelmän kolmatta näkymää hallinnoiva luokka _OverviewController_ on vielä toteuttamatta. Dao-pakkauksen kehitys on myöskin vasta alkutekijöissään.
+
+## Päätoiminnallisuudet
+
+Käyttäjän tekstikenttään syöttämä teksti tallennetaan _textBuilder_-olion linkitettyyn listaan mm. _MainController.set_-metodilla. Alla oleva sekvenssikaavio kuvaa metodin etenemistä esimerkkitapauksessa.
+
+![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/set_statement.png "MainController.set")
