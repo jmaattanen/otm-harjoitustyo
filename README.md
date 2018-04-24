@@ -8,7 +8,13 @@ Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018
 
 [Arkkitehtuurikuvaus](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Käyttöohje](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
 [Työaikakirjanpito](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+## Release
+
+[Release 1](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivitoiminnot
 
