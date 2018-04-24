@@ -166,7 +166,9 @@ public class MainController {
     public boolean splitStatement(String statement, int splitIndex) {
         Duration startTime = audioPlayer.getCurrentTime();
         boolean result = textBuilder.splitStatement(statement, splitIndex, startTime);
-        workSaved = false;
+        if (result == true) {
+            workSaved = false;
+        }
         return result;
     }
     

@@ -35,10 +35,8 @@ public class MainApp extends Application {
             databaseUser = properties.getProperty("postgresUser");
             databasePass = properties.getProperty("postgresPass");
         } catch (FileNotFoundException ex) {
-//            System.out.println(ex);
             createConfigFile();
         }
-//        System.out.println("URL: " + databaseURL + "\nUser: " + databaseUser + "\nPass: " + databasePass);
         AppSettings settings = new AppSettings(databaseURL, databaseUser, databasePass);
         
         mainController = new MainController(settings);
@@ -104,15 +102,12 @@ public class MainApp extends Application {
             properties.store(output, null);
             
         } catch (IOException ex) {
-//            System.out.println("Failed to set configs");
             return false;
         } finally {
             if (output != null) {
                 try {
                     output.close();
-                } catch (IOException e) {
-//                    System.out.println(e);
-                }
+                } catch (IOException e) { }
             }
 
 	}
