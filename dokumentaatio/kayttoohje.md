@@ -13,10 +13,12 @@ Ensimmäisellä suorituskerralla ohjelman pitäisi luoda omaan kotipolkuunsa tiedos
 Jos _config.properties_-tiedostoa ei jostain syystä luoda ensimmäisellä ajokerralla, voit luoda itse samannimisen tiedoston sovelluksen juureen ja lisätä sinne vastaavat rivit:
 
 ```
-postgresUser=_postgres_
-postgresPass=_salasanasi_
-databaseURL=jdbc:postgresql://localhost:5432/_tietokantasinimi_
+postgresUser=postgres
+postgresPass=salasanasi
+databaseURL=jdbc:postgresql://localhost:5432/tietokantasinimi
 ```
+
+Tietokantayhteys ei ole välttämätön sovelluksen käytön kannalta, mutta se mahdollistaa mm. virkkeiden merkkien ja ääniraidan sijainnin muistamisen suorituskertojen välillä. Litterointiprojektin leipäteksti itsessään tallennetaan *.txt-muotoiseen tiedostoon.
 
 ## Näppäinkomennot
 
@@ -34,3 +36,8 @@ databaseURL=jdbc:postgresql://localhost:5432/_tietokantasinimi_
 | _ctrl_ + ,                 | Siirry tekstinäkymään (Poistettu käytöstä release1-versiossa) |
 | _ctrl_ + .                 | Siirry rivinäkymään (Poistettu käytöstä release1-versiossa)   |
 
+## Vinkkejä sovelluksen käyttöön
+
+- Jo päätettyjen virkkeiden muokkaus/poistaminen tulee tehdä aina rivinäkymässä.
+- Siirryttäessä tekstinäkymästä rivinäkymään voit navigoida haluamaasi kohtaan tekstissä siirtämällä tekstikursorin haluamaasi kohtaan ennen näkymänvaihtoa.
+- Rivinäkymän jaa virke -toiminto katkaisee virkkeen tekstikursorin osoittamasta kohdasta.
