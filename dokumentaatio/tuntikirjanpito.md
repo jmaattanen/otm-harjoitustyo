@@ -32,4 +32,5 @@
 |       |      | Käyttöliittymän virheilmoitukset |
 | 23.4. | 4    | Lomake projektin tietojen hallinnointiin |
 |       |      | Projektitietojen lataus ja tallennus tietokantaan |
+| 24.4. | 1    | Korjaus tietokantatallennukseen |
 | yht   | 54   | | 

@@ -85,9 +85,10 @@ public class MainController {
     
     private boolean saveProject(File textFile) {
         final String textFilePath = textFile.toString();
-        boolean result = projectDao.save(projectInfo, textFilePath, textBuilder);
         // Update project information
         projectInfo.setUpFilePaths(textFile);
+        // Try to save to database
+        boolean result = projectDao.save(projectInfo, textFilePath, textBuilder);
         workSaved = true;
         return result;
     }

@@ -133,7 +133,7 @@ public class DBTextInfoDao implements TextInfoDao {
                 ps.setString(3, statement.toString());
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
-                return true;
+                return result == 1;
             } catch (SQLException ex) {
 //                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
             }

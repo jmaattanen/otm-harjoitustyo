@@ -6,10 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import jm.transcribebuddy.logics.ProjectInfo;
-import jm.transcribebuddy.logics.Statement;
-import jm.transcribebuddy.logics.TextBuilder;
 
 public class DBProjectInfoDao {
     
@@ -42,7 +39,6 @@ public class DBProjectInfoDao {
         } else {
             result = insertProjectInfo(projectInfo);
         }
-        
         closeConnection();
         return result;
     }
@@ -113,13 +109,16 @@ public class DBProjectInfoDao {
                     + "ON CONFLICT DO NOTHING";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
-                //ps.setInt(1, projectInfo.getId());
+                final String textFilePath = projectInfo.getTextFilePath();
                 ps.setString(1, projectInfo.getName());
                 ps.setString(2, projectInfo.getDescription());
-                ps.setString(3, projectInfo.getTextFilePath());
+                ps.setString(3, textFilePath);
                 ps.setString(4, projectInfo.getAudioFilePath());
                 int result = ps.executeUpdate();
-                return true;
+                // update project id
+                final int projectId = getProjectId(textFilePath);
+                projectInfo.setId(projectId);
+                return result == 1;
             } catch (SQLException ex) {
 //                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
             }
@@ -180,6 +179,21 @@ public class DBProjectInfoDao {
             } catch (SQLException ex) { }
         }
         return false;
+    }
+    
+    private int getProjectId(final String textFilePath) {
+        if (tableExists(dbTableNameForProjects)) {
+            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects + " WHERE text_file_path = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setString(1, textFilePath);
+                ResultSet results = ps.executeQuery();
+                if (results.next()) {
+                    return results.getInt(1);
+                }
+            } catch (SQLException ex) { }
+        }
+        return 0;
     }
     
     private boolean tableExists(final String tableName) {
