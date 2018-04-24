@@ -21,6 +21,7 @@ import jm.transcribebuddy.logics.MainController;
 public class MainApp extends Application {
 
     private MainController mainController;
+    final private String configFileName = "config.properties";
     
     @Override
     public void init() throws IOException {
@@ -30,7 +31,7 @@ public class MainApp extends Application {
         
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("config.properties"));
+            properties.load(new FileInputStream(configFileName));
             databaseURL = properties.getProperty("databaseURL");
             databaseUser = properties.getProperty("postgresUser");
             databasePass = properties.getProperty("postgresPass");
@@ -95,7 +96,7 @@ public class MainApp extends Application {
         Properties properties = new Properties();
         OutputStream output = null;
         try {
-            output = new FileOutputStream("config.properties");
+            output = new FileOutputStream(configFileName);
             properties.setProperty("databaseURL", "");
             properties.setProperty("postgresUser", "");
             properties.setProperty("postgresPass", "");
