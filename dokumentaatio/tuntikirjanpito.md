@@ -32,6 +32,7 @@
 |       |      | Käyttöliittymän virheilmoitukset |
 | 23.4. | 4    | Lomake projektin tietojen hallinnointiin |
 |       |      | Projektitietojen lataus ja tallennus tietokantaan |
-| 24.4. | 1,5  | Korjaus tietokantatallennukseen |
+| 24.4. | 2,5  | Korjaus tietokantatallennukseen |
 |       |      | Uusia testejä |
-| yht   | 55,5 | | 
+|       |      | Pieniä rakenteellisia muutoksia |
+| yht   | 56,5 | | 

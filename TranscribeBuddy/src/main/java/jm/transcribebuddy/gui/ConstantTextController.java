@@ -127,9 +127,12 @@ public class ConstantTextController implements Initializable {
                     "Do you want to start a new project anyway?"
             );
         }
-        if (confirmOpen && mainController.openAudioFile()) {
-            audioNameLabel.setText(mainController.getAudioFilePath());
-            workArea.setText("");
+        if (confirmOpen) {
+            String audioFileURI = GuiHelper.openAudioFileDialog(mainController);
+            if (mainController.openAudioFile(audioFileURI)) {
+                audioNameLabel.setText(mainController.getAudioFilePath());
+                workArea.setText("");
+            }
         }
         workArea.requestFocus();
     }
@@ -145,7 +148,8 @@ public class ConstantTextController implements Initializable {
             );
         }
         if (confirmOpen) {
-            mainController.loadProject();
+            String textFilePath = GuiHelper.openTextFileDialog(mainController);
+            mainController.loadProject(textFilePath);
             projectNameLabel.setText(mainController.getProjectName());
             audioNameLabel.setText(mainController.getAudioFilePath());
             String text = mainController.getFullText();
@@ -162,7 +166,8 @@ public class ConstantTextController implements Initializable {
         if (mainController.parseLastStatement(text) < 0) {
             // report an error
         }
-        if (mainController.saveProject() == false) {
+        String textFilePath = GuiHelper.saveTextFileDialog(mainController);
+        if (mainController.saveProject(textFilePath) == false) {
             String daoError = mainController.getDaoError();
             while (daoError != null) {
                 AlertBox.showWarning("Database error.", daoError);

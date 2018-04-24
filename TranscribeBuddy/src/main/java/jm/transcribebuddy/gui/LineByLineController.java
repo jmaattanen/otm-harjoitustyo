@@ -147,9 +147,12 @@ public class LineByLineController implements Initializable {
                     "Do you want to start a new project anyway?"
             );
         }
-        if (confirmOpen && mainController.openAudioFile()) {
-            audioNameLabel.setText(mainController.getAudioFilePath());
-            setUpTextAreas();
+        if (confirmOpen) {
+            String audioFileURI = GuiHelper.openAudioFileDialog(mainController);
+            if (mainController.openAudioFile(audioFileURI)) {
+                audioNameLabel.setText(mainController.getAudioFilePath());
+                setUpTextAreas();
+            }
         }
         workArea.requestFocus();
     }
@@ -165,7 +168,8 @@ public class LineByLineController implements Initializable {
             );
         }
         if (confirmOpen) {
-            mainController.loadProject();
+            String textFilePath = GuiHelper.openTextFileDialog(mainController);
+            mainController.loadProject(textFilePath);
             projectNameLabel.setText(mainController.getProjectName());
             audioNameLabel.setText(mainController.getAudioFilePath());
             setUpTextAreas();
@@ -177,7 +181,8 @@ public class LineByLineController implements Initializable {
     private void saveToFile(ActionEvent event) {
         String statement = workArea.getText();
         mainController.set(statement);
-        if (mainController.saveProject() == false) {
+        String textFilePath = GuiHelper.saveTextFileDialog(mainController);
+        if (mainController.saveProject(textFilePath) == false) {
             String daoError = mainController.getDaoError();
             while (daoError != null) {
                 AlertBox.showWarning("Database error.", daoError);

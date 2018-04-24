@@ -1,13 +1,12 @@
 package jm.transcribebuddy.logics;
 
 import java.io.File;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
 import jm.transcribebuddy.gui.ProjectForm;
 
 public class MainController {
-    private AppSettings appSettings;
+    final private AppSettings appSettings;
     private ProjectInfo projectInfo;
     private TextBuilder textBuilder;
     static private AudioPlayer audioPlayer;
@@ -39,52 +38,21 @@ public class MainController {
         return projectDao.getError();
     }
     
-    public boolean loadProject() {
-        this.stopAudio();
-        String saveDirectory = projectInfo.getSaveDirectory();
-        // Open dialog
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter =
-                new FileChooser.ExtensionFilter("Select a TXT file (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setInitialDirectory(new File(saveDirectory));
-        File file = fileChooser.showOpenDialog(null);
-        if (file == null) {
-            // Load canceled
-            return false;
+    public void loadProject(final String textFilePath) {
+        if (textFilePath == null || textFilePath.isEmpty()) {
+            return;
         }
-        // Load project
-        final String textFilePath = file.toString();
         textBuilder = projectDao.readFile(projectInfo, textFilePath);
         String audioFilePath = projectInfo.getAudioFilePath();
         audioPlayer.openAudioFile(audioFilePath);
         workSaved = true;
-        return true;
     }
     
-    public boolean saveProject() {
-        this.stopAudio();
-        final String saveDirectory = projectInfo.getSaveDirectory();
-        final String initialFileName = projectInfo.getInitialFileName();
-        // Save dialog
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter =
-                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setInitialDirectory(new File(saveDirectory));
-        fileChooser.setInitialFileName(initialFileName);
-        File file = fileChooser.showSaveDialog(null);
-        if (file == null) {
-            // Save canceled
+    public boolean saveProject(final String textFilePath) {
+        if (textFilePath == null || textFilePath.isEmpty()) {
             return false;
         }
-        // Save project
-        boolean result = saveProject(file);
-        return result;
-    }
-    
-    private boolean saveProject(File textFile) {
-        final String textFilePath = textFile.toString();
+        File textFile = new File(textFilePath);
         // Update project information
         projectInfo.setUpFilePaths(textFile);
         // Try to save to database
@@ -96,6 +64,14 @@ public class MainController {
     }
     
     /*******            PROJECT INFO METHODS            *******/
+    
+    public String getSaveDirectory() {
+        return projectInfo.getSaveDirectory();
+    }
+    
+    public String getTextFileName() {
+        return projectInfo.getInitialFileName();
+    }
     
     public String getProjectName() {
         return projectInfo.getName();
@@ -179,22 +155,12 @@ public class MainController {
     
     /*******            AUDIO PROCESSING METHODS            *******/
     
-    public boolean openAudioFile() {
-        this.stopAudio();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open audio file");
-        FileChooser.ExtensionFilter filter =
-                new FileChooser.ExtensionFilter(
-                        "Select a file (*.m4a),(*.mp3),(*.wav)",
-                        "*.m4a", "*.mp3", "*.wav");
-        fileChooser.getExtensionFilters().add(filter);
-        File file = fileChooser.showOpenDialog(null);
-        if (file == null) {
+    public boolean openAudioFile(final String audioFileURI) {
+        if (audioFileURI == null || audioFileURI.isEmpty()) {
             return false;
         }
-        String audioFilePath = file.toURI().toString();
-        audioPlayer.openAudioFile(audioFilePath);
-        projectInfo.setAudioFilePath(audioFilePath);
+        audioPlayer.openAudioFile(audioFileURI);
+        projectInfo.setAudioFilePath(audioFileURI);
         textBuilder = new TextBuilder();
         workSaved = true;
         return true;
