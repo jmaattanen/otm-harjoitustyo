@@ -28,6 +28,10 @@ public class AudioPlayer {
         longerSkipTime = Duration.seconds(30);
     }
     
+    public boolean isSet() {
+        return mediaPlayer != null;
+    }
+    
     public void openAudioFile(String filePath) {
         this.stop();
         if (filePath != null && !filePath.isEmpty()) {

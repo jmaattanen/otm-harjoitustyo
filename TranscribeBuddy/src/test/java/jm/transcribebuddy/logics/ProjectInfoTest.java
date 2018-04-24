@@ -7,9 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AudioPlayerTest {
+public class ProjectInfoTest {
     
-    public AudioPlayerTest() {
+    ProjectInfo projectInfo;
+    
+    public ProjectInfoTest() {
     }
     
     @BeforeClass
@@ -22,22 +24,18 @@ public class AudioPlayerTest {
     
     @Before
     public void setUp() {
+        projectInfo = new ProjectInfo();
     }
     
     @After
     public void tearDown() {
     }
 
-    @Test
-    public void incorrectParameterInitializesFilePathRight() {
-        AudioPlayer audioPlayer = new AudioPlayer(null);
-        assertEquals("Ei audiota", audioPlayer.getFilePath());
-    }
+    
     
     @Test
-    public void openMethodCanBeCalledWithEmptyString() {
-        AudioPlayer audioPlayer = new AudioPlayer(null);
-        audioPlayer.openAudioFile("");
-        assertEquals(false, audioPlayer.isSet());
+    public void isNewProjectWorks() {
+        boolean isNew = projectInfo.isNewProject();
+        assertEquals(true, isNew);
     }
 }

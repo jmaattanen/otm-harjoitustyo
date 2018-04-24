@@ -89,6 +89,8 @@ public class MainController {
         projectInfo.setUpFilePaths(textFile);
         // Try to save to database
         boolean result = projectDao.save(projectInfo, textFilePath, textBuilder);
+        // NOTE TO MYSELF:
+        // You might want to check save result before setting workSaved
         workSaved = true;
         return result;
     }

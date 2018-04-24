@@ -65,4 +65,55 @@ public class MainControllerTest {
         String statement = mainController.getCurrentStatement();
         assertEquals(expectedStatement, statement);
     }
+    
+    @Test
+    public void selectByCaretPositionFindsFirstStatement() {
+        mainController.endStatement("Eka lause.");
+        mainController.endStatement("Toka lause.");
+        mainController.endStatement("Kolmas lause.");
+        // caret is now positioned in the beginning of text
+        int caretPos = 0;
+        mainController.selectStatementByCaretPosition(caretPos);
+        String statement = mainController.getCurrentStatement();
+        assertEquals("Eka lause.", statement);
+    }
+    
+    @Test
+    public void selectByCaretPositionFindsSecondStatement() {
+        final String firstStatement = "Eka lause.";
+        final String secondStatement = "Toka lause.";
+        mainController.endStatement(firstStatement);
+        mainController.endStatement(secondStatement);
+        mainController.set("Kolmas lause.");
+        int caretPos = firstStatement.length() + 2;
+        mainController.selectStatementByCaretPosition(caretPos);
+        String statement = mainController.getCurrentStatement();
+        assertEquals(secondStatement, statement);
+    }
+    
+    @Test
+    public void parseLastStatementRetainsTextState() {
+        mainController.endStatement("Testi lause.");
+        mainController.endStatement("Toinen testi lause.");
+        mainController.set("Kolmas testi lause.");
+        final String statementBefore = mainController.getCurrentStatement();
+        final String text = mainController.getFullText();
+        mainController.parseLastStatement(text);
+        String statementAfter = mainController.getCurrentStatement();
+        assertEquals(statementBefore, statementAfter);
+    }
+    
+    @Test
+    public void parseLastStatementDetectsModifications() {
+        mainController.endStatement("Testi lause.");
+        mainController.endStatement("Toinen testi lause.");
+        mainController.set("Kolmas testi.");
+        String text = mainController.getFullText();
+        final String replacement = "Kolmas testi lause.";
+        text = text.replaceFirst("Kolmas testi.", replacement);
+        mainController.parseLastStatement(text);
+        String statement = mainController.getCurrentStatement();
+        assertEquals(replacement, statement);
+    }
+    
 }
