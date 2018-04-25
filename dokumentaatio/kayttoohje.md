@@ -39,5 +39,6 @@ Tietokantayhteys ei ole välttämätön sovelluksen käytön kannalta, mutta se mahdol
 ## Vinkkejä sovelluksen käyttöön
 
 - Jo päätettyjen virkkeiden muokkaus/poistaminen tulee tehdä aina rivinäkymässä.
+- Myös tyhjän rivin voi päättää rivinäkymässä, jolloin se näkyy tekstissä kappaleenvaihtona.
 - Siirryttäessä tekstinäkymästä rivinäkymään voit navigoida haluamaasi kohtaan tekstissä siirtämällä tekstikursorin haluamaasi kohtaan ennen näkymänvaihtoa.
 - Rivinäkymän jaa virke -toiminto katkaisee virkkeen tekstikursorin osoittamasta kohdasta.

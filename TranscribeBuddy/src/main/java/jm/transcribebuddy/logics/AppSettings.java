@@ -1,9 +1,9 @@
 package jm.transcribebuddy.logics;
 
 public class AppSettings {
-    private String databaseURL;
-    private String databaseUser;
-    private String databasePass;
+    final private String databaseURL;
+    final private String databaseUser;
+    final private String databasePass;
     
     public AppSettings(String databaseURL, String databaseUser, String databasePass) {
         this.databaseURL = databaseURL;

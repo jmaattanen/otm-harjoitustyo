@@ -1,5 +1,7 @@
 package jm.transcribebuddy.logics;
 
+/***   This class is responsible for word processing   ***/
+
 import java.util.ArrayList;
 import javafx.util.Duration;
 

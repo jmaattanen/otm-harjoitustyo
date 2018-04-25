@@ -1,24 +1,27 @@
 package jm.transcribebuddy.logics;
 
+/***   A single node object of sentences   ***/
+
 import javafx.util.Duration;
 
 public class Statement {
     private String statement;
-    private Duration start;
+    private Duration startTime;
     
     public Statement() {
         statement = "";
-        start = Duration.seconds(0);
+        startTime = Duration.seconds(0);
     }
     
     public Statement(Duration startTime) {
         statement = "";
-        start = startTime;
+        this.startTime = startTime;
+        checkStartTime();
     }
     
     public Statement(String statement, Duration startTime) {
         this.statement = statement;
-        this.start = startTime;
+        this.startTime = startTime;
     }
     
     public void set(String statement) {
@@ -27,27 +30,32 @@ public class Statement {
         }
     }
     
-    public void setStartTime(Duration startTime) {
-        start = startTime;
-    }
-    public void setStartTime(double startTimeInMillis) {
-        start = Duration.millis(startTimeInMillis);
-        if (start.lessThan(Duration.ZERO)) {
-            start = Duration.ZERO;
+    private void checkStartTime() {
+        if (startTime.lessThan(Duration.ZERO)) {
+            startTime = Duration.ZERO;
         }
     }
     
+    public void setStartTime(Duration startTime) {
+        this.startTime = startTime;
+        checkStartTime();
+    }
+    public void setStartTime(double startTimeInMillis) {
+        startTime = Duration.millis(startTimeInMillis);
+        checkStartTime();
+    }
+    
     public Duration getStartTime() {
-        return start;
+        return startTime;
     }
     
     public double startTimeToDouble() {
-        return start.toMillis();
+        return startTime.toMillis();
     }
     
     public String startTimeToString() {
         Integer seconds;
-        seconds = (int) (start.toSeconds());
+        seconds = (int) (startTime.toSeconds());
         String time = "";
         if (seconds >= 3600) {
             time += hoursToString(seconds) + ":";

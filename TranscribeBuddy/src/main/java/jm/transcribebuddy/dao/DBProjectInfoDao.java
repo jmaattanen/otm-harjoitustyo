@@ -1,5 +1,7 @@
 package jm.transcribebuddy.dao;
 
+/***   DAO for storing project information like project name and resource paths    ***/
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -15,7 +17,7 @@ public class DBProjectInfoDao {
     final private String databaseUser;
     final private String databasePass;
     
-    private final String dbTableNameForProjects = "tb_projects";
+    final private String dbTableNameForProjects = "tb_projects";
     
     public DBProjectInfoDao(String databaseURL, String databaseUser, String databasePass) {
         this.databaseURL = databaseURL;
@@ -33,7 +35,7 @@ public class DBProjectInfoDao {
         if (connectDatabase() == false) {
             return false;
         }
-        boolean result = false;
+        boolean result;
         if (projectExists(projectInfo.getId())) {
             result = updateProjectInfo(projectInfo);
         } else {
@@ -84,7 +86,6 @@ public class DBProjectInfoDao {
         }
         try {
             String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForProjects + " (\n"
-                    //+ "id integer NOT NULL, \n"
                     + "id serial UNIQUE, \n"
                     + "name varchar(30) NOT NULL, \n"
                     + "description varchar(512), \n"
@@ -105,8 +106,7 @@ public class DBProjectInfoDao {
         if (tableExists(dbTableNameForProjects)) {
             String sqlQuery = "INSERT INTO " + dbTableNameForProjects
                     + " (name, description, text_file_path, audio_file_path)"
-                    + "VALUES (?, ?, ?, ?) "
-                    + "ON CONFLICT DO NOTHING";
+                    + "VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 final String textFilePath = projectInfo.getTextFilePath();
@@ -119,9 +119,7 @@ public class DBProjectInfoDao {
                 final int projectId = getProjectId(textFilePath);
                 projectInfo.setId(projectId);
                 return result == 1;
-            } catch (SQLException ex) {
-//                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
-            }
+            } catch (SQLException ex) { }
         }
         return false;
     }
@@ -168,7 +166,8 @@ public class DBProjectInfoDao {
     
     private boolean projectExists(final int projectId) {
         if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  name FROM " + dbTableNameForProjects + " WHERE id = ?";
+            String sqlQuery = "SELECT  name FROM " + dbTableNameForProjects
+                    + " WHERE id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
@@ -183,7 +182,8 @@ public class DBProjectInfoDao {
     
     private int getProjectId(final String textFilePath) {
         if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects + " WHERE text_file_path = ?";
+            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects
+                    + " WHERE text_file_path = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setString(1, textFilePath);

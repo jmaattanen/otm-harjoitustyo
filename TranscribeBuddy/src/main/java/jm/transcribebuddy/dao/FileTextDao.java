@@ -1,5 +1,7 @@
 package jm.transcribebuddy.dao;
 
+/***   This is DAO for saving and loading pure text using TXT files   ***/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

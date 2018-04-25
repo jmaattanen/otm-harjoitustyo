@@ -1,5 +1,7 @@
 package jm.transcribebuddy.dao;
 
+/***   This is DAO that is responsible for storing text info like time marks    ***/
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;

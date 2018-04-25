@@ -1,5 +1,7 @@
 package jm.transcribebuddy.logics;
 
+/***   This is the supreme leader of application logics   ***/
+
 import java.io.File;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
@@ -113,6 +115,7 @@ public class MainController {
     
     public int parseLastStatement(final String text) {
         int result = textBuilder.parseFromAll(text);
+        // result is 0 when nothing has changed
         if (result != 0) {
             workSaved = false;
         }

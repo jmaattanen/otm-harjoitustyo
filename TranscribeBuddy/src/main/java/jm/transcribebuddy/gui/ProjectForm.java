@@ -1,5 +1,7 @@
 package jm.transcribebuddy.gui;
 
+/***   Project information setup window    ***/
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

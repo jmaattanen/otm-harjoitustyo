@@ -1,14 +1,16 @@
 package jm.transcribebuddy.dao;
 
+/***   This is the supreme leader of DAO package   ***/
+
 import java.util.ArrayDeque;
 import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class ProjectDao {
     final private ArrayDeque<String> errorLog;
-    private DBProjectInfoDao projectInfoDao;
-    private final FileTextDao textDao;
-    private TextInfoDao textInfoDao;
+    final private DBProjectInfoDao projectInfoDao;
+    final private FileTextDao textDao;
+    final private TextInfoDao textInfoDao;
     
     public ProjectDao(String databaseURL, String databaseUser, String databasePass) {
         errorLog = new ArrayDeque<>();

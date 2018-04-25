@@ -37,4 +37,5 @@
 |       |      | Pieniä rakenteellisia muutoksia |
 |       |      | Toiminnallisuutta kuvaavan sekvenssikaavion lisäys arkkitehtuuridokumenttiin |
 |       |      | Dokumentointia |
-| yht   | 59 | | 
+| 25.4. | 1    | Kommentteja lähdekoodiin  |
+| yht   | 60 | | 

@@ -1,5 +1,7 @@
 package jm.transcribebuddy.gui;
 
+/***   This is the main class of TranscribeBuddy   ***/
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,9 +47,11 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        // Load fxml resource
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getResource("/fxml/ConstantText.fxml").openStream());
         
+        // Set up scene and stage
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
@@ -80,6 +84,7 @@ public class MainApp extends Application {
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);
         
+        // Check if an error occurred while initializing dao
         String daoError = mainController.getDaoError();
         while (daoError != null) {
             AlertBox.showWarning("Database error.", daoError);
@@ -93,6 +98,7 @@ public class MainApp extends Application {
     }
     
     private boolean createConfigFile() {
+        // Create a new config.properties file with empty parameters
         Properties properties = new Properties();
         OutputStream output = null;
         try {
