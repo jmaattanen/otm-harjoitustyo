@@ -20,13 +20,23 @@ public class Statement {
     }
     
     public Statement(String statement, Duration startTime) {
-        this.statement = statement;
+        if (statement == null) {
+            this.statement = "";
+        } else {
+            this.statement = statement.trim();
+        }
         this.startTime = startTime;
     }
     
+    /**
+     * Method copies the trimmed string to the Statement instance.
+     * NULL won't affect.
+     * 
+     * @param statement 
+     */
     public void set(String statement) {
         if (statement != null) {
-            this.statement = statement;
+            this.statement = statement.trim();
         }
     }
     

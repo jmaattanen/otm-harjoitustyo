@@ -105,7 +105,7 @@ public class TextBuilder {
     
     public void setLast(String statement) {
         workingIndex = statements.size() - 1;
-        this.set(statement.trim());
+        this.set(statement);
     }
     
     public void deleteStatement() {
@@ -122,7 +122,7 @@ public class TextBuilder {
     
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
-        node.set(statement.trim());
+        node.set(statement);
         Statement newNode = new Statement();
         workingIndex++;
         statements.add(workingIndex, newNode);
@@ -135,10 +135,10 @@ public class TextBuilder {
             return false;
         }
         Statement currentNode = statements.get(workingIndex);
-        currentNode.set(statement.substring(0, splitIndex).trim());
+        currentNode.set(statement.substring(0, splitIndex));
         // create a new node
         final int endIndex = statement.length();
-        String newStatement = statement.substring(splitIndex, endIndex).trim();
+        String newStatement = statement.substring(splitIndex, endIndex);
         Statement newNode = new Statement(newStatement, splitTime);
         workingIndex++;
         statements.add(workingIndex, newNode);
