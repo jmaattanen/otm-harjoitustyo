@@ -188,19 +188,7 @@ public class DBTextInfoDao implements TextInfoDao {
         return statement;
     }
     
-    private boolean tableExists(String tableName) {
-        if (dbConnection == null) {
-            return false;
-        }
-        try {
-            DatabaseMetaData dbData = dbConnection.getMetaData();
-            ResultSet tables = dbData.getTables(null, null, tableName, null);
-            if (tables.next()) {
-                return true;
-            }
-        } catch (SQLException ex) {
-//            System.out.println("Failed to check if " + tableName + " exists\n" + ex);
-        }
-        return false;
+    private boolean tableExists(final String tableName) {
+        return DBHelper.tableExists(tableName, dbConnection);
     }
 }
