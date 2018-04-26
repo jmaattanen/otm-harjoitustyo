@@ -198,8 +198,6 @@ public class MainController {
         }
         audioPlayer.openAudioFile(audioFileURI);
         projectInfo.setAudioFilePath(audioFileURI);
-        textBuilder = new TextBuilder();
-        workSaved = true;
         return true;
     }
     

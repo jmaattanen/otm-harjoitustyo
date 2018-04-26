@@ -58,10 +58,7 @@ public class ProjectForm {
             @Override
             public void handle(ActionEvent event) {
                 String audioFileURI = GuiHelper.openAudioFileDialog(mainController);
-                mainController.openAudioFile(audioFileURI);
-                audioFileURI = mainController.getAudioFilePath();
                 audioFileLabel.setText(audioFileURI);
-                projectInfo.setAudioFilePath(audioFileURI);
             }
         });
         
@@ -73,6 +70,9 @@ public class ProjectForm {
                 projectInfo.setProjectName(projectName);
                 String description = projectDescriptionArea.getText();
                 projectInfo.setDescription(description);
+                final String audioFileURI = audioFileLabel.getText();
+                projectInfo.setAudioFilePath(audioFileURI);
+                mainController.openAudioFile(audioFileURI);
                 window.close();
             }
         });
