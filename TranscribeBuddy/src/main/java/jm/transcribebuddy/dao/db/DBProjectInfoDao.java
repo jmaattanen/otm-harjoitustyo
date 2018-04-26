@@ -3,8 +3,6 @@ package jm.transcribebuddy.dao.db;
 /***   DAO for storing project information like project name and resource paths    ***/
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

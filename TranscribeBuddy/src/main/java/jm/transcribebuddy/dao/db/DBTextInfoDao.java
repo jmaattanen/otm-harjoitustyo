@@ -3,8 +3,6 @@ package jm.transcribebuddy.dao.db;
 /***   This is DAO that is responsible for storing text info like time marks    ***/
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,7 +120,7 @@ public class DBTextInfoDao implements TextInfoDao {
                     + "id serial PRIMARY KEY, \n"
                     + "project_id serial REFERENCES tb_projects, \n"
                     + "index integer NOT NULL, \n"
-                    + "text varchar(8192) NOT NULL, \n"
+                    + "text varchar(1024) NOT NULL, \n"
                     + "start_time double precision \n"
                     + ");";
             PreparedStatement ps = dbConnection.prepareStatement(qs);
