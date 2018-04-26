@@ -1,4 +1,4 @@
-package jm.transcribebuddy.gui;
+package jm.transcribebuddy.gui.popups;
 
 /***   Project information setup window    ***/
 

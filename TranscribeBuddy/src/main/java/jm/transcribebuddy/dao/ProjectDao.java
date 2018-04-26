@@ -2,14 +2,18 @@ package jm.transcribebuddy.dao;
 
 /***   This is the supreme leader of DAO package   ***/
 
+import java.io.File;
+import java.io.IOException;
+import jm.transcribebuddy.dao.db.*;
+import jm.transcribebuddy.dao.file.*;
 import java.util.ArrayDeque;
 import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class ProjectDao {
     final private ArrayDeque<String> errorLog;
-    final private DBProjectInfoDao projectInfoDao;
-    final private FileTextDao textDao;
+    final private ProjectInfoDao projectInfoDao;
+    final private TextDao textDao;
     final private TextInfoDao textInfoDao;
     
     public ProjectDao(String databaseURL, String databaseUser, String databasePass) {
@@ -29,19 +33,18 @@ public class ProjectDao {
         return errorLog.poll();
     }
     
-    public boolean save(final ProjectInfo projectInfo, final String textFilePath, TextBuilder textBuilder) {
+    public boolean save(final ProjectInfo projectInfo, TextBuilder textBuilder) {
         boolean saveOk = true;
         if (projectInfoDao.save(projectInfo) == false) {
             errorLog.add("Error while saving the project information.");
             saveOk = false;
         }
-        if (textDao.save(textFilePath, textBuilder) == false) {
+        if (textDao.save(projectInfo, textBuilder) == false) {
             errorLog.add("Error while saving to file.\n"
                     + "Your work may not have been saved.");
             saveOk = false;
         }
-        int projectId = projectInfo.getId();
-        if (textInfoDao.save(projectId, textBuilder) == false) {
+        if (textInfoDao.save(projectInfo, textBuilder) == false) {
             errorLog.add("Error while saving the project data.\n"
                     + "Time marks have not been saved.");
             saveOk = false;
@@ -49,15 +52,34 @@ public class ProjectDao {
         return saveOk;
     }
     
-    public TextBuilder readFile(ProjectInfo projectInfo, final String textFilePath) {
+    public TextBuilder load(ProjectInfo projectInfo) {
         // read text content from TXT file
-        TextBuilder textBuilder = textDao.readFile(textFilePath);
+        TextBuilder textBuilder = textDao.load(projectInfo);
+        
         // load project information from db
-        projectInfo.setUpFilePaths(textFilePath);
         projectInfo = projectInfoDao.load(projectInfo);
+        
         // load text information from db
-        final int projectId = projectInfo.getId();
-        textBuilder = textInfoDao.load(projectId, textBuilder);
+        textBuilder = textInfoDao.load(projectInfo, textBuilder);
         return textBuilder;
+    }
+    
+    public boolean createTextFileIfNotExists(final String textFilePath) {
+        File file = new File(textFilePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                return true;
+            } catch (IOException ex) { }
+        }
+        return false;
+    }
+    
+    public boolean removeCreatedTextFile(final String textFilePath) {
+        File file = new File(textFilePath);
+        if (file.exists()) {
+            return file.delete();
+        }
+        return true;
     }
 }

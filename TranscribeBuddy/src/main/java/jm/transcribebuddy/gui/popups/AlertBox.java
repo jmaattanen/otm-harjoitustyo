@@ -1,4 +1,4 @@
-package jm.transcribebuddy.gui;
+package jm.transcribebuddy.gui.popups;
 
 import java.util.Optional;
 import javafx.scene.control.Alert;

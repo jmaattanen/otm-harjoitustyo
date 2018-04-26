@@ -1,4 +1,4 @@
-package jm.transcribebuddy.dao;
+package jm.transcribebuddy.dao.db;
 
 /***   This is DAO that is responsible for storing text info like time marks    ***/
 
@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import jm.transcribebuddy.dao.TextInfoDao;
+import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.Statement;
 import jm.transcribebuddy.logics.TextBuilder;
 
@@ -34,11 +36,13 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     @Override
-    public boolean save(final int projectId, TextBuilder textBuilder) {
+    public boolean save(final ProjectInfo projectInfo, TextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return false;
         }
-        // delete old text info of the project
+        final int projectId = projectInfo.getId();
+        
+        // Delete old text info of the project
         deleteAllProjectStatements(projectId);
         
         boolean result = true;
@@ -56,11 +60,13 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     @Override
-    public TextBuilder load(final int projectId, final TextBuilder textBuilder) {
+    public TextBuilder load(final ProjectInfo projectInfo, final TextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return textBuilder;
         }
-        // construct a new TextBuilder with loaded text info
+        final int projectId = projectInfo.getId();
+        
+        // Construct a new TextBuilder with loaded text info
         TextBuilder updatedTextBuilder = new TextBuilder();
         updatedTextBuilder.initialClear();
 

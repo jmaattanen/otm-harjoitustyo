@@ -90,16 +90,30 @@ public class ProjectInfo {
         this.textFileName = textFilePath;
     }
     
-    public void setUpFilePaths(File textFile) {
-        if (textFile != null) {
-            saveDirectory = textFile.getParent();
-            textFileName = textFile.getName();
+    private boolean setUpFilePaths(File textFile) {
+        if (textFile == null || !textFile.isFile()) {
+            return false;
         }
+        String parentPath = textFile.getParent();
+        if (parentPath == null) {
+            return false;
+        }
+        File dir = new File(parentPath);
+        if (!dir.exists() || !dir.isDirectory()) {
+            return false;
+        }
+        // path ok
+        saveDirectory = textFile.getParent();
+        textFileName = textFile.getName();
+        return true;
     }
     
-    public void setUpFilePaths(String textFilePath) {
+    public boolean setUpFilePaths(final String textFilePath) {
+        if (textFilePath == null || textFilePath.lastIndexOf(".txt") == -1) {
+            return false;
+        }
         File file = new File(textFilePath);
-        setUpFilePaths(file);
+        return setUpFilePaths(file);
     }
     
     public void setAudioFilePath(String audioFilePath) {

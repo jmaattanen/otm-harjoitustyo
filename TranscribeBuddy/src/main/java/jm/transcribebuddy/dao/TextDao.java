@@ -1,12 +1,12 @@
 package jm.transcribebuddy.dao;
 
-import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.TextBuilder;
+import jm.transcribebuddy.logics.ProjectInfo;
 
-public interface TextInfoDao {
+public interface TextDao {
     
     public boolean save(final ProjectInfo projectInfo, TextBuilder textBuilder);
     
-    public TextBuilder load(final ProjectInfo projectInfo, TextBuilder textBuilder);
+    public TextBuilder load(final ProjectInfo projectInfo);
     
 }

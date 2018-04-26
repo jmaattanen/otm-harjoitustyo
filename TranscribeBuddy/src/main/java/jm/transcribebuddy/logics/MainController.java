@@ -3,9 +3,12 @@ package jm.transcribebuddy.logics;
 /***   This is the supreme leader of application logics   ***/
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
-import jm.transcribebuddy.gui.ProjectForm;
+import jm.transcribebuddy.gui.popups.ProjectForm;
 
 public class MainController {
     final private AppSettings appSettings;
@@ -40,25 +43,44 @@ public class MainController {
         return projectDao.getError();
     }
     
-    public void loadProject(final String textFilePath) {
-        if (textFilePath == null || textFilePath.isEmpty()) {
-            return;
+    public boolean loadProject(final String textFilePath) {
+        // Update project information
+        if (projectInfo.setUpFilePaths(textFilePath) == false) {
+            return false;
         }
-        textBuilder = projectDao.readFile(projectInfo, textFilePath);
+        
+        textBuilder = projectDao.load(projectInfo);
         String audioFilePath = projectInfo.getAudioFilePath();
         audioPlayer.openAudioFile(audioFilePath);
         workSaved = true;
+        return true;
     }
     
+    /**
+     * Save project to a text file and project information to the database.
+     * 
+     * @param textFilePath Absolute path of *.txt file to save
+     * @return 
+     */
     public boolean saveProject(final String textFilePath) {
         if (textFilePath == null || textFilePath.isEmpty()) {
             return false;
         }
-        File textFile = new File(textFilePath);
+        
+        // Create a new text file if it doesn't exist
+        boolean newTextFileCreated;
+        newTextFileCreated = projectDao.createTextFileIfNotExists(textFilePath);
+        
         // Update project information
-        projectInfo.setUpFilePaths(textFile);
+        if (projectInfo.setUpFilePaths(textFilePath) == false) {
+            if (newTextFileCreated) {
+                projectDao.removeCreatedTextFile(textFilePath);
+            }
+            return false;
+        }
+        
         // Try to save to database
-        boolean result = projectDao.save(projectInfo, textFilePath, textBuilder);
+        boolean result = projectDao.save(projectInfo, textBuilder);
         // NOTE TO MYSELF:
         // You might want to check save result before setting workSaved
         workSaved = true;

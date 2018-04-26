@@ -2,6 +2,8 @@ package jm.transcribebuddy.gui;
 
 /***   FXML controller for line by line view alias rivinäkymä   ***/
 
+import jm.transcribebuddy.gui.popups.AlertBox;
+import jm.transcribebuddy.gui.popups.GuiHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

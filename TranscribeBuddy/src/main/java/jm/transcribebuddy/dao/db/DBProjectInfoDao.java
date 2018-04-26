@@ -1,4 +1,4 @@
-package jm.transcribebuddy.dao;
+package jm.transcribebuddy.dao.db;
 
 /***   DAO for storing project information like project name and resource paths    ***/
 
@@ -8,9 +8,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import jm.transcribebuddy.dao.ProjectInfoDao;
 import jm.transcribebuddy.logics.ProjectInfo;
 
-public class DBProjectInfoDao {
+public class DBProjectInfoDao implements ProjectInfoDao {
     
     private Connection dbConnection;
     final private String databaseURL;
@@ -31,6 +32,7 @@ public class DBProjectInfoDao {
         }
     }
     
+    @Override
     public boolean save(final ProjectInfo projectInfo) {
         if (connectDatabase() == false) {
             return false;
@@ -45,6 +47,7 @@ public class DBProjectInfoDao {
         return result;
     }
     
+    @Override
     public ProjectInfo load(ProjectInfo projectInfo) {
         if (connectDatabase() == true) {
             projectInfo = loadProjectInfo(projectInfo);

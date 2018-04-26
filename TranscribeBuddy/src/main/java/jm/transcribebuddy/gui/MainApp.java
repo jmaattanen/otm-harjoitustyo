@@ -2,6 +2,7 @@ package jm.transcribebuddy.gui;
 
 /***   This is the main class of TranscribeBuddy   ***/
 
+import jm.transcribebuddy.gui.popups.AlertBox;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
