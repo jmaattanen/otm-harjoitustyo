@@ -19,7 +19,8 @@ public class DBTextInfoDao implements TextInfoDao {
     final private String databaseUser;
     final private String databasePass;
     
-    private final String dbTableNameForStatements = "tb_statements";
+    final private String dbTableNameForStatements = "tb_statements";
+    final private int maxStatementLength = 1024;
     
     public DBTextInfoDao(String databaseURL, String databaseUser, String databasePass) {
         this.databaseURL = databaseURL;
@@ -120,7 +121,7 @@ public class DBTextInfoDao implements TextInfoDao {
                     + "id serial PRIMARY KEY, \n"
                     + "project_id serial REFERENCES tb_projects, \n"
                     + "index integer NOT NULL, \n"
-                    + "text varchar(1024) NOT NULL, \n"
+                    + "text varchar(" + maxStatementLength + ") NOT NULL, \n"
                     + "start_time double precision \n"
                     + ");";
             PreparedStatement ps = dbConnection.prepareStatement(qs);
@@ -141,15 +142,21 @@ public class DBTextInfoDao implements TextInfoDao {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
                 ps.setInt(2, statementIndex);
-                ps.setString(3, statement.toString());
+                String text = fitTextForDB(statement.toString());
+                ps.setString(3, text);
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
                 return result == 1;
-            } catch (SQLException ex) {
-//                System.out.println("Failed to insert into " + dbTableNameForStatements + "\n" + ex);
-            }
+            } catch (SQLException ex) { }
         }
         return false;
+    }
+    
+    private String fitTextForDB(String text) {
+        if (text.length() > maxStatementLength) {
+            return text.substring(0, maxStatementLength);
+        }
+        return text;
     }
     
     private int deleteAllProjectStatements(final int projectId) {

@@ -108,7 +108,7 @@
                 <version>0.8.0</version>
                 <configuration>
                     <excludes>
-                        <exclude>jm/transcribebuddy/gui/*</exclude>
+                        <exclude>jm/transcribebuddy/gui/**</exclude>
                         <exclude>**/org/postgresql/**/*.*</exclude>
                     </excludes>
                 </configuration>
