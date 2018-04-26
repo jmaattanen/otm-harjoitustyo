@@ -4,9 +4,11 @@ package jm.transcribebuddy.gui.popups;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -16,6 +18,8 @@ import jm.transcribebuddy.logics.ProjectInfo;
 public class ProjectForm {
     
     public static ProjectInfo show(final ProjectInfo projectInfo) {
+        final int maxInputFieldWidth = 250;
+        
         final Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Project information");
@@ -27,20 +31,26 @@ public class ProjectForm {
         Label textFileHeader = new Label();
         Label audioFileHeader = new Label();
         
-        final TextField projectNameField = new TextField();
-        Label projectDescriptionLabel = new Label();
-        Label textFileLabel = new Label();
-        Label audioFileLabel = new Label();
-        
         projectNameHeader.setText("Project name:");
         projectDescriptionHeader.setText("Description:");
         textFileHeader.setText("TXT File path:");
         audioFileHeader.setText("Audio file path:");
         
+        final TextField projectNameField = new TextField();
+//        Label projectDescriptionLabel = new Label();
+        final TextArea projectDescriptionArea = new TextArea();
+        Label textFileLabel = new Label();
+        Label audioFileLabel = new Label();
+        
         projectNameField.setText(projectInfo.getName());
-        projectDescriptionLabel.setText(projectInfo.getDescription());
+//        projectDescriptionLabel.setText(projectInfo.getDescription());
+        projectDescriptionArea.setText(projectInfo.getDescription());
         textFileLabel.setText(projectInfo.getTextFilePath());
         audioFileLabel.setText(projectInfo.getAudioFilePath());
+        
+        projectNameField.setMaxWidth(maxInputFieldWidth);
+        projectDescriptionArea.setWrapText(true);
+        projectDescriptionArea.setMaxSize(maxInputFieldWidth, 80);
         
         Button confirmButton = new Button("Confirm changes");
         confirmButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -48,6 +58,8 @@ public class ProjectForm {
             public void handle(ActionEvent event) {
                 String projectName = projectNameField.getText();
                 projectInfo.setProjectName(projectName);
+                String description = projectDescriptionArea.getText();
+                projectInfo.setDescription(description);
                 window.close();
             }
         });
@@ -59,12 +71,15 @@ public class ProjectForm {
         grid.add(projectNameHeader, 0, 0);
         grid.add(projectNameField, 1, 0);
         grid.add(projectDescriptionHeader, 0, 1);
-        grid.add(projectDescriptionLabel, 1, 1);
+//        grid.add(projectDescriptionLabel, 1, 1);
+        grid.add(projectDescriptionArea, 1, 1);
         grid.add(textFileHeader, 0, 2);
         grid.add(textFileLabel, 1, 2);
         grid.add(audioFileHeader, 0, 3);
         grid.add(audioFileLabel, 1, 3);
         grid.add(confirmButton, 1, 4);
+        
+        grid.setPadding(new Insets(10, 10, 10, 10));
         
         Scene scene = new Scene(grid);
         window.setScene(scene);

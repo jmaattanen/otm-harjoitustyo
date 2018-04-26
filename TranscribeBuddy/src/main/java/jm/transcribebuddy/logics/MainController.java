@@ -2,10 +2,6 @@ package jm.transcribebuddy.logics;
 
 /***   This is the supreme leader of application logics   ***/
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
 import jm.transcribebuddy.gui.popups.ProjectForm;
@@ -60,7 +56,7 @@ public class MainController {
      * Save project to a text file and project information to the database.
      * 
      * @param textFilePath Absolute path of *.txt file to save
-     * @return 
+     * @return true if there were no errors during saving
      */
     public boolean saveProject(final String textFilePath) {
         if (textFilePath == null || textFilePath.isEmpty()) {

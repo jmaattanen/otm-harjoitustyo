@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jm.transcribebuddy.dao.TextDao;
 import jm.transcribebuddy.logics.ProjectInfo;
 import jm.transcribebuddy.logics.Statement;
@@ -26,6 +24,7 @@ public class FileTextDao implements TextDao {
         try {
             final String textFilePath = projectInfo.getTextFilePath();
             File file = new File(textFilePath);
+            // Start writing in an empty file
             clean(file);
             try (FileWriter writer = new FileWriter(file)) {
                 ArrayList<Statement> statements = textBuilder.getAllStatements();

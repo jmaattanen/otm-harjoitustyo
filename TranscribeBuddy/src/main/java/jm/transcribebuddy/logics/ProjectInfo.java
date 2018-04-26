@@ -1,6 +1,9 @@
 package jm.transcribebuddy.logics;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ProjectInfo {
     private int id;
@@ -8,13 +11,17 @@ public class ProjectInfo {
     private String description;
     private String textFileName;
     private String audioFilePath;
-    
     private String saveDirectory;
+    
+    final private int maxNameLength = 30;
+    final private int maxDescriptionLength = 512;
     
     public ProjectInfo() {
         id = 0;
-        name = "My Test Project";
-        description = "The application is being developed.";
+        name = "New Project";
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date today = new Date();
+        description = "Created " + dateFormat.format(today);
         textFileName = null;
         audioFilePath = "";
         saveDirectory = "\\";
@@ -64,22 +71,25 @@ public class ProjectInfo {
     }
     
     public boolean setProjectName(String name) {
-        if (name != null && !name.isEmpty() && name.length() < 30) {
+        if (name == null || name.isEmpty()) {
+            return false;
+        } else if (name.length() > maxNameLength) {
+            this.name = name.substring(0, maxNameLength);
+        } else {
             this.name = name;
-            return true;
         }
-        return false;
+        return true;
     }
     
     public boolean setDescription(String description) {
         if (description == null) {
-            this.description = "";
-            return true;
-        } else if (description.length() <= 512) {
+            return false;
+        } else if (description.length() > maxDescriptionLength) {
+            this.description = description.substring(0, maxDescriptionLength);
+        } else {
             this.description = description;
-            return true;
         }
-        return false;
+        return true;
     }
     
     public void setSaveDirectory(final String saveDirectory) {

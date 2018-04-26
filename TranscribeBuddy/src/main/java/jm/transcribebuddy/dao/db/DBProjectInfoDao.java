@@ -41,6 +41,7 @@ public class DBProjectInfoDao implements ProjectInfoDao {
         if (projectExists(projectInfo.getId())) {
             result = updateProjectInfo(projectInfo);
         } else {
+            // Insert new project
             result = insertProjectInfo(projectInfo);
         }
         closeConnection();

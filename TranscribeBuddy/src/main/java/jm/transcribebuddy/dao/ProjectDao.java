@@ -45,7 +45,7 @@ public class ProjectDao {
             saveOk = false;
         }
         if (textInfoDao.save(projectInfo, textBuilder) == false) {
-            errorLog.add("Error while saving the project data.\n"
+            errorLog.add("Error while saving project data.\n"
                     + "Time marks have not been saved.");
             saveOk = false;
         }
