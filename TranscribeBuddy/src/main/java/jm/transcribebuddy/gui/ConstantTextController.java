@@ -41,12 +41,6 @@ public class ConstantTextController implements Initializable {
     public void setUpController(final Stage stage, MainController controller) {
         mainController = controller;
         Scene scene = stage.getScene();
-        // retain the maximized stage
-        if (stage.isMaximized()) {
-            stage.hide();
-            stage.setMaximized(true);
-            stage.show();
-        }
         
         // set up labels and text areas
         projectNameLabel.setText(mainController.getProjectName());
@@ -109,8 +103,18 @@ public class ConstantTextController implements Initializable {
         Scene lineByLineScene = new Scene(lineByLineParent);
         lineByLineScene.getStylesheets().add("/styles/Styles.css");
         
+        final double width = stage.getWidth();
+        final double height = stage.getHeight();
+        final boolean resizable = stage.isResizable();
+        
         stage.setScene(lineByLineScene);
+        stage.setWidth(width);
+        stage.setHeight(height);
+        // Next code just gets stage to refresh
+        stage.setResizable(!resizable);
+        stage.setResizable(resizable);
         stage.show();
+        
         LineByLineController fxmlController = (LineByLineController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);
     }
