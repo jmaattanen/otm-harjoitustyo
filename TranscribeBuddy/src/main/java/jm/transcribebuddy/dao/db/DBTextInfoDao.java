@@ -101,12 +101,8 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     private boolean connectDatabase() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            dbConnection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
-            return dbConnection != null;
-        } catch (SQLException | ClassNotFoundException ex) { }
-        return false;
+        dbConnection = DBHelper.connectPostgres(databaseURL, databaseUser, databasePass);
+        return dbConnection != null;
     }
     
     private void closeConnection() {

@@ -27,6 +27,15 @@ public class ProjectInfo {
         saveDirectory = "\\";
     }
     
+    public ProjectInfo(ProjectInfo other) {
+        id = other.id;
+        name = other.name;
+        description = other.description;
+        textFileName = other.textFileName;
+        audioFilePath = other.audioFilePath;
+        saveDirectory = other.saveDirectory;
+    }
+    
     public int getId() {
         return id;
     }
@@ -126,7 +135,11 @@ public class ProjectInfo {
         return setUpFilePaths(file);
     }
     
-    public void setAudioFilePath(String audioFilePath) {
+    public boolean setAudioFilePath(final String audioFilePath) {
+        if (audioFilePath == null) {
+            return false;
+        }
         this.audioFilePath = audioFilePath;
+        return true;
     }
 }

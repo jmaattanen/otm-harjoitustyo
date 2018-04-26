@@ -38,6 +38,7 @@
 |       |      | Toiminnallisuutta kuvaavan sekvenssikaavion lisäys arkkitehtuuridokumenttiin |
 |       |      | Dokumentointia |
 | 25.4. | 1    | Kommentteja lähdekoodiin  |
-| 26.4. | 3    | Koodin refaktorointia |
+| 26.4. | 4,5  | Koodin refaktorointia |
 |       |      | Parannuksia tietokantatallennukseen |
-| yht   | 63   | | 
+|       |      | Parannuksia käyttöliittymään |
+| yht   | 64,5 | | 

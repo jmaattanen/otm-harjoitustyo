@@ -33,6 +33,13 @@ public class MainController {
         return workSaved;
     }
     
+    public void cleanProject(String audioFilePath) {
+        projectInfo = new ProjectInfo();
+        projectInfo.setAudioFilePath(audioFilePath);
+        textBuilder = new TextBuilder();
+        workSaved = true;
+    }
+    
     /*******            DAO METHODS            *******/
     
     public String getDaoError() {
@@ -47,7 +54,8 @@ public class MainController {
         
         textBuilder = projectDao.load(projectInfo);
         String audioFilePath = projectInfo.getAudioFilePath();
-        audioPlayer.openAudioFile(audioFilePath);
+        //audioPlayer.openAudioFile(audioFilePath);
+        audioPlayer = new AudioPlayer(audioFilePath);
         workSaved = true;
         return true;
     }
@@ -97,9 +105,17 @@ public class MainController {
         return projectInfo.getName();
     }
     
-    public void editProjectInfo() {
-        projectInfo = ProjectForm.show(projectInfo);
+    public ProjectInfo getProjectInfo() {
+        return new ProjectInfo(projectInfo);
     }
+    
+    public void setProjectInfo(ProjectInfo projectInfo) {
+        this.projectInfo = projectInfo;
+    }
+    
+//    public void editProjectInfo() {
+//        projectInfo = ProjectForm.show(projectInfo);
+//    }
     
     /*******            WORD PROCESSING METHODS            *******/
     

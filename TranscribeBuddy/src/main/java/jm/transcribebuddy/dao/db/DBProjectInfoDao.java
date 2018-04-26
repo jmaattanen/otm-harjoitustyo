@@ -70,14 +70,8 @@ public class DBProjectInfoDao implements ProjectInfoDao {
     }
     
     private boolean connectDatabase() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            dbConnection = DriverManager.getConnection(databaseURL, databaseUser, databasePass);
-            return dbConnection != null;
-        } catch (SQLException | ClassNotFoundException ex) {
-//            System.out.println("Failed to connect database\n" + ex);
-        }
-        return false;
+        dbConnection = DBHelper.connectPostgres(databaseURL, databaseUser, databasePass);
+        return dbConnection != null;
     }
     
     private void closeConnection() {

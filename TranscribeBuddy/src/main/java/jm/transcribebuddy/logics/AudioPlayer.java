@@ -16,13 +16,13 @@ public class AudioPlayer {
         longerSkipTime = Duration.seconds(30);
     }
     
-    public AudioPlayer(String filePath) {
-        if (filePath != null) {
-            Media media = new Media(filePath);
+    public AudioPlayer(String audioFilePath) {
+        if (audioFilePath != null && !audioFilePath.isEmpty()) {
+            Media media = new Media(audioFilePath);
             mediaPlayer = new MediaPlayer(media);
-            audioFilePath = filePath;
+            this.audioFilePath = audioFilePath;
         } else {
-            audioFilePath = "Ei audiota";
+            this.audioFilePath = "Ei audiota";
         }
         skipTime = Duration.seconds(5);
         longerSkipTime = Duration.seconds(30);
@@ -32,12 +32,12 @@ public class AudioPlayer {
         return mediaPlayer != null;
     }
     
-    public void openAudioFile(String filePath) {
+    public void openAudioFile(String audioFilePath) {
         this.stop();
-        if (filePath != null && !filePath.isEmpty()) {
-            Media media = new Media(filePath);
+        if (audioFilePath != null && !audioFilePath.isEmpty()) {
+            Media media = new Media(audioFilePath);
             mediaPlayer = new MediaPlayer(media);
-            audioFilePath = filePath;
+            this.audioFilePath = audioFilePath;
         }
     }
     

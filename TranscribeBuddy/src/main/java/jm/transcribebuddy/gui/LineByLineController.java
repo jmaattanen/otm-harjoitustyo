@@ -2,8 +2,6 @@ package jm.transcribebuddy.gui;
 
 /***   FXML controller for line by line view alias rivinäkymä   ***/
 
-import jm.transcribebuddy.gui.popups.AlertBox;
-import jm.transcribebuddy.gui.popups.GuiHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +20,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.MainController;
+import jm.transcribebuddy.logics.ProjectInfo;
 
 public class LineByLineController implements Initializable {
     
@@ -154,6 +154,8 @@ public class LineByLineController implements Initializable {
         if (confirmOpen) {
             String audioFileURI = GuiHelper.openAudioFileDialog(mainController);
             if (mainController.openAudioFile(audioFileURI)) {
+                mainController.cleanProject(audioFileURI);
+                projectNameLabel.setText(mainController.getProjectName());
                 audioNameLabel.setText(mainController.getAudioFilePath());
                 setUpTextAreas();
             }
@@ -198,8 +200,10 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void editProjectInfo(ActionEvent event) {
-        mainController.editProjectInfo();
+        ProjectInfo projectInfo = ProjectForm.show(mainController);
+        mainController.setProjectInfo(projectInfo);
         projectNameLabel.setText(mainController.getProjectName());
+        audioNameLabel.setText(mainController.getAudioFilePath());
         workArea.requestFocus();
     }
     
