@@ -85,6 +85,15 @@ public class DBTextInfoDao implements TextInfoDao {
         return textBuilder;
     }
     
+    public int delete(final int projectId) {
+        if (connectDatabase()) {
+            int result = deleteAllProjectStatements(projectId);
+            closeConnection();
+            return result;
+        }
+        return 0;
+    }
+    
     public boolean testConnection() {
         boolean result = connectDatabase();
         closeConnection();

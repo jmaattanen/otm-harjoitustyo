@@ -38,10 +38,16 @@ public class DBProjectInfoDao implements ProjectInfoDao {
             return false;
         }
         boolean result;
-        if (projectExists(projectInfo.getId())) {
+        final int projectId = projectInfo.getId();
+        final String textFilePath = projectInfo.getTextFilePath();
+        if (projectExists(projectId) && hasSameTextFilePath(projectId, textFilePath)) {
+            // Project exists already and text file path has not changed
+            // so update instead of creating new row
             result = updateProjectInfo(projectInfo);
         } else {
-            // Insert new project
+            // Create a new project with a new id
+            // and delete other projects that are using this text file
+            deleteProjectsThatUse(textFilePath);
             result = insertProjectInfo(projectInfo);
         }
         closeConnection();
@@ -148,6 +154,38 @@ public class DBProjectInfoDao implements ProjectInfoDao {
         return false;
     }
     
+    private int deleteProject(final int projectId) {
+        if (tableExists(dbTableNameForProjects)) {
+            // Delete all statements first
+            DBTextInfoDao textInfoDao = new DBTextInfoDao(databaseURL, databaseUser, databasePass);
+            textInfoDao.delete(projectId);
+            // Then delete project information
+            String sqlQuery = "DELETE FROM " + dbTableNameForProjects + " WHERE id = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                int result = ps.executeUpdate();
+                return result;
+            } catch (SQLException ex) { }
+        }
+        return 0;
+    }
+    
+    private void deleteProjectsThatUse(final String textFilePath) {
+        if (tableExists(dbTableNameForProjects)) {
+            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects
+                    + " WHERE text_file_path = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setString(1, textFilePath);
+                ResultSet results = ps.executeQuery();
+                while (results.next()) {
+                    int projectId = results.getInt(1);
+                    deleteProject(projectId);
+                }
+            } catch (SQLException ex) { }
+        }
+    }
     
     private ProjectInfo loadProjectInfo(final ProjectInfo projectInfo) {
         if (tableExists(dbTableNameForProjects)) {
@@ -182,6 +220,23 @@ public class DBProjectInfoDao implements ProjectInfoDao {
             } catch (SQLException ex) { }
         }
         return false;
+    }
+    
+    private boolean hasSameTextFilePath(final int projectId, final String textFilePath) {
+        if (tableExists(dbTableNameForProjects)) {
+            String sqlQuery = "SELECT  text_file_path FROM " + dbTableNameForProjects
+                    + " WHERE id = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                ResultSet results = ps.executeQuery();
+                if (results.next()) {
+                    String oldPath = results.getString(1);
+                    return textFilePath.equals(oldPath);
+                }
+            } catch (SQLException ex) { }
+        }
+        return true;
     }
     
     private int getProjectId(final String textFilePath) {
