@@ -4,6 +4,7 @@ package jm.transcribebuddy.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,15 +20,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.gui.popups.*;
+import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.MainController;
+import jm.transcribebuddy.logics.storage.Category;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public class OverviewController implements Initializable {
     
     private MainController mainController;
+    private Classifier classifier;
     
     @FXML
-    private Label projectNameLabel;
+    private Label projectNameLabel, subcategorySizeLabel;
     
     @FXML
     private ChoiceBox subcategoryChoiceBox;
@@ -42,13 +46,17 @@ public class OverviewController implements Initializable {
 
     public void setUpController(final Stage stage, MainController controller) {
         mainController = controller;
+        classifier = mainController.getClassifier();
         Scene scene = stage.getScene();
         
-        // set up labels and text areas
+        // Set up labels and choice box
         projectNameLabel.setText(mainController.getProjectName());
+        ArrayList<Category> subcategories = classifier.getSubcategories();
+        for (Category c : subcategories) {
+            subcategoryChoiceBox.getItems().add(c);
+        }
         
-        
-        // set up hotkeys
+        // Set up hotkeys
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             
             @Override
@@ -141,4 +149,11 @@ public class OverviewController implements Initializable {
         projectNameLabel.setText(mainController.getProjectName());
     }
     
+    @FXML
+    private void updateTable(ActionEvent event) {
+        Category subcategory = (Category) subcategoryChoiceBox.getValue();
+        if (subcategory != null) {
+            subcategorySizeLabel.setText(Integer.toString(subcategory.getSize()));
+        }
+    }
 }

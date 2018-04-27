@@ -41,7 +41,7 @@
 | 26.4. | 5    | Koodin refaktorointia |
 |       |      | Parannuksia tietokantatallennukseen |
 |       |      | Parannuksia käyttöliittymään |
-| 27.4. | 6    | Sovelluksen ulkoasun muokkaus |
+| 27.4. | 7    | Sovelluksen ulkoasun muokkaus |
 |       |      | Lausumia luokittelevan tietotyypin alustus |
 |       |      | Hakunäkymä käyttöliittymään  |
-| yht   | 71   | | 
+| yht   | 72   | | 

@@ -96,6 +96,10 @@ public class TextBuilder {
         return text;
     }
     
+    public Classifier getClassifier() {
+        return classifier;
+    }
+    
     public String startTimeToString() {
         Statement statement = statements.get(workingIndex);
         return statement.startTimeToString();
@@ -116,6 +120,14 @@ public class TextBuilder {
     public void setSubcategory(String categoryName) {
         Category subcategory = classifier.addSubcategory(categoryName);
         Statement node = statements.get(workingIndex);
+        Category oldCategory = node.getSubcategory();
+        if (oldCategory != subcategory) {
+            subcategory.addStatement();
+            oldCategory.removeStatement();
+            if (oldCategory.getSize() == 0) {
+                classifier.removeSubcategory(oldCategory);
+            }
+        }
         node.setSubcategory(subcategory);
     }
     
@@ -130,6 +142,9 @@ public class TextBuilder {
     }
     
     public void deleteStatement() {
+        Statement node = statements.get(workingIndex);
+        Category subcategory = node.getSubcategory();
+        subcategory.removeStatement();
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
             Statement first = new Statement(undefined);

@@ -13,6 +13,9 @@ public class Statement {
         statement = "";
         startTime = Duration.seconds(0);
         this.subcategory = subcategory;
+        if (subcategory != null) {
+            subcategory.addStatement();
+        }
     }
     
     public Statement(Duration startTime, Category subcategory) {
@@ -20,6 +23,9 @@ public class Statement {
         this.startTime = startTime;
         checkStartTime();
         this.subcategory = subcategory;
+        if (subcategory != null) {
+            subcategory.addStatement();
+        }
     }
     
     public Statement(String statement, Duration startTime, Category subcategory) {
@@ -31,6 +37,9 @@ public class Statement {
         this.startTime = startTime;
         checkStartTime();
         this.subcategory = subcategory;
+        if (subcategory != null) {
+            subcategory.addStatement();
+        }
     }
     
     public int getLength() {

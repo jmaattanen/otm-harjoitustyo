@@ -24,6 +24,13 @@ public class Classifier {
         highestUndefined = parent;
     }
     
+    private boolean isValid(Category category) {
+        if (category == null) {
+            return false;
+        }
+        return !undefinedName.equals(category.toString());
+    }
+    
     public ArrayList<Category> getCategories(final int depth) {
         if (depth < 1 || depth > maxDepth) {
             return new ArrayList<>();
@@ -70,6 +77,13 @@ public class Classifier {
         Category subcategory = new Category(name, parent);
         parent.addChild(subcategory);
         return subcategory;
+    }
+    
+    public void removeSubcategory(Category subcategory) {
+        if (isValid(subcategory) && subcategory != root) {
+            Category parent = subcategory.getParent();
+            parent.removeChild(subcategory);
+        }
     }
     
     public Category getSubcategory(final String name) {

@@ -19,12 +19,27 @@
          <top>
             <HBox prefHeight="50.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                <children>
+                  <Label text="Alaluokka">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
                   <ChoiceBox fx:id="subcategoryChoiceBox" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="5.0" top="5.0" />
                      </HBox.margin>
                   </ChoiceBox>
-                   <Label fx:id="projectNameLabel" alignment="BOTTOM_RIGHT" prefWidth="300.0" text="Project Name">
+                  <Label fx:id="subcategorySizeLabel" prefWidth="30.0">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#updateTable" text="Hae">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                   <Label fx:id="projectNameLabel" alignment="BOTTOM_RIGHT" prefWidth="220.0" text="Project Name">
                      <padding>
                         <Insets right="10.0" top="10.0" />
                      </padding>

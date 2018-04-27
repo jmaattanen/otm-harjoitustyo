@@ -8,6 +8,7 @@ public class Category {
     private String name;
     private Category parent;
     final private ArrayList<Category> children;
+    int statementCounter;
     
     final static private int MAXNAMELENGTH = 30;
     
@@ -15,6 +16,7 @@ public class Category {
         this.name = getValidName(name);
         parent = this;
         children = new ArrayList<>();
+        statementCounter = 0;
     }
     
     public Category(String name, Category parent) {
@@ -25,6 +27,7 @@ public class Category {
             this.parent = parent;
         }
         children = new ArrayList<>();
+        statementCounter = 0;
     }
     
     public static String getValidName(String name) {
@@ -49,6 +52,10 @@ public class Category {
         return name;
     }
     
+    public int getSize() {
+        return statementCounter;
+    }
+    
     public Category getParent() {
         return parent;
     }
@@ -67,6 +74,22 @@ public class Category {
         if (child != null) {
             children.add(child);
         }
+    }
+    
+    public boolean removeChild(Category child) {
+        if (child.children.isEmpty()) {
+            child.parent = null;
+            children.remove(child);
+            return true;
+        }
+        return false;
+    }
+    
+    public void addStatement() {
+        statementCounter++;
+    }
+    public void removeStatement() {
+        statementCounter--;
     }
     
     @Override

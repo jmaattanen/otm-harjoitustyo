@@ -41,6 +41,10 @@ public class MainController {
         workSaved = true;
     }
     
+    public Classifier getClassifier() {
+        return textBuilder.getClassifier();
+    }
+    
     /*******            DAO METHODS            *******/
     
     public String getDaoError() {
@@ -114,9 +118,6 @@ public class MainController {
         this.projectInfo = projectInfo;
     }
     
-//    public void editProjectInfo() {
-//        projectInfo = ProjectForm.show(projectInfo);
-//    }
     
     /*******            WORD PROCESSING METHODS            *******/
     
