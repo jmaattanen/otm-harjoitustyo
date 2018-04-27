@@ -57,6 +57,14 @@
                  <Region prefHeight="350.0" prefWidth="140.0" />
                  <Button mnemonicParsing="false" onAction="#switchToLBLS" text="Rivinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                     <VBox.margin>
+                        <Insets bottom="4.0" />
+                     </VBox.margin>
+                 </Button>
+                 <Button mnemonicParsing="false" onAction="#switchToOS" text="Hakunäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                     <BorderPane.margin>
                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin>
                  </Button>

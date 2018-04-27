@@ -39,8 +39,8 @@ public class Classifier {
     
     private void addChildren(
             ArrayList<Category> result, Category node,
-            final int requestedDepth, int depth)
-    {
+            final int requestedDepth, int depth
+    ) {
         ArrayList<Category> children = node.getChildren();
         if (depth >= requestedDepth) {
             result.addAll(children);

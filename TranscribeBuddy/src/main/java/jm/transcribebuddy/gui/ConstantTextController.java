@@ -60,9 +60,13 @@ public class ConstantTextController implements Initializable {
                         case PERIOD:
                             try {
                                 switchToLBLS(stage);
-                            } catch (IOException ex) {
-                                Logger.getLogger(ConstantTextController.class.getName()).log(Level.SEVERE, null, ex);
-                            }   break;
+                            } catch (IOException ex) { }
+                            break;
+                        case MINUS:
+                            try {
+                                switchToOS(stage);
+                            } catch (IOException ex) { }
+                            break;
                         case SPACE:
                             mainController.changePlayingStatus();
                             break;
@@ -122,6 +126,43 @@ public class ConstantTextController implements Initializable {
     private void switchToLBLS(ActionEvent event) throws IOException {
         final Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         switchToLBLS(stage);
+    }
+    
+        // Switch to Overview scene
+    private void switchToOS(final Stage stage) throws IOException {
+        // Save current work to TextBuilder
+        String text = workArea.getText();
+        if (mainController.parseLastStatement(text) < 0) {
+            // report an error
+        } else {
+            int index = workArea.getCaretPosition();
+            mainController.selectStatementByCaretPosition(index);
+        }
+        
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Parent overviewParent = fxmlLoader.load(getClass().getResource("/fxml/Overview.fxml").openStream());
+        Scene overviewScene = new Scene(overviewParent);
+        overviewScene.getStylesheets().add("/styles/Feather.css");
+        
+        final double width = stage.getWidth();
+        final double height = stage.getHeight();
+        
+        stage.setScene(overviewScene);
+        stage.setWidth(width);
+        stage.setHeight(height);
+        // Next code just gets stage to refresh
+        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.show();
+        
+        OverviewController fxmlController = (OverviewController)fxmlLoader.getController();
+        fxmlController.setUpController(stage, mainController);
+    }
+    
+    @FXML
+    private void switchToOS(ActionEvent event) throws IOException {
+        final Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        switchToOS(stage);
     }
     
     @FXML

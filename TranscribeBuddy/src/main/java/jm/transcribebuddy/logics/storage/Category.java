@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class Category {
     private String name;
     private Category parent;
-    private ArrayList<Category> children;
+    final private ArrayList<Category> children;
     
-    final static private int maxNameLength = 30;
+    final static private int MAXNAMELENGTH = 30;
     
     public Category(String name) {
         this.name = getValidName(name);
@@ -31,8 +31,8 @@ public class Category {
         if (name == null || name.isEmpty()) {
             return "Undefined";
         }
-        if (name.length() > maxNameLength) {
-            return name.substring(0, maxNameLength);
+        if (name.length() > MAXNAMELENGTH) {
+            return name.substring(0, MAXNAMELENGTH);
         }
         return name;
     }
