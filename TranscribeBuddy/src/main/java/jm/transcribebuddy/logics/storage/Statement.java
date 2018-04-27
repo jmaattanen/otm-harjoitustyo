@@ -9,20 +9,20 @@ public class Statement {
     private Duration startTime;
     private Category subcategory;
     
-    public Statement() {
+    public Statement(Category subcategory) {
         statement = "";
         startTime = Duration.seconds(0);
-        subcategory = null;
+        this.subcategory = subcategory;
     }
     
-    public Statement(Duration startTime) {
+    public Statement(Duration startTime, Category subcategory) {
         statement = "";
         this.startTime = startTime;
         checkStartTime();
-        subcategory = null;
+        this.subcategory = subcategory;
     }
     
-    public Statement(String statement, Duration startTime) {
+    public Statement(String statement, Duration startTime, Category subcategory) {
         if (statement == null) {
             this.statement = "";
         } else {
@@ -30,7 +30,19 @@ public class Statement {
         }
         this.startTime = startTime;
         checkStartTime();
-        subcategory = null;
+        this.subcategory = subcategory;
+    }
+    
+    public int getLength() {
+        return statement.length();
+    }
+    
+    public Category getSubcategory() {
+        return subcategory;
+    }
+    
+    public Duration getStartTime() {
+        return startTime;
     }
     
     /**
@@ -42,6 +54,12 @@ public class Statement {
     public void set(String statement) {
         if (statement != null) {
             this.statement = statement.trim();
+        }
+    }
+    
+    public void setSubcategory(Category subcategory) {
+        if (subcategory != null) {
+            this.subcategory = subcategory;
         }
     }
     
@@ -58,10 +76,6 @@ public class Statement {
     public void setStartTime(double startTimeInMillis) {
         startTime = Duration.millis(startTimeInMillis);
         checkStartTime();
-    }
-    
-    public Duration getStartTime() {
-        return startTime;
     }
     
     public double startTimeToDouble() {
@@ -106,10 +120,6 @@ public class Statement {
     @Override
     public String toString() {
         return statement;
-    }
-    
-    public int getLength() {
-        return statement.length();
     }
     
 }

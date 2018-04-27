@@ -32,7 +32,7 @@ public class LineByLineController implements Initializable {
     private Label projectNameLabel, audioNameLabel;
     
     @FXML
-    private TextField startTimeField;
+    private TextField startTimeField, subcategoryField;
     
     @FXML
     private TextArea workArea, prevArea, nextArea;
@@ -46,7 +46,9 @@ public class LineByLineController implements Initializable {
         startTimeField.setText(mainController.startTimeToString());
         prevArea.setText(mainController.getPrevStatement());
         nextArea.setText(mainController.getNextStatement());
-        final String statement = mainController.getCurrentStatement();
+        String subcategory = mainController.getCurrentSubcategory();
+        subcategoryField.setText(subcategory);
+        String statement = mainController.getCurrentStatement();
         workArea.setText(statement);
         workArea.positionCaret(statement.length());
         workArea.requestFocus();
@@ -114,7 +116,9 @@ public class LineByLineController implements Initializable {
     
     // switch to ConstantText scene
     private void switchToCTS(final Stage stage) throws IOException {
-        // save current text to TextBuilder
+        // Save current work to TextBuilder
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         mainController.set(statement);
         
@@ -125,14 +129,13 @@ public class LineByLineController implements Initializable {
         
         final double width = stage.getWidth();
         final double height = stage.getHeight();
-        final boolean resizable = stage.isResizable();
         
         stage.setScene(constantTextScene);
         stage.setWidth(width);
         stage.setHeight(height);
         // Next code just gets stage to refresh
-        stage.setResizable(!resizable);
-        stage.setResizable(resizable);
+        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
         
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
@@ -189,6 +192,8 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void saveToFile(ActionEvent event) {
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         mainController.set(statement);
         String textFilePath = GuiHelper.saveTextFileDialog(mainController);
@@ -215,7 +220,6 @@ public class LineByLineController implements Initializable {
     private void setStartTime(ActionEvent event) {
         mainController.setStartTime();
         startTimeField.setText(mainController.startTimeToString());
-        //workArea.positionCaret(statement.length());
         workArea.requestFocus();
     }
     
@@ -227,6 +231,8 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void splitStatement(ActionEvent event) {
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         int index = workArea.getCaretPosition();
         mainController.splitStatement(statement, index);
@@ -235,6 +241,8 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void selectPrevStatement() {
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         mainController.set(statement);
         mainController.selectPrevStatement();
@@ -243,6 +251,8 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void selectNextStatement() {
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         mainController.set(statement);
         mainController.selectNextStatement();
@@ -251,6 +261,8 @@ public class LineByLineController implements Initializable {
     
     @FXML
     private void endStatement() {
+        String subcategory = subcategoryField.getText();
+        mainController.setSubcategory(subcategory);
         String statement = workArea.getText();
         mainController.endStatement(statement);
         setUpTextAreas();

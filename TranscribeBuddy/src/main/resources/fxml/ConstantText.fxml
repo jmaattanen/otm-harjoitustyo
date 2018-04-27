@@ -73,12 +73,15 @@
          <bottom>
             <VBox prefHeight="84.0" prefWidth="175.0">
              <children>
-                 <Label fx:id="audioNameLabel" BorderPane.alignment="TOP_LEFT" />
+                 <Label fx:id="audioNameLabel" BorderPane.alignment="TOP_LEFT">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#seekBeginning" text="Alkuun">
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#skipBackward" text="&lt;&lt;">

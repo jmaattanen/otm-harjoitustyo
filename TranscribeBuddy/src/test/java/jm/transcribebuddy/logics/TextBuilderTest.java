@@ -204,7 +204,7 @@ public class TextBuilderTest {
     @Test
     public void addNewStatementWorks() {
         //textBuilder has now one statement
-        Statement statement = new Statement();
+        Statement statement = new Statement(null);
         textBuilder.addNewStatement(statement);
         int listSize = textBuilder.getAllStatements().size();
         assertEquals(2, listSize);

@@ -105,14 +105,13 @@ public class ConstantTextController implements Initializable {
         
         final double width = stage.getWidth();
         final double height = stage.getHeight();
-        final boolean resizable = stage.isResizable();
         
         stage.setScene(lineByLineScene);
         stage.setWidth(width);
         stage.setHeight(height);
         // Next code just gets stage to refresh
-        stage.setResizable(!resizable);
-        stage.setResizable(resizable);
+        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
         
         LineByLineController fxmlController = (LineByLineController)fxmlLoader.getController();

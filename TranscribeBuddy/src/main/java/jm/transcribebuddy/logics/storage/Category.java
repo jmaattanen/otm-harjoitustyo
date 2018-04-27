@@ -9,7 +9,7 @@ public class Category {
     private Category parent;
     private ArrayList<Category> children;
     
-    final private int maxNameLength = 30;
+    final static private int maxNameLength = 30;
     
     public Category(String name) {
         this.name = getValidName(name);
@@ -27,7 +27,7 @@ public class Category {
         children = new ArrayList<>();
     }
     
-    private String getValidName(String name) {
+    public static String getValidName(String name) {
         if (name == null || name.isEmpty()) {
             return "Undefined";
         }
@@ -68,4 +68,35 @@ public class Category {
             children.add(child);
         }
     }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (!Category.class.isAssignableFrom(object.getClass())) {
+            return false;
+        }
+        final Category other = (Category) object;
+        if (this.parent != other.parent) {
+            return false;
+        }
+        if (this.name == null) {
+            return null == other.name;
+        }
+        return this.name.equals(other.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
+    
 }

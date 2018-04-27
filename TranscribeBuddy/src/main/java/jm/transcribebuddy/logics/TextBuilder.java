@@ -5,14 +5,19 @@ package jm.transcribebuddy.logics;
 import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
 import javafx.util.Duration;
+import jm.transcribebuddy.logics.storage.Category;
 
 public class TextBuilder {
     final private ArrayList<Statement> statements;
     private int workingIndex;
+    final private Classifier classifier;
+    final Category undefined;
     
     public TextBuilder() {
         statements = new ArrayList<>();
-        Statement firstStatement = new Statement();
+        classifier = new Classifier();
+        undefined = classifier.getUndefinedSubcategory();
+        Statement firstStatement = new Statement(undefined);
         statements.add(firstStatement);
         workingIndex = 0;
     }
@@ -38,6 +43,15 @@ public class TextBuilder {
     
     public String getCurrent() {
         return statements.get(workingIndex).toString();
+    }
+    
+    public String getCurrentSubcategory() {
+        Statement node = statements.get(workingIndex);
+        Category subcategory = node.getSubcategory();
+        if (subcategory == null) {
+            return classifier.getUndefinedName();
+        }
+        return subcategory.toString();
     }
     
     public Duration getStartTime() {
@@ -99,6 +113,12 @@ public class TextBuilder {
         return true;
     }
     
+    public void setSubcategory(String categoryName) {
+        Category subcategory = classifier.addSubcategory(categoryName);
+        Statement node = statements.get(workingIndex);
+        node.setSubcategory(subcategory);
+    }
+    
     public void setStartTime(Duration startTime) {
         Statement currentStatement = statements.get(workingIndex);
         currentStatement.setStartTime(startTime);
@@ -112,7 +132,7 @@ public class TextBuilder {
     public void deleteStatement() {
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
-            Statement first = new Statement();
+            Statement first = new Statement(undefined);
             statements.add(first);
         } else if (workingIndex == statements.size()) {
             // statement in the end of list has been deleted
@@ -124,7 +144,7 @@ public class TextBuilder {
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement);
-        Statement newNode = new Statement();
+        Statement newNode = new Statement(undefined);
         workingIndex++;
         statements.add(workingIndex, newNode);
     }
@@ -140,7 +160,7 @@ public class TextBuilder {
         // create a new node
         final int endIndex = statement.length();
         String newStatement = statement.substring(splitIndex, endIndex);
-        Statement newNode = new Statement(newStatement, splitTime);
+        Statement newNode = new Statement(newStatement, splitTime, undefined);
         workingIndex++;
         statements.add(workingIndex, newNode);
         return true;

@@ -6,7 +6,6 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.AppSettings;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
-import jm.transcribebuddy.gui.popups.ProjectForm;
 
 public class MainController {
     final private AppSettings appSettings;
@@ -130,6 +129,9 @@ public class MainController {
     public String getNextStatement() {
         return textBuilder.getNext();
     }
+    public String getCurrentSubcategory() {
+        return textBuilder.getCurrentSubcategory();
+    }
     public String getFullText() {
         return textBuilder.getAll();
     }
@@ -141,6 +143,10 @@ public class MainController {
         if (textBuilder.set(statement)) {
             workSaved = false;
         }
+    }
+    
+    public void setSubcategory(String subcategory) {
+        textBuilder.setSubcategory(subcategory);
     }
     
     public void setStartTime() {
