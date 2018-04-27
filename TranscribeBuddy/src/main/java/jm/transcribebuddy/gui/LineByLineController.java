@@ -121,7 +121,7 @@ public class LineByLineController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent constantTextParent = fxmlLoader.load(getClass().getResource("/fxml/ConstantText.fxml").openStream());
         Scene constantTextScene = new Scene(constantTextParent);
-        constantTextScene.getStylesheets().add("/styles/Styles.css");
+        constantTextScene.getStylesheets().add("/styles/Feather.css");
         
         final double width = stage.getWidth();
         final double height = stage.getHeight();

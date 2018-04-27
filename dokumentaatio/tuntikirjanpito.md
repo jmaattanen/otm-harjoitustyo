@@ -41,4 +41,5 @@
 | 26.4. | 5    | Koodin refaktorointia |
 |       |      | Parannuksia tietokantatallennukseen |
 |       |      | Parannuksia käyttöliittymään |
-| yht   | 65   | | 
+| 27.4. | 1    | Sovelluksen ulkoasun muokkaus |
+| yht   | 66   | | 

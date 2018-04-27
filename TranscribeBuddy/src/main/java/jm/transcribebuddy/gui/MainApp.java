@@ -54,7 +54,7 @@ public class MainApp extends Application {
         
         // Set up scene and stage
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        scene.getStylesheets().add("/styles/Feather.css");
         
         stage.setTitle("TranscribeBuddy");
         stage.setScene(scene);

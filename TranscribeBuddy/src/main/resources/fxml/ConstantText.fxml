@@ -35,8 +35,7 @@
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Region maxHeight="50.0" prefHeight="50.0" prefWidth="150.0" />
-                  <Label fx:id="projectNameLabel" alignment="BOTTOM_CENTER" text="Project Name">
+                  <Label fx:id="projectNameLabel" prefWidth="300.0" alignment="BOTTOM_RIGHT" text="Project Name">
                      <padding>
                         <Insets right="10.0" top="10.0" />
                      </padding>
@@ -53,14 +52,23 @@
             </HBox>
          </top>
          <right>
-            <Button mnemonicParsing="false" onAction="#switchToLBLS" text="Rivinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
-               <BorderPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </BorderPane.margin>
-            </Button>
+             <VBox prefHeight="600.0" prefWidth="140.0" BorderPane.alignment="BOTTOM_RIGHT">
+                 <children>
+                 <Region prefHeight="350.0" prefWidth="140.0" />
+                 <Button mnemonicParsing="false" onAction="#switchToLBLS" text="Rivinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                     <BorderPane.margin>
+                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                 </Button>
+                 </children>
+             </VBox>
          </right>
          <center>
-            <TextArea fx:id="workArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="TOP_LEFT" />
+            <TextArea fx:id="workArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="TOP_LEFT">
+                <BorderPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </BorderPane.margin>
+            </TextArea>
          </center>
          <bottom>
             <VBox prefHeight="84.0" prefWidth="175.0">

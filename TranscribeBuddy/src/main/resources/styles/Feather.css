@@ -1,0 +1,16 @@
+.root {
+    -fx-background-color: #f0dffb;
+    -fx-background-image: url("../images/pexels-photo-1021594.jpeg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.button {
+    -fx-font-weight: bold;
+    -fx-text-fill: #717be7;
+    -fx-border-color: lightblue;
+}
+
+.label {
+    -fx-text-fill: #5a66b4;
+}

@@ -101,7 +101,7 @@ public class ConstantTextController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent lineByLineParent = fxmlLoader.load(getClass().getResource("/fxml/LineByLine.fxml").openStream());
         Scene lineByLineScene = new Scene(lineByLineParent);
-        lineByLineScene.getStylesheets().add("/styles/Styles.css");
+        lineByLineScene.getStylesheets().add("/styles/Feather.css");
         
         final double width = stage.getWidth();
         final double height = stage.getHeight();
