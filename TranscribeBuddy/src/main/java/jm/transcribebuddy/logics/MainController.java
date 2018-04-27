@@ -2,6 +2,8 @@ package jm.transcribebuddy.logics;
 
 /***   This is the supreme leader of application logics   ***/
 
+import jm.transcribebuddy.logics.storage.ProjectInfo;
+import jm.transcribebuddy.logics.storage.AppSettings;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
 import jm.transcribebuddy.gui.popups.ProjectForm;

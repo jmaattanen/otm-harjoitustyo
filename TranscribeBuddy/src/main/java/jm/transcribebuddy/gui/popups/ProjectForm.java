@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jm.transcribebuddy.logics.MainController;
-import jm.transcribebuddy.logics.ProjectInfo;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public class ProjectForm {
     

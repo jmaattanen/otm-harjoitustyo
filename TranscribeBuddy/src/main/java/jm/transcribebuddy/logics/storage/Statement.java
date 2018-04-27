@@ -1,4 +1,4 @@
-package jm.transcribebuddy.logics;
+package jm.transcribebuddy.logics.storage;
 
 /***   A single node object of sentences   ***/
 
@@ -7,16 +7,19 @@ import javafx.util.Duration;
 public class Statement {
     private String statement;
     private Duration startTime;
+    private Category subcategory;
     
     public Statement() {
         statement = "";
         startTime = Duration.seconds(0);
+        subcategory = null;
     }
     
     public Statement(Duration startTime) {
         statement = "";
         this.startTime = startTime;
         checkStartTime();
+        subcategory = null;
     }
     
     public Statement(String statement, Duration startTime) {
@@ -26,6 +29,8 @@ public class Statement {
             this.statement = statement.trim();
         }
         this.startTime = startTime;
+        checkStartTime();
+        subcategory = null;
     }
     
     /**

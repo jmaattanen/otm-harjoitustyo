@@ -1,7 +1,7 @@
 package jm.transcribebuddy.dao;
 
 import jm.transcribebuddy.logics.TextBuilder;
-import jm.transcribebuddy.logics.ProjectInfo;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public interface TextDao {
     

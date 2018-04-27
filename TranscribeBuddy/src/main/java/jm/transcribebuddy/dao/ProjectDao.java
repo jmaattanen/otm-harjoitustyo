@@ -7,7 +7,7 @@ import java.io.IOException;
 import jm.transcribebuddy.dao.db.*;
 import jm.transcribebuddy.dao.file.*;
 import java.util.ArrayDeque;
-import jm.transcribebuddy.logics.ProjectInfo;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class ProjectDao {

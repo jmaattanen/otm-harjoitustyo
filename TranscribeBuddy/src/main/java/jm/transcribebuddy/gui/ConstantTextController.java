@@ -21,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.MainController;
-import jm.transcribebuddy.logics.ProjectInfo;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public class ConstantTextController implements Initializable {
     

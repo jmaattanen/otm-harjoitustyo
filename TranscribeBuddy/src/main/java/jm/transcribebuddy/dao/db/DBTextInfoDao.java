@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import jm.transcribebuddy.dao.TextInfoDao;
-import jm.transcribebuddy.logics.ProjectInfo;
-import jm.transcribebuddy.logics.Statement;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
+import jm.transcribebuddy.logics.storage.Statement;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class DBTextInfoDao implements TextInfoDao {

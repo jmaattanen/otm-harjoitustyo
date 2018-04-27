@@ -1,5 +1,6 @@
 package jm.transcribebuddy.logics;
 
+import jm.transcribebuddy.logics.storage.Statement;
 import javafx.util.Duration;
 import org.junit.After;
 import org.junit.AfterClass;

@@ -1,5 +1,6 @@
 package jm.transcribebuddy.logics;
 
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

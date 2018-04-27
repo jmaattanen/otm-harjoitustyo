@@ -1,4 +1,4 @@
-package jm.transcribebuddy.logics;
+package jm.transcribebuddy.logics.storage;
 
 public class AppSettings {
     final private String databaseURL;

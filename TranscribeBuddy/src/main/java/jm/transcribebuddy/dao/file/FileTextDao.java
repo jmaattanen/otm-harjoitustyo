@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import jm.transcribebuddy.dao.TextDao;
-import jm.transcribebuddy.logics.ProjectInfo;
-import jm.transcribebuddy.logics.Statement;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
+import jm.transcribebuddy.logics.storage.Statement;
 import jm.transcribebuddy.logics.TextBuilder;
 
 public class FileTextDao implements TextDao {

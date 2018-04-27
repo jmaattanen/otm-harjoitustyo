@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import jm.transcribebuddy.dao.ProjectInfoDao;
-import jm.transcribebuddy.logics.ProjectInfo;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public class DBProjectInfoDao implements ProjectInfoDao {
     

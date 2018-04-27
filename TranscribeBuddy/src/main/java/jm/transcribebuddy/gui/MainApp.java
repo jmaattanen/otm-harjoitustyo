@@ -18,7 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import jm.transcribebuddy.logics.AppSettings;
+import jm.transcribebuddy.logics.storage.AppSettings;
 import jm.transcribebuddy.logics.MainController;
 
 public class MainApp extends Application {
