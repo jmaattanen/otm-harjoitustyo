@@ -19,6 +19,7 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 public class ProjectForm {
     
     public static ProjectInfo show(final MainController mainController) {
+        mainController.stopAudio();
         final int maxInputFieldWidth = 250;
         
         final ProjectInfo projectInfo = mainController.getProjectInfo();

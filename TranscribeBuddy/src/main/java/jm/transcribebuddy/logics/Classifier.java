@@ -1,5 +1,7 @@
 package jm.transcribebuddy.logics;
 
+/***   A tree structure for classification of statements   ***/
+
 import java.util.ArrayList;
 import jm.transcribebuddy.logics.storage.Category;
 
@@ -8,7 +10,7 @@ public class Classifier {
     final private Category highestUndefined;
     
     // Max depth should have value 1 or greater
-    final private int maxDepth = 3;
+    final private int maxDepth = 2;
     final String undefinedName = "Undefined";
     
     public Classifier() {

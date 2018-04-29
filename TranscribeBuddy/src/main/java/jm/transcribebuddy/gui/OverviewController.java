@@ -5,6 +5,7 @@ package jm.transcribebuddy.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
@@ -60,6 +61,7 @@ public class OverviewController implements Initializable {
         // Set up labels and combo box
         projectNameLabel.setText(mainController.getProjectName());
         ArrayList<Category> subcategories = classifier.getSubcategories();
+        Collections.sort(subcategories);
         for (Category c : subcategories) {
             subcategoryComboBox.getItems().add(c);
         }

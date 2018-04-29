@@ -4,7 +4,7 @@ package jm.transcribebuddy.logics.storage;
 
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements Comparable {
     private String name;
     private Category parent;
     final private ArrayList<Category> children;
@@ -34,9 +34,11 @@ public class Category {
         if (name == null || name.isEmpty()) {
             return "Undefined";
         }
+        name = name.trim();
         if (name.length() > MAXNAMELENGTH) {
             return name.substring(0, MAXNAMELENGTH);
         }
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         return name;
     }
     
@@ -118,4 +120,15 @@ public class Category {
         return hash;
     }
     
+    @Override
+    public int compareTo(Object object) {
+        if (object == null) {
+            throw new NullPointerException();
+        }
+        if (!Category.class.isAssignableFrom(object.getClass())) {
+            return -1;
+        }
+        String categoryName = ((Category) object).name;
+        return this.name.compareTo(categoryName);
+    }
 }
