@@ -44,5 +44,6 @@
 | 27.4. | 7    | Sovelluksen ulkoasun muokkaus |
 |       |      | Lausumia luokittelevan tietotyypin alustus |
 |       |      | Hakunäkymän alustus käyttöliittymään |
-| 29.4. | 3    | Hakunäkymän taulukon generointi |
-| yht   | 75   | | 
+| 29.4. | 4,5  | Hakunäkymän taulukon generointi |
+|       |      | Testejä luokittelijalle |
+| yht   | 76,5 | | 

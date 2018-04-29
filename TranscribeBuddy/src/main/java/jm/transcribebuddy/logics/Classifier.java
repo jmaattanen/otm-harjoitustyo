@@ -33,6 +33,10 @@ public class Classifier {
         return !undefinedName.equals(category.toString());
     }
     
+    public int getHeightOfTree() {
+        return maxDepth;
+    }
+    
     public ArrayList<Category> getCategories(final int depth) {
         if (depth < 1 || depth > maxDepth) {
             return new ArrayList<>();
@@ -92,7 +96,7 @@ public class Classifier {
     }
     
     public void removeIfEmpty(Category subcategory) {
-        if (subcategory != null && subcategory.getSize() == 0) {
+        if (isRealCategory(subcategory) && subcategory.getSize() == 0) {
             removeCategory(subcategory);
         }
     }
