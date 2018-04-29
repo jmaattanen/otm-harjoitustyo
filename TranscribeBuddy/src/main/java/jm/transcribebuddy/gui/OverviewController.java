@@ -5,7 +5,9 @@ package jm.transcribebuddy.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,29 +17,34 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.MainController;
+import jm.transcribebuddy.logics.TextBuilder;
 import jm.transcribebuddy.logics.storage.Category;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
+import jm.transcribebuddy.logics.storage.TableRow;
 
 public class OverviewController implements Initializable {
     
     private MainController mainController;
+    // NOTE TO MYSELF: create a new class for handling overview logics
     private Classifier classifier;
+    private TextBuilder textBuilder;
     
     @FXML
     private Label projectNameLabel, subcategorySizeLabel;
     
     @FXML
-    private ChoiceBox subcategoryChoiceBox;
+    private ComboBox subcategoryComboBox;
     
     @FXML
     private TableView statementsTableView;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,20 +54,29 @@ public class OverviewController implements Initializable {
     public void setUpController(final Stage stage, MainController controller) {
         mainController = controller;
         classifier = mainController.getClassifier();
+        textBuilder = mainController.getTextBuilder();
         Scene scene = stage.getScene();
         
-        // Set up labels and choice box
+        // Set up labels and combo box
         projectNameLabel.setText(mainController.getProjectName());
         ArrayList<Category> subcategories = classifier.getSubcategories();
         for (Category c : subcategories) {
-            subcategoryChoiceBox.getItems().add(c);
+            subcategoryComboBox.getItems().add(c);
         }
+        
+        // Update the table view every time the combo box value changes
+        subcategoryComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                updateTable();
+            }
+        });
         
         // Set up hotkeys
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             
             @Override
-            public void handle( KeyEvent keyEvent) {
+            public void handle(KeyEvent keyEvent) {
                 if( keyEvent.isControlDown() ) {
                     if( null != keyEvent.getCode() ) switch (keyEvent.getCode()) {
                         case COMMA:
@@ -149,11 +165,22 @@ public class OverviewController implements Initializable {
         projectNameLabel.setText(mainController.getProjectName());
     }
     
-    @FXML
-    private void updateTable(ActionEvent event) {
-        Category subcategory = (Category) subcategoryChoiceBox.getValue();
-        if (subcategory != null) {
-            subcategorySizeLabel.setText(Integer.toString(subcategory.getSize()));
+    private void updateTable() {
+        final Category subcategory = (Category) subcategoryComboBox.getValue();
+        if (subcategory == null) {
+            return;
+        }
+        subcategorySizeLabel.setText(Integer.toString(subcategory.getSize()));
+        ObservableList<TableRow> tableContent = statementsTableView.getItems();
+        tableContent.clear();
+        HashMap<Integer, String> statements = textBuilder.getStatementsIn(subcategory);
+        final String categoryName = subcategory.toString();
+        for (HashMap.Entry<Integer, String> entry : statements.entrySet()) {
+            Integer index = entry.getKey();
+            String statement = entry.getValue();
+            if (!statement.isEmpty()) {
+                tableContent.add(new TableRow(categoryName, statement, index));
+            }
         }
     }
 }

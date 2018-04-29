@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.gui.popups.*;
@@ -111,6 +112,8 @@ public class LineByLineController implements Initializable {
                         default:
                             break;
                     }
+                } else if (keyEvent.getCode() == KeyCode.ENTER) {
+                    workArea.requestFocus();
                 }
             }
         });

@@ -1,6 +1,6 @@
 package jm.transcribebuddy.logics.storage;
 
-/***   A single node object of sentences   ***/
+/***   A single node object of sentences managed by TextBuilder   ***/
 
 import javafx.util.Duration;
 
@@ -70,6 +70,10 @@ public class Statement {
         if (subcategory != null) {
             this.subcategory = subcategory;
         }
+    }
+    
+    public boolean isInSubcategory(Category subcategory) {
+        return this.subcategory == subcategory;
     }
     
     private void checkStartTime() {

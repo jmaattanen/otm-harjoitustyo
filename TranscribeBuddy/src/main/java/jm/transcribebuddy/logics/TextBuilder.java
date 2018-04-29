@@ -4,6 +4,7 @@ package jm.transcribebuddy.logics;
 
 import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.util.Duration;
 import jm.transcribebuddy.logics.storage.Category;
 
@@ -30,10 +31,13 @@ public class TextBuilder {
         return statements;
     }
     public void addNewStatement(Statement newStatement) {
+        newStatement.setSubcategory(undefined);
+        undefined.addStatement();
         statements.add(newStatement);
     }
     public void initialClear() {
         statements.clear();
+        undefined.removeStatement();
     }
     public boolean isValid() {
         workingIndex = statements.size() - 1;
@@ -100,6 +104,21 @@ public class TextBuilder {
         return classifier;
     }
     
+    public HashMap<Integer, String> getStatementsIn(Category subcategory) {
+        HashMap<Integer, String> resultMap = new HashMap<>();
+        if (subcategory == null) {
+            return resultMap;
+        }
+        int index = 0;
+        for (Statement s : statements) {
+            if (s.isInSubcategory(subcategory)) {
+                resultMap.put(index, s.toString());
+            }
+            index++;
+        }
+        return resultMap;
+    }
+    
     public String startTimeToString() {
         Statement statement = statements.get(workingIndex);
         return statement.startTimeToString();
@@ -124,9 +143,7 @@ public class TextBuilder {
         if (oldCategory != subcategory) {
             subcategory.addStatement();
             oldCategory.removeStatement();
-            if (oldCategory.getSize() == 0) {
-                classifier.removeSubcategory(oldCategory);
-            }
+            classifier.removeIfEmpty(oldCategory);
         }
         node.setSubcategory(subcategory);
     }
@@ -145,6 +162,7 @@ public class TextBuilder {
         Statement node = statements.get(workingIndex);
         Category subcategory = node.getSubcategory();
         subcategory.removeStatement();
+        classifier.removeIfEmpty(subcategory);
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
             Statement first = new Statement(undefined);

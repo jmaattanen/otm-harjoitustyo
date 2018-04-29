@@ -1,6 +1,6 @@
 package jm.transcribebuddy.logics.storage;
 
-/***   An abstract data type for categorizing statements   ***/
+/***   A tree node for categorizing statements   ***/
 
 import java.util.ArrayList;
 
@@ -46,10 +46,6 @@ public class Category {
         }
         this.name = getValidName(name);
         return true;
-    }
-    
-    public String getName() {
-        return name;
     }
     
     public int getSize() {

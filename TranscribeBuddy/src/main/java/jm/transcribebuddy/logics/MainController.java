@@ -41,9 +41,15 @@ public class MainController {
         workSaved = true;
     }
     
+    // temporary implementation for OverviewController...
     public Classifier getClassifier() {
         return textBuilder.getClassifier();
     }
+    public TextBuilder getTextBuilder() {
+        return textBuilder;
+    }
+    // before better solution is made
+    
     
     /*******            DAO METHODS            *******/
     

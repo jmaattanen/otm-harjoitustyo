@@ -8,7 +8,7 @@ public class Classifier {
     final private Category highestUndefined;
     
     // Max depth should have value 1 or greater
-    final private int maxDepth = 1;
+    final private int maxDepth = 3;
     final String undefinedName = "Undefined";
     
     public Classifier() {
@@ -24,8 +24,8 @@ public class Classifier {
         highestUndefined = parent;
     }
     
-    private boolean isValid(Category category) {
-        if (category == null) {
+    private boolean isRealCategory(Category category) {
+        if (category == null || category == root) {
             return false;
         }
         return !undefinedName.equals(category.toString());
@@ -67,7 +67,7 @@ public class Classifier {
         // Subcategory must have a unique name
         ArrayList<Category> subcategories = getCategories(maxDepth);
         for (Category sc : subcategories) {
-            if (name.equals(sc.getName())) {
+            if (name.equals(sc.toString())) {
                 // Name exists so no addition needed
                 return sc;
             }
@@ -79,10 +79,19 @@ public class Classifier {
         return subcategory;
     }
     
-    public void removeSubcategory(Category subcategory) {
-        if (isValid(subcategory) && subcategory != root) {
-            Category parent = subcategory.getParent();
-            parent.removeChild(subcategory);
+    private void removeCategory(Category category) {
+        if (isRealCategory(category)) {
+            Category parent = category.getParent();
+            parent.removeChild(category);
+            if (parent.getChildren().isEmpty()) {
+                removeCategory(parent);
+            }
+        }
+    }
+    
+    public void removeIfEmpty(Category subcategory) {
+        if (subcategory != null && subcategory.getSize() == 0) {
+            removeCategory(subcategory);
         }
     }
     
@@ -92,7 +101,7 @@ public class Classifier {
         }
         ArrayList<Category> subcategories = getCategories(maxDepth);
         for (Category sc : subcategories) {
-            if (name.equals(sc.getName())) {
+            if (name.equals(sc.toString())) {
                 return sc;
             }
         }
