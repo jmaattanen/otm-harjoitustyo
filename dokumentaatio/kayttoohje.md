@@ -19,13 +19,15 @@ databaseURL=jdbc:postgresql://localhost:5432/tietokantasinimi
 ```
 
 Tietokantayhteys ei ole välttämätön sovelluksen käytön kannalta, mutta se mahdollistaa mm. virkkeiden merkkien ja ääniraidan sijainnin muistamisen suorituskertojen välillä. Litterointiprojektin leipäteksti itsessään tallennetaan *.txt-muotoiseen tiedostoon.
+[Postgresin sivuilta](https://jdbc.postgresql.org/documentation/head/connect.html) löytyy lisää ohjeita tietokantaan yhdistämisestä.
+
 
 ## Näppäinkomennot
 
 | Näppäinyhdistelmä          | Toiminto                                                      |
 | :-------------------------:| :-------------------------------------------------------------|
 | _ctrl_ + _space_           | Aloita/keskeytä ääniraidan toisto                             |
-| _ctrl_ + _shift_ + _space_ | Aloita ääniraidan toisto asetetusta merkistä                  |
+| _ctrl_ + _shift_ + _space_ | Aloita ääniraidan toisto asetetusta merkistä rivinäkymässä    |
 | _ctrl_ + _shift_ + _N_     | Hyppää 30s eteenpäin toistossa                                |
 | _ctrl_ + _N_               | Hyppää 5s eteenpäin toistossa                                 |
 | _ctrl_ + _shift_ + _B_     | Hyppää 30s taaksepäin toistossa                               |
@@ -35,6 +37,7 @@ Tietokantayhteys ei ole välttämätön sovelluksen käytön kannalta, mutta se mahdol
 | _ctrl_ + _ENTER_           | Päätä virke rivinäkymässä                                     |
 | _ctrl_ + ,                 | Siirry tekstinäkymään (Poistettu käytöstä release1-versiossa) |
 | _ctrl_ + .                 | Siirry rivinäkymään (Poistettu käytöstä release1-versiossa)   |
+| _ctrl_ + -                 | Siirry hakunäkymään                                           |
 
 ## Vinkkejä sovelluksen käyttöön
 

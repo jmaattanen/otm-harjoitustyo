@@ -32,7 +32,6 @@ public class TextBuilder {
     }
     public void addNewStatement(Statement newStatement) {
         newStatement.setSubcategory(undefined);
-        undefined.addStatement();
         statements.add(newStatement);
     }
     public void initialClear() {
@@ -140,12 +139,8 @@ public class TextBuilder {
         Category subcategory = classifier.addSubcategory(categoryName);
         Statement node = statements.get(workingIndex);
         Category oldCategory = node.getSubcategory();
-        if (oldCategory != subcategory) {
-            subcategory.addStatement();
-            oldCategory.removeStatement();
-            classifier.removeIfEmpty(oldCategory);
-        }
         node.setSubcategory(subcategory);
+        classifier.removeIfEmpty(oldCategory);
     }
     
     public void setStartTime(Duration startTime) {

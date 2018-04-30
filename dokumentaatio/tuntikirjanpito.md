@@ -46,4 +46,5 @@
 |       |      | Hakunäkymän alustus käyttöliittymään |
 | 29.4. | 4,5  | Hakunäkymän taulukon generointi |
 |       |      | Testejä luokittelijalle |
-| yht   | 76,5 | | 
+| 30.4. | ,5   | Dokumentointia |
+| yht   | 77   | | 

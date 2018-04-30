@@ -68,7 +68,12 @@ public class Statement {
     
     public void setSubcategory(Category subcategory) {
         if (subcategory != null) {
+            if (this.subcategory != null) {
+                // deduct statement from the counter of the old category
+                this.subcategory.removeStatement();
+            }
             this.subcategory = subcategory;
+            this.subcategory.addStatement();
         }
     }
     
