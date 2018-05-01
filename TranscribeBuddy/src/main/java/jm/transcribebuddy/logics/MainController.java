@@ -247,7 +247,8 @@ public class MainController {
         audioPlayer.seekBeginning();
     }
     public void seekBeginningOfCurrentStatement() {
-        audioPlayer.seekBeginning(textBuilder);
+        Duration timeMark = textBuilder.getStartTime();
+        audioPlayer.seekTimeMark(timeMark);
     }
     
 }

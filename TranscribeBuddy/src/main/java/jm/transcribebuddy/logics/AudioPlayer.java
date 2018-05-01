@@ -1,6 +1,5 @@
 package jm.transcribebuddy.logics;
 
-import jm.transcribebuddy.logics.word.TextBuilder;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -81,10 +80,9 @@ public class AudioPlayer {
         }
     }
     
-    public void seekBeginning(TextBuilder textBuilder) {
+    public void seekTimeMark(Duration timeMark) {
         if (mediaPlayer != null) {
-            Duration startTime = textBuilder.getStartTime();
-            mediaPlayer.seek(startTime);
+            mediaPlayer.seek(timeMark);
         }
     }
     

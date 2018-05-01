@@ -4,14 +4,15 @@ package jm.transcribebuddy.logics.word;
 
 import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
-import javafx.util.Duration;
 
 public class TextBuilder {
     final protected ArrayList<Statement> statements;
     protected int workingIndex;
     
-    final static public String BEGINNINGSIGN = "\n\n            * * *   The Beginning of the Document   * * *";
-    final static public String ENDSIGN = "\n\n            * * *   The End of the Document   * * *";
+    final static public String BEGINNINGSIGN
+            = "\n\n            * * *   The Beginning of the Document   * * *";
+    final static public String ENDSIGN
+            = "\n\n            * * *   The End of the Document   * * *";
     
     
     public TextBuilder() {
@@ -28,11 +29,6 @@ public class TextBuilder {
     
     public String getCurrent() {
         return statements.get(workingIndex).toString();
-    }
-    
-    public Duration getStartTime() {
-        Statement currentStatement = statements.get(workingIndex);
-        return currentStatement.getStartTime();
     }
     
     public String getPrev() {

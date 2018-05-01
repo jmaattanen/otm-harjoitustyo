@@ -57,6 +57,11 @@ public class DetailedTextBuilder extends TextBuilder {
         classifier.removeIfEmpty(oldCategory);
     }
     
+    public Duration getStartTime() {
+        Statement currentStatement = statements.get(workingIndex);
+        return currentStatement.getStartTime();
+    }
+    
     public void setStartTime(Duration startTime) {
         Statement currentStatement = statements.get(workingIndex);
         currentStatement.setStartTime(startTime);
