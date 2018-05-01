@@ -2,6 +2,7 @@ package jm.transcribebuddy.logics;
 
 /***   This is the supreme leader of application logics   ***/
 
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.AppSettings;
 import javafx.util.Duration;
@@ -10,7 +11,7 @@ import jm.transcribebuddy.dao.ProjectDao;
 public class MainController {
     final private AppSettings appSettings;
     private ProjectInfo projectInfo;
-    private TextBuilder textBuilder;
+    private DetailedTextBuilder textBuilder;
     static private AudioPlayer audioPlayer;
     final private ProjectDao projectDao;
     
@@ -19,7 +20,7 @@ public class MainController {
     public MainController(AppSettings settings) {
         appSettings = settings;
         projectInfo = new ProjectInfo();
-        textBuilder = new TextBuilder();
+        textBuilder = new DetailedTextBuilder();
         audioPlayer = new AudioPlayer();
         
         String databaseURL = settings.getDatabaseURL();
@@ -37,7 +38,7 @@ public class MainController {
     public void cleanProject(String audioFilePath) {
         projectInfo = new ProjectInfo();
         projectInfo.setAudioFilePath(audioFilePath);
-        textBuilder = new TextBuilder();
+        textBuilder = new DetailedTextBuilder();
         workSaved = true;
     }
     
@@ -45,7 +46,7 @@ public class MainController {
     public Classifier getClassifier() {
         return textBuilder.getClassifier();
     }
-    public TextBuilder getTextBuilder() {
+    public DetailedTextBuilder getTextBuilder() {
         return textBuilder;
     }
     // before better solution is made

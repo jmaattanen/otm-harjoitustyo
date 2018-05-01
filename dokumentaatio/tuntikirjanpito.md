@@ -47,4 +47,5 @@
 | 29.4. | 4,5  | Hakunäkymän taulukon generointi |
 |       |      | Testejä luokittelijalle |
 | 30.4. | ,5   | Dokumentointia |
-| yht   | 77   | | 
+| 1.5.  | 2    | Koodin refaktorointia |
+| yht   | 79   | | 

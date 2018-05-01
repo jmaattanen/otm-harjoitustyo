@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import jm.transcribebuddy.dao.TextInfoDao;
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
+import jm.transcribebuddy.logics.word.DuctileTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.Statement;
-import jm.transcribebuddy.logics.TextBuilder;
+import jm.transcribebuddy.logics.word.TextBuilder;
 
 public class DBTextInfoDao implements TextInfoDao {
     
@@ -59,15 +61,14 @@ public class DBTextInfoDao implements TextInfoDao {
     }
     
     @Override
-    public TextBuilder load(final ProjectInfo projectInfo, final TextBuilder textBuilder) {
+    public DetailedTextBuilder load(final ProjectInfo projectInfo, final DetailedTextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return textBuilder;
         }
         final int projectId = projectInfo.getId();
         
         // Construct a new TextBuilder with loaded text info
-        TextBuilder updatedTextBuilder = new TextBuilder();
-        updatedTextBuilder.initialClear();
+        DuctileTextBuilder updatedTextBuilder = new DuctileTextBuilder();
 
         ArrayList<Statement> statements = textBuilder.getAllStatements();
         int statementIndex = 1;

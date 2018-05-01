@@ -90,16 +90,25 @@ public class ConstantTextController implements Initializable {
         });
     }
     
-    // Switch to LineByLine scene
-    private void switchToLBLS(final Stage stage) throws IOException {
-        // save current work
+    private void updateWork() {
         String text = workArea.getText();
         if (mainController.parseLastStatement(text) < 0) {
-            // report an error
+            // Report an error
+            AlertBox.showWarning(
+                    "Illegal modification!",
+                    "Changes to the beginning of the text should be made in the row view."
+            );
         } else {
             int index = workArea.getCaretPosition();
             mainController.selectStatementByCaretPosition(index);
         }
+    }
+    
+    
+    // Switch to LineByLine scene
+    private void switchToLBLS(final Stage stage) throws IOException {
+        // Save current work to TextBuilder
+        updateWork();
         
         // Load new scene
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -107,16 +116,7 @@ public class ConstantTextController implements Initializable {
         Scene lineByLineScene = new Scene(lineByLineParent);
         lineByLineScene.getStylesheets().add("/styles/Feather.css");
         
-        final double width = stage.getWidth();
-        final double height = stage.getHeight();
-        
-        stage.setScene(lineByLineScene);
-        stage.setWidth(width);
-        stage.setHeight(height);
-        // Next code just gets stage to refresh
-        stage.setResizable(false);
-        stage.setResizable(true);
-        stage.show();
+        GuiHelper.setUpStage(stage, lineByLineScene);
         
         LineByLineController fxmlController = (LineByLineController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);
@@ -131,29 +131,15 @@ public class ConstantTextController implements Initializable {
         // Switch to Overview scene
     private void switchToOS(final Stage stage) throws IOException {
         // Save current work to TextBuilder
-        String text = workArea.getText();
-        if (mainController.parseLastStatement(text) < 0) {
-            // report an error
-        } else {
-            int index = workArea.getCaretPosition();
-            mainController.selectStatementByCaretPosition(index);
-        }
+        updateWork();
         
+        // Load new scene
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent overviewParent = fxmlLoader.load(getClass().getResource("/fxml/Overview.fxml").openStream());
         Scene overviewScene = new Scene(overviewParent);
         overviewScene.getStylesheets().add("/styles/Feather.css");
         
-        final double width = stage.getWidth();
-        final double height = stage.getHeight();
-        
-        stage.setScene(overviewScene);
-        stage.setWidth(width);
-        stage.setHeight(height);
-        // Next code just gets stage to refresh
-        stage.setResizable(false);
-        stage.setResizable(true);
-        stage.show();
+        GuiHelper.setUpStage(stage, overviewScene);
         
         OverviewController fxmlController = (OverviewController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);

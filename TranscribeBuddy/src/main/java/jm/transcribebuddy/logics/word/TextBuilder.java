@@ -1,60 +1,33 @@
-package jm.transcribebuddy.logics;
+package jm.transcribebuddy.logics.word;
 
 /***   This class is responsible for word processing   ***/
 
 import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javafx.util.Duration;
-import jm.transcribebuddy.logics.storage.Category;
 
 public class TextBuilder {
-    final private ArrayList<Statement> statements;
-    private int workingIndex;
-    final private Classifier classifier;
-    final Category undefined;
+    final protected ArrayList<Statement> statements;
+    protected int workingIndex;
+    
+    final static public String BEGINNINGSIGN = "\n\n            * * *   The Beginning of the Document   * * *";
+    final static public String ENDSIGN = "\n\n            * * *   The End of the Document   * * *";
+    
     
     public TextBuilder() {
         statements = new ArrayList<>();
-        classifier = new Classifier();
-        undefined = classifier.getUndefinedSubcategory();
-        Statement firstStatement = new Statement(undefined);
+        Statement firstStatement = new Statement(null);
         statements.add(firstStatement);
         workingIndex = 0;
     }
     
-    /* FOR DAO */
-    public Statement getCurrentStatement() {
-        return statements.get(workingIndex);
-    }
+    
     public ArrayList<Statement> getAllStatements() {
         return statements;
     }
-    public void addNewStatement(Statement newStatement) {
-        newStatement.setSubcategory(undefined);
-        statements.add(newStatement);
-    }
-    public void initialClear() {
-        statements.clear();
-        undefined.removeStatement();
-    }
-    public boolean isValid() {
-        workingIndex = statements.size() - 1;
-        return workingIndex >= 0;
-    }
-    /* FOR DAO */
     
     public String getCurrent() {
         return statements.get(workingIndex).toString();
-    }
-    
-    public String getCurrentSubcategory() {
-        Statement node = statements.get(workingIndex);
-        Category subcategory = node.getSubcategory();
-        if (subcategory == null) {
-            return classifier.getUndefinedName();
-        }
-        return subcategory.toString();
     }
     
     public Duration getStartTime() {
@@ -64,14 +37,14 @@ public class TextBuilder {
     
     public String getPrev() {
         if (workingIndex == 0) {
-            return "*Projektin alku*";
+            return BEGINNINGSIGN;
         }
         return statements.get(workingIndex - 1).toString();
     }
     
     public String getNext() {
         if (workingIndex == statements.size() - 1) {
-            return "*Projektin loppu*";
+            return ENDSIGN;
         }
         return statements.get(workingIndex + 1).toString();
     }
@@ -99,30 +72,6 @@ public class TextBuilder {
         return text;
     }
     
-    public Classifier getClassifier() {
-        return classifier;
-    }
-    
-    public HashMap<Integer, String> getStatementsIn(Category subcategory) {
-        HashMap<Integer, String> resultMap = new HashMap<>();
-        if (subcategory == null) {
-            return resultMap;
-        }
-        int index = 0;
-        for (Statement s : statements) {
-            if (s.isInSubcategory(subcategory)) {
-                resultMap.put(index, s.toString());
-            }
-            index++;
-        }
-        return resultMap;
-    }
-    
-    public String startTimeToString() {
-        Statement statement = statements.get(workingIndex);
-        return statement.startTimeToString();
-    }
-    
     public boolean set(String statement) {
         statement = statement.trim();
         Statement node = statements.get(workingIndex);
@@ -135,32 +84,15 @@ public class TextBuilder {
         return true;
     }
     
-    public void setSubcategory(String categoryName) {
-        Category subcategory = classifier.addSubcategory(categoryName);
-        Statement node = statements.get(workingIndex);
-        Category oldCategory = node.getSubcategory();
-        node.setSubcategory(subcategory);
-        classifier.removeIfEmpty(oldCategory);
-    }
-    
-    public void setStartTime(Duration startTime) {
-        Statement currentStatement = statements.get(workingIndex);
-        currentStatement.setStartTime(startTime);
-    }
-    
     public void setLast(String statement) {
         workingIndex = statements.size() - 1;
         this.set(statement);
     }
     
     public void deleteStatement() {
-        Statement node = statements.get(workingIndex);
-        Category subcategory = node.getSubcategory();
-        subcategory.removeStatement();
-        classifier.removeIfEmpty(subcategory);
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
-            Statement first = new Statement(undefined);
+            Statement first = new Statement(null);
             statements.add(first);
         } else if (workingIndex == statements.size()) {
             // statement in the end of list has been deleted
@@ -172,13 +104,14 @@ public class TextBuilder {
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement);
-        Statement newNode = new Statement(undefined);
+        Statement newNode = new Statement(null);
         workingIndex++;
         statements.add(workingIndex, newNode);
     }
     
     /* This method divides statement into two parts */
-    public boolean splitStatement(String statement, int splitIndex, Duration splitTime) {
+    public boolean splitStatement(String statement, int splitIndex) {
+        set(statement);
         if (splitIndex <= 0 || splitIndex >= statement.length()) {
             // invalid parameters
             return false;
@@ -188,7 +121,8 @@ public class TextBuilder {
         // create a new node
         final int endIndex = statement.length();
         String newStatement = statement.substring(splitIndex, endIndex);
-        Statement newNode = new Statement(newStatement, splitTime, undefined);
+        Statement newNode = new Statement(null);
+        newNode.set(newStatement);
         workingIndex++;
         statements.add(workingIndex, newNode);
         return true;

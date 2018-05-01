@@ -1,7 +1,9 @@
 package jm.transcribebuddy.gui.popups;
 
 import java.io.File;
+import javafx.scene.Scene;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import jm.transcribebuddy.logics.MainController;
 
 public class GuiHelper {
@@ -58,4 +60,19 @@ public class GuiHelper {
         String textFilePath = file.toString();
         return textFilePath;
     }
+    
+    
+    // Retain the size of the window when changing scene
+    public static void setUpStage(final Stage stage, final Scene scene) {
+        final double width = stage.getWidth();
+        final double height = stage.getHeight();
+        stage.setScene(scene);
+        stage.setWidth(width);
+        stage.setHeight(height);
+        // Next code just gets stage to refresh
+        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.show();
+    }
+    
 }

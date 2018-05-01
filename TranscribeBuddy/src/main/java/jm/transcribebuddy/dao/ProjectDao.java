@@ -7,8 +7,9 @@ import java.io.IOException;
 import jm.transcribebuddy.dao.db.*;
 import jm.transcribebuddy.dao.file.*;
 import java.util.ArrayDeque;
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
-import jm.transcribebuddy.logics.TextBuilder;
+import jm.transcribebuddy.logics.word.TextBuilder;
 
 public class ProjectDao {
     final private ArrayDeque<String> errorLog;
@@ -52,9 +53,9 @@ public class ProjectDao {
         return saveOk;
     }
     
-    public TextBuilder load(ProjectInfo projectInfo) {
+    public DetailedTextBuilder load(ProjectInfo projectInfo) {
         // read text content from TXT file
-        TextBuilder textBuilder = textDao.load(projectInfo);
+        DetailedTextBuilder textBuilder = textDao.load(projectInfo);
         
         // load project information from db
         projectInfo = projectInfoDao.load(projectInfo);

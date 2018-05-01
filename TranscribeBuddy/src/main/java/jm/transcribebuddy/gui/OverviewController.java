@@ -24,8 +24,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.Classifier;
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.MainController;
-import jm.transcribebuddy.logics.TextBuilder;
 import jm.transcribebuddy.logics.storage.Category;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.TableRow;
@@ -35,7 +35,7 @@ public class OverviewController implements Initializable {
     private MainController mainController;
     // NOTE TO MYSELF: create a new class for handling overview logics
     private Classifier classifier;
-    private TextBuilder textBuilder;
+    private DetailedTextBuilder textBuilder;
     
     @FXML
     private Label projectNameLabel, subcategorySizeLabel;
@@ -99,6 +99,7 @@ public class OverviewController implements Initializable {
         });
     }
     
+    
     // Switch to ConstantText scene
     private void switchToCTS(final Stage stage) throws IOException {
         
@@ -108,16 +109,7 @@ public class OverviewController implements Initializable {
         Scene constantTextScene = new Scene(constantTextParent);
         constantTextScene.getStylesheets().add("/styles/Feather.css");
         
-        final double width = stage.getWidth();
-        final double height = stage.getHeight();
-        
-        stage.setScene(constantTextScene);
-        stage.setWidth(width);
-        stage.setHeight(height);
-        // Next code just gets stage to refresh
-        stage.setResizable(false);
-        stage.setResizable(true);
-        stage.show();
+        GuiHelper.setUpStage(stage, constantTextScene);
         
         ConstantTextController fxmlController = (ConstantTextController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);
@@ -138,16 +130,7 @@ public class OverviewController implements Initializable {
         Scene lineByLineScene = new Scene(lineByLineParent);
         lineByLineScene.getStylesheets().add("/styles/Feather.css");
         
-        final double width = stage.getWidth();
-        final double height = stage.getHeight();
-        
-        stage.setScene(lineByLineScene);
-        stage.setWidth(width);
-        stage.setHeight(height);
-        // Next code just gets stage to refresh
-        stage.setResizable(false);
-        stage.setResizable(true);
-        stage.show();
+        GuiHelper.setUpStage(stage, lineByLineScene);
         
         LineByLineController fxmlController = (LineByLineController)fxmlLoader.getController();
         fxmlController.setUpController(stage, mainController);

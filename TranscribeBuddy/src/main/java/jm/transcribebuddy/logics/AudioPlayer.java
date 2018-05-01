@@ -1,5 +1,6 @@
 package jm.transcribebuddy.logics;
 
+import jm.transcribebuddy.logics.word.TextBuilder;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;

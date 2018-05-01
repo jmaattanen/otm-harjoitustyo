@@ -1,7 +1,9 @@
 package jm.transcribebuddy.logics;
 
-import jm.transcribebuddy.logics.storage.Statement;
 import javafx.util.Duration;
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
+import jm.transcribebuddy.logics.word.DuctileTextBuilder;
+import jm.transcribebuddy.logics.word.TextBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -9,11 +11,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TextBuilderTest {
+public class DetailedTextBuilderTest {
     
-    TextBuilder textBuilder;
+    DetailedTextBuilder textBuilder;
     
-    public TextBuilderTest() {
+    public DetailedTextBuilderTest() {
     }
     
     @BeforeClass
@@ -26,19 +28,13 @@ public class TextBuilderTest {
     
     @Before
     public void setUp() {
-        textBuilder = new TextBuilder();
+        textBuilder = new DetailedTextBuilder();
     }
     
     @After
     public void tearDown() {
     }
 
-    @Test
-    public void constructorCreatesTheFirstStatement() {
-        Statement firstStatement = textBuilder.getCurrentStatement();
-        assertNotNull(firstStatement);
-    }
-    
     @Test
     public void firstStatementIsEmpty() {
         String firstStatement = textBuilder.getCurrent();
@@ -84,7 +80,7 @@ public class TextBuilderTest {
             textBuilder.selectPrev();
         }
         String prev = textBuilder.getPrev();
-        assertEquals("*Projektin alku*", prev);
+        assertEquals(TextBuilder.BEGINNINGSIGN, prev);
     }
     
     @Test
@@ -97,7 +93,7 @@ public class TextBuilderTest {
             textBuilder.selectPrev();
         // now we should be working with the first statement
         String prev = textBuilder.getPrev();
-        assertEquals("*Projektin alku*", prev);
+        assertEquals(TextBuilder.BEGINNINGSIGN, prev);
     }
     
     @Test
@@ -108,7 +104,7 @@ public class TextBuilderTest {
             textBuilder.endStatement(statement);
         // now we should be working with the last statement
         String next = textBuilder.getNext();
-        assertEquals("*Projektin loppu*", next);
+        assertEquals(TextBuilder.ENDSIGN, next);
     }
     
     @Test
@@ -195,20 +191,20 @@ public class TextBuilderTest {
     }
     
     @Test
-    public void textBuilderIsNotValidAfterInitialClear() {
-        textBuilder.initialClear();
-        boolean isValid = textBuilder.isValid();
+    public void ductileTextBuilderIsNotValidAfterInit() {
+        DuctileTextBuilder ductileTextBuilder = new DuctileTextBuilder();
+        boolean isValid = ductileTextBuilder.isValid();
         assertEquals(false, isValid);
     }
     
-    @Test
-    public void addNewStatementWorks() {
-        //textBuilder has now one statement
-        Statement statement = new Statement(null);
-        textBuilder.addNewStatement(statement);
-        int listSize = textBuilder.getAllStatements().size();
-        assertEquals(2, listSize);
-    }
+//    @Test
+//    public void addNewStatementWorks() {
+//        //textBuilder has now one statement
+//        Statement statement = new Statement(null);
+//        textBuilder.addNewStatement(statement);
+//        int listSize = textBuilder.getAllStatements().size();
+//        assertEquals(2, listSize);
+//    }
     
     
 }

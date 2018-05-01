@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import jm.transcribebuddy.dao.TextDao;
+import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.Statement;
-import jm.transcribebuddy.logics.TextBuilder;
+import jm.transcribebuddy.logics.word.TextBuilder;
 
 public class FileTextDao implements TextDao {
     
@@ -41,9 +42,9 @@ public class FileTextDao implements TextDao {
     }
     
     @Override
-    public TextBuilder load(final ProjectInfo projectInfo) {
+    public DetailedTextBuilder load(final ProjectInfo projectInfo) {
         final String textFilePath = projectInfo.getTextFilePath();
-        TextBuilder textBuilder = new TextBuilder();
+        DetailedTextBuilder textBuilder = new DetailedTextBuilder();
         
         try {
             try (Scanner reader = new Scanner(new File(textFilePath))) {
