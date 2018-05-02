@@ -12,9 +12,11 @@ Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018
 
 [Työaikakirjanpito](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-## Release
+## Julkaisut
 
 [Release 1](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko5)
+
+[Release 2](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
 
@@ -41,3 +43,12 @@ mvn jxr:jxr checkstyle:checkstyle
 Checkstyle-raportti löytyy polusta _/target/site/checkstyle.html_
 
 Checkstyle on konfiguroitu tiedostossa _checkstyle.xml_
+
+JavaDocin voi generoida komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+Generoidun JavaDocin voi avata selaimella polusta _/target/site/apidocs/index.html_
+
