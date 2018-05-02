@@ -2,7 +2,6 @@ package jm.transcribebuddy.dao.db;
 
 /***   This is DAO that is responsible for storing text info like time marks    ***/
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,30 +13,19 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.Statement;
 import jm.transcribebuddy.logics.word.TextBuilder;
 
-public class DBTextInfoDao implements TextInfoDao {
-    
-    private Connection dbConnection;
-    final private String databaseURL;
-    final private String databaseUser;
-    final private String databasePass;
+public class DBTextInfoDao extends DBDao implements TextInfoDao {
     
     final private String dbTableNameForStatements = "tb_statements";
-    final private int maxStatementLength = 1024;
     
     public DBTextInfoDao(String databaseURL, String databaseUser, String databasePass) {
-        this.databaseURL = databaseURL;
-        this.databaseUser = databaseUser;
-        this.databasePass = databasePass;
+        super(databaseURL, databaseUser, databasePass);
         
         // Create statements table if not exists
-        if (connectDatabase()) {
-            createStatementsTable();
-            closeConnection();
-        }
+        createStatementsTable();
     }
     
     @Override
-    public boolean save(final ProjectInfo projectInfo, TextBuilder textBuilder) {
+    public boolean save(final ProjectInfo projectInfo, final TextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return false;
         }
@@ -94,44 +82,22 @@ public class DBTextInfoDao implements TextInfoDao {
         return 0;
     }
     
-    public boolean testConnection() {
-        boolean result = connectDatabase();
-        closeConnection();
-        return result;
-    }
-    
-    private boolean connectDatabase() {
-        dbConnection = DBHelper.connectPostgres(databaseURL, databaseUser, databasePass);
-        return dbConnection != null;
-    }
-    
-    private void closeConnection() {
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-            } catch (SQLException ex) { }
-        }
-    }
-    
-    private boolean createStatementsTable() {
-        if (dbConnection == null) {
-            return false;
+    private void createStatementsTable() {
+        if (connectDatabase() == false) {
+            return;
         }
         try {
             String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForStatements + " (\n"
                     + "id serial PRIMARY KEY, \n"
                     + "project_id serial REFERENCES tb_projects, \n"
                     + "index integer NOT NULL, \n"
-                    + "text varchar(" + maxStatementLength + ") NOT NULL, \n"
+                    + "text text NOT NULL, \n"
                     + "start_time double precision \n"
                     + ");";
             PreparedStatement ps = dbConnection.prepareStatement(qs);
             ps.execute();
-            return true;
-        } catch (SQLException ex) {
-            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
-        }
-        return false;
+        } catch (SQLException ex) { }
+        closeConnection();
     }
     
     private boolean insertStatement(final int projectId, final int statementIndex, Statement statement) {
@@ -143,21 +109,13 @@ public class DBTextInfoDao implements TextInfoDao {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
                 ps.setInt(2, statementIndex);
-                String text = fitTextForDB(statement.toString());
-                ps.setString(3, text);
+                ps.setString(3, statement.toString());
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
                 return result == 1;
             } catch (SQLException ex) { }
         }
         return false;
-    }
-    
-    private String fitTextForDB(String text) {
-        if (text.length() > maxStatementLength) {
-            return text.substring(0, maxStatementLength);
-        }
-        return text;
     }
     
     private int deleteAllProjectStatements(final int projectId) {
@@ -194,7 +152,4 @@ public class DBTextInfoDao implements TextInfoDao {
         return statement;
     }
     
-    private boolean tableExists(final String tableName) {
-        return DBHelper.tableExists(tableName, dbConnection);
-    }
 }

@@ -2,32 +2,21 @@ package jm.transcribebuddy.dao.db;
 
 /***   DAO for storing project information like project name and resource paths    ***/
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import jm.transcribebuddy.dao.ProjectInfoDao;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
-public class DBProjectInfoDao implements ProjectInfoDao {
-    
-    private Connection dbConnection;
-    final private String databaseURL;
-    final private String databaseUser;
-    final private String databasePass;
+public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     
     final private String dbTableNameForProjects = "tb_projects";
     
     public DBProjectInfoDao(String databaseURL, String databaseUser, String databasePass) {
-        this.databaseURL = databaseURL;
-        this.databaseUser = databaseUser;
-        this.databasePass = databasePass;
+        super(databaseURL, databaseUser, databasePass);
         
         // Create statements table if not exists
-        if (connectDatabase()) {
-            createProjectsTable();
-            closeConnection();
-        }
+        createProjectsTable();
     }
     
     @Override
@@ -61,30 +50,9 @@ public class DBProjectInfoDao implements ProjectInfoDao {
         return projectInfo;
     }
     
-    public boolean testConnection() {
-        boolean result = connectDatabase();
-        closeConnection();
-        return result;
-    }
-    
-    private boolean connectDatabase() {
-        dbConnection = DBHelper.connectPostgres(databaseURL, databaseUser, databasePass);
-        return dbConnection != null;
-    }
-    
-    private void closeConnection() {
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-            } catch (SQLException ex) {
-//                System.out.println("Failed to close database connection\n" + ex);
-            }
-        }
-    }
-    
-    private boolean createProjectsTable() {
-        if (dbConnection == null) {
-            return false;
+    private void createProjectsTable() {
+        if (connectDatabase() == false) {
+            return;
         }
         try {
             String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForProjects + " (\n"
@@ -97,11 +65,8 @@ public class DBProjectInfoDao implements ProjectInfoDao {
                     + ");";
             PreparedStatement ps = dbConnection.prepareStatement(qs);
             ps.execute();
-            return true;
-        } catch (SQLException ex) {
-//            System.out.println("Failed to create " + dbTableNameForStatements + " table\n" + ex);
-        }
-        return false;
+        } catch (SQLException ex) { }
+        closeConnection();
     }
     
     private boolean insertProjectInfo(final ProjectInfo projectInfo) {
@@ -247,7 +212,4 @@ public class DBProjectInfoDao implements ProjectInfoDao {
         return 0;
     }
     
-    private boolean tableExists(final String tableName) {
-        return DBHelper.tableExists(tableName, dbConnection);
-    }
 }

@@ -48,4 +48,5 @@
 |       |      | Testejä luokittelijalle |
 | 30.4. | ,5   | Dokumentointia |
 | 1.5.  | 2    | Koodin refaktorointia |
-| yht   | 79   | | 
+| 2.5.  | 1    | Koodin refaktorointia |
+| yht   | 80   | | 
