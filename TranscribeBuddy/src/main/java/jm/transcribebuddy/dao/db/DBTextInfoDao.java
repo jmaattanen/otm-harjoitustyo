@@ -15,7 +15,7 @@ import jm.transcribebuddy.logics.word.TextBuilder;
 
 public class DBTextInfoDao extends DBDao implements TextInfoDao {
     
-    final private String dbTableNameForStatements = "tb_statements";
+    final public static String STATEMENTSTABLE = "tb_statements";
     
     public DBTextInfoDao(String databaseURL, String databaseUser, String databasePass) {
         super(databaseURL, databaseUser, databasePass);
@@ -87,24 +87,18 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
             return;
         }
         try {
-            String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForStatements + " (\n"
-                    + "id serial PRIMARY KEY, \n"
-                    + "project_id serial REFERENCES tb_projects, \n"
-                    + "index integer NOT NULL, \n"
-                    + "text text NOT NULL, \n"
-                    + "start_time double precision \n"
-                    + ");";
-            PreparedStatement ps = dbConnection.prepareStatement(qs);
+            String sqlQuery = getCreateStatementsTableQuery();
+            PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
             ps.execute();
-        } catch (SQLException ex) { }
+        } catch (SQLException ex) { 
+//            System.out.println("Failed to create table.\n" + ex);
+        }
         closeConnection();
     }
     
     private boolean insertStatement(final int projectId, final int statementIndex, Statement statement) {
-        if (tableExists(dbTableNameForStatements)) {
-            String sqlQuery = "INSERT INTO " + dbTableNameForStatements
-                    + " (project_id, index, text, start_time) VALUES (?, ?, ?, ?) "
-                    + "ON CONFLICT DO NOTHING";
+        if (tableExists(STATEMENTSTABLE)) {
+            String sqlQuery = getInsertStatementQuery();
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
@@ -113,14 +107,16 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
                 return result == 1;
-            } catch (SQLException ex) { }
+            } catch (SQLException ex) {
+                System.out.println("insert error:\n" + ex);
+            }
         }
         return false;
     }
     
     private int deleteAllProjectStatements(final int projectId) {
-        if (tableExists(dbTableNameForStatements)) {
-            String sqlQuery = "DELETE FROM " + dbTableNameForStatements + " WHERE project_id = ?";
+        if (tableExists(STATEMENTSTABLE)) {
+            String sqlQuery = "DELETE FROM " + STATEMENTSTABLE + " WHERE project_id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
@@ -134,8 +130,8 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
     }
     
     private Statement loadStatement(final int projectId, final int statementIndex, Statement statement) {
-        if (tableExists(dbTableNameForStatements)) {
-            String sqlQuery = "SELECT start_time FROM " + dbTableNameForStatements + " WHERE project_id = ? AND index = ?";
+        if (tableExists(STATEMENTSTABLE)) {
+            String sqlQuery = getLoadStatementQuery();
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);

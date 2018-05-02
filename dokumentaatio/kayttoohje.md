@@ -21,6 +21,12 @@ databaseURL=jdbc:postgresql://localhost:5432/tietokantasinimi
 Tietokantayhteys ei ole välttämätön sovelluksen käytön kannalta, mutta se mahdollistaa mm. virkkeiden merkkien ja ääniraidan sijainnin muistamisen suorituskertojen välillä. Litterointiprojektin leipäteksti itsessään tallennetaan *.txt-muotoiseen tiedostoon.
 [Postgresin sivuilta](https://jdbc.postgresql.org/documentation/head/connect.html) löytyy lisää ohjeita tietokantaan yhdistämisestä.
 
+Sovellus tukee nyt myös SQLite-tietokantaa. Seuraava konfiguraatio luo _munbeissi.db_-nimisen tietokannan sovelluksen juureen:
+
+```
+databaseURL=jdbc:sqlite:munbeissi.db
+```
+
 
 ## Näppäinkomennot
 

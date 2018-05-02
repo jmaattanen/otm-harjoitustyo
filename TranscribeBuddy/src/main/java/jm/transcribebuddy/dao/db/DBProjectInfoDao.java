@@ -10,7 +10,7 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 
 public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     
-    final private String dbTableNameForProjects = "tb_projects";
+    final public static String PROJECTSTABLE = "tb_projects";
     
     public DBProjectInfoDao(String databaseURL, String databaseUser, String databasePass) {
         super(databaseURL, databaseUser, databasePass);
@@ -55,25 +55,18 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
             return;
         }
         try {
-            String qs = "CREATE TABLE IF NOT EXISTS " + dbTableNameForProjects + " (\n"
-                    + "id serial UNIQUE, \n"
-                    + "name varchar(30) NOT NULL, \n"
-                    + "description varchar(512), \n"
-                    + "text_file_path varchar(256) NOT NULL, \n"
-                    + "audio_file_path varchar(256), \n"
-                    + "PRIMARY KEY(id) \n"
-                    + ");";
-            PreparedStatement ps = dbConnection.prepareStatement(qs);
+            String sqlQuery = getCreateProjectsTableQuery();
+            PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
             ps.execute();
-        } catch (SQLException ex) { }
+        } catch (SQLException ex) {
+//            System.out.println("Failed to create table.\n" + ex);
+        }
         closeConnection();
     }
     
     private boolean insertProjectInfo(final ProjectInfo projectInfo) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "INSERT INTO " + dbTableNameForProjects
-                    + " (name, description, text_file_path, audio_file_path)"
-                    + "VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING";
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = getInsertProjectQuery();
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 final String textFilePath = projectInfo.getTextFilePath();
@@ -86,14 +79,16 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
                 final int projectId = getProjectId(textFilePath);
                 projectInfo.setId(projectId);
                 return result == 1;
-            } catch (SQLException ex) { }
+            } catch (SQLException ex) {
+//                System.out.println("insert error:\n" + ex);
+            }
         }
         return false;
     }
     
     private boolean updateProjectInfo(final ProjectInfo projectInfo) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "UPDATE " + dbTableNameForProjects + " SET "
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = "UPDATE " + PROJECTSTABLE + " SET "
                     + "name = ?, description = ?, "
                     + "text_file_path = ?, audio_file_path = ? "
                     + "WHERE id = ?";
@@ -112,12 +107,12 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private int deleteProject(final int projectId) {
-        if (tableExists(dbTableNameForProjects)) {
+        if (tableExists(PROJECTSTABLE)) {
             // Delete all statements first
             DBTextInfoDao textInfoDao = new DBTextInfoDao(databaseURL, databaseUser, databasePass);
             textInfoDao.delete(projectId);
             // Then delete project information
-            String sqlQuery = "DELETE FROM " + dbTableNameForProjects + " WHERE id = ?";
+            String sqlQuery = "DELETE FROM " + PROJECTSTABLE + " WHERE id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setInt(1, projectId);
@@ -129,8 +124,8 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private void deleteProjectsThatUse(final String textFilePath) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = "SELECT  id FROM " + PROJECTSTABLE
                     + " WHERE text_file_path = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
@@ -145,9 +140,9 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private ProjectInfo loadProjectInfo(final ProjectInfo projectInfo) {
-        if (tableExists(dbTableNameForProjects)) {
+        if (tableExists(PROJECTSTABLE)) {
             String sqlQuery = "SELECT id, name, description, audio_file_path"
-                    + " FROM " + dbTableNameForProjects + " WHERE text_file_path = ?";
+                    + " FROM " + PROJECTSTABLE + " WHERE text_file_path = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
                 ps.setString(1, projectInfo.getTextFilePath());
@@ -164,8 +159,8 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private boolean projectExists(final int projectId) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  name FROM " + dbTableNameForProjects
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = "SELECT  name FROM " + PROJECTSTABLE
                     + " WHERE id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
@@ -180,8 +175,8 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private boolean hasSameTextFilePath(final int projectId, final String textFilePath) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  text_file_path FROM " + dbTableNameForProjects
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = "SELECT  text_file_path FROM " + PROJECTSTABLE
                     + " WHERE id = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
@@ -197,8 +192,8 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     }
     
     private int getProjectId(final String textFilePath) {
-        if (tableExists(dbTableNameForProjects)) {
-            String sqlQuery = "SELECT  id FROM " + dbTableNameForProjects
+        if (tableExists(PROJECTSTABLE)) {
+            String sqlQuery = "SELECT  id FROM " + PROJECTSTABLE
                     + " WHERE text_file_path = ?";
             try {
                 PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
