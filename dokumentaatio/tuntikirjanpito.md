@@ -48,7 +48,7 @@
 |       |      | Testejä luokittelijalle |
 | 30.4. | ,5   | Dokumentointia |
 | 1.5.  | 2    | Koodin refaktorointia |
-| 2.5.  | 5    | Koodin refaktorointia |
+| 2.5.  | 7    | Koodin refaktorointia |
 |       |      | Sovelluksen muokkaaminen SQLite-yhteensopivaksi |
 |       |      | JavaDoc-dokumentointia |
-| yht   | 84   | | 
+| yht   | 86   | | 

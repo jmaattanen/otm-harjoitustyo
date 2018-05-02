@@ -97,7 +97,7 @@ public class Statement {
      * Method checks if this statement belongs to given sub category.
      * 
      * @see jm.transcribebuddy.logics.storage.Category
-     * @param subcategory
+     * @param subcategory Comparable sub category.
      * @return True if belongs to given sub category.
      */
     public boolean isInSubcategory(Category subcategory) {
