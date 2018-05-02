@@ -1,13 +1,16 @@
 package jm.transcribebuddy.logics;
 
-/***   This is the supreme leader of application logics   ***/
-
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.AppSettings;
 import javafx.util.Duration;
 import jm.transcribebuddy.dao.ProjectDao;
 
+/**
+ * The supreme leader of application logics.
+ * 
+ * @author juham
+ */
 public class MainController {
     final private AppSettings appSettings;
     private ProjectInfo projectInfo;
@@ -52,7 +55,7 @@ public class MainController {
     // before better solution is made
     
     
-    /*******            DAO METHODS            *******/
+    /* ******            DAO METHODS            ****** */
     
     public String getDaoError() {
         return projectDao.getError();
@@ -103,7 +106,7 @@ public class MainController {
         return result;
     }
     
-    /*******            PROJECT INFO METHODS            *******/
+    /* ******            PROJECT INFO METHODS            ****** */
     
     public String getSaveDirectory() {
         return projectInfo.getSaveDirectory();
@@ -126,7 +129,7 @@ public class MainController {
     }
     
     
-    /*******            WORD PROCESSING METHODS            *******/
+    /* ******            WORD PROCESSING METHODS            ****** */
     
     public String getPrevStatement() {
         return textBuilder.getPrev();
@@ -206,7 +209,7 @@ public class MainController {
     
     
     
-    /*******            AUDIO PROCESSING METHODS            *******/
+    /* ******            AUDIO PROCESSING METHODS            ****** */
     
     public boolean openAudioFile(final String audioFileURI) {
         if (audioFileURI == null || audioFileURI.isEmpty()) {
