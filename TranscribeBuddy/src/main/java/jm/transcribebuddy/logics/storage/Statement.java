@@ -1,14 +1,24 @@
 package jm.transcribebuddy.logics.storage;
 
-/***   A single node object of sentences managed by TextBuilder   ***/
-
 import javafx.util.Duration;
 
+/**
+ * A single node object of sentences managed by TextBuilder.
+ * 
+ * @author Juha
+ */
 public class Statement {
     private String statement;
     private Duration startTime;
     private Category subcategory;
     
+    /**
+     * Creates a new Statement object with empty phrase and zero time mark.
+     * 
+     * @see jm.transcribebuddy.logics.storage.Category
+     * @param subcategory The sub category to which the statement is added.
+     * Can be null.
+     */
     public Statement(Category subcategory) {
         statement = "";
         startTime = Duration.seconds(0);
@@ -56,9 +66,8 @@ public class Statement {
     
     /**
      * Method copies the trimmed string to the Statement instance.
-     * NULL won't affect.
      * 
-     * @param statement 
+     * @param statement NULL won't affect.
      */
     public void set(String statement) {
         if (statement != null) {
@@ -66,6 +75,13 @@ public class Statement {
         }
     }
     
+    /**
+     * Method puts this statement into the given sub category and
+     * update category sizes.
+     * 
+     * @see jm.transcribebuddy.logics.storage.Category
+     * @param subcategory NULL won't affect.
+     */
     public void setSubcategory(Category subcategory) {
         if (subcategory != null) {
             if (this.subcategory != null) {
@@ -77,6 +93,13 @@ public class Statement {
         }
     }
     
+    /**
+     * Method checks if this statement belongs to given sub category.
+     * 
+     * @see jm.transcribebuddy.logics.storage.Category
+     * @param subcategory
+     * @return True if belongs to given sub category.
+     */
     public boolean isInSubcategory(Category subcategory) {
         return this.subcategory == subcategory;
     }
@@ -87,10 +110,21 @@ public class Statement {
         }
     }
     
+    /**
+     * The time mark of this statement can be set by this method.
+     * 
+     * @param startTime Negative values ​​will be changed to zero.
+     */
     public void setStartTime(Duration startTime) {
         this.startTime = startTime;
         checkStartTime();
     }
+    /**
+     * The time mark of this statement can be set by this method.
+     * 
+     * @param startTimeInMillis Time mark in milliseconds.
+     * Negative values ​​will be changed to zero.
+     */
     public void setStartTime(double startTimeInMillis) {
         startTime = Duration.millis(startTimeInMillis);
         checkStartTime();
@@ -100,6 +134,11 @@ public class Statement {
         return startTime.toMillis();
     }
     
+    /**
+     * This method returns the time mark of this statement.
+     * 
+     * @return String in "H:MM:SS" format.
+     */
     public String startTimeToString() {
         Integer seconds;
         seconds = (int) (startTime.toSeconds());

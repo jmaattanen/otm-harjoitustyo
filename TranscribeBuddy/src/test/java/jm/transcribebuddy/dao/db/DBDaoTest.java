@@ -54,7 +54,7 @@ public class DBDaoTest {
     @Test
     public void sqliteCanBeConnected() {
 //        DBDao dbDao = new DBDao("testLiteBase.db");
-        DBDao dbDao = new DBDao("testLiteBase.db");
+        DBDao dbDao = new DBDao("testdata/testLiteBase.db");
         boolean connected = dbDao.connectDatabase();
         dbDao.closeConnection();
         assertTrue(connected);

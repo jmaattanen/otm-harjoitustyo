@@ -1,17 +1,28 @@
 package jm.transcribebuddy.logics.storage;
 
-/***   A tree node for categorizing statements   ***/
-
 import java.util.ArrayList;
 
+/**
+ * A tree node object for categorizing Statements.
+ * The category name maximum length is set to 30. Names are unique.
+ * Tree leaves are called 'subcategories' in this project.
+ * 
+ * @author Juha
+ */
 public class Category implements Comparable {
     private String name;
     private Category parent;
     final private ArrayList<Category> children;
-    int statementCounter;
+    private int statementCounter;
     
     final static private int MAXNAMELENGTH = 30;
     
+    /**
+     * The root of category tree can be created by this constructor.
+     * 
+     * @param name Category name. NULL or empty string is
+     * changed to "Undefined". Name should have up to 30 characters.
+     */
     public Category(String name) {
         this.name = getValidName(name);
         parent = this;
@@ -19,6 +30,12 @@ public class Category implements Comparable {
         statementCounter = 0;
     }
     
+    /**
+     * 
+     * @param name Category name. NULL or empty string is
+     * changed to "Undefined". Name should have up to 30 characters.
+     * @param parent The upper category to which this belongs.
+     */
     public Category(String name, Category parent) {
         this.name = getValidName(name);
         if (parent == null) {
@@ -30,6 +47,13 @@ public class Category implements Comparable {
         statementCounter = 0;
     }
     
+    /**
+     * This method edits the name in the desired format. 
+     * 
+     * @param name Category name. Name should have up to 30 characters.
+     * @return "Undefined" if name is NULL or empty string. Otherwise the
+     * name in trimmed form.
+     */
     public static String getValidName(String name) {
         if (name == null || name.isEmpty()) {
             return "Undefined";
@@ -42,6 +66,13 @@ public class Category implements Comparable {
         return name;
     }
     
+    /**
+     * Renames the category. Method won't check if the name is still unique.
+     * 
+     * @param name Category name. Name should have up to 30 characters.
+     * NULL or empty string won't affect.
+     * @return True if the category was renamed.
+     */
     public boolean rename(String name) {
         if (name == null || name.isEmpty()) {
             return false;
@@ -50,6 +81,10 @@ public class Category implements Comparable {
         return true;
     }
     
+    /**
+     * 
+     * @return The number of statements in this sub category.
+     */
     public int getSize() {
         return statementCounter;
     }
@@ -74,8 +109,16 @@ public class Category implements Comparable {
         }
     }
     
+    /**
+     * Removes the child node from the tree if it doesn't have any
+     * children or statements.
+     * 
+     * @see jm.transcribebuddy.logics.storage.Statement
+     * @param child The node to be removed.
+     * @return True if the child was removed.
+     */
     public boolean removeChild(Category child) {
-        if (child.children.isEmpty()) {
+        if (child.children.isEmpty() && child.statementCounter == 0) {
             child.parent = null;
             children.remove(child);
             return true;
@@ -83,9 +126,17 @@ public class Category implements Comparable {
         return false;
     }
     
+    /**
+     * Call this method when a Statement is added to this sub category.
+     * @see jm.transcribebuddy.logics.storage.Statement
+     */
     public void addStatement() {
         statementCounter++;
     }
+    /**
+     * Call this method when a Statement is removed from this sub category.
+     * @see jm.transcribebuddy.logics.storage.Statement
+     */
     public void removeStatement() {
         statementCounter--;
     }
