@@ -1,17 +1,30 @@
 package jm.transcribebuddy.logics;
 
+import java.io.File;
+import java.io.IOException;
 import jm.transcribebuddy.logics.storage.AppSettings;
+import jm.transcribebuddy.logics.storage.ProjectInfo;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
 public class MainControllerTest {
     
     MainController mainController;
     AppSettings settings;
+    
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+    
+    public File testFolder;
+    public static String databaseURL, liteFolder, sqlURL, textFilePath;
+    public static AppSettings sqliteSettings;
+    
     
     public MainControllerTest() {
     }
@@ -117,4 +130,58 @@ public class MainControllerTest {
         assertEquals(replacement, statement);
     }
     
+    
+    
+    
+    
+    @Test
+    public void setUpSQLiteMadeByHasteProduction() throws IOException {
+        testFolder = tempFolder.newFolder("testfolder");
+        liteFolder = testFolder.getAbsolutePath();
+        System.out.println("lite created: " + liteFolder);
+        databaseURL = testFolder.getAbsolutePath() + "\\testbase.db";
+        sqlURL = "jdbc:sqlite:" + databaseURL;
+        sqlURL = sqlURL.replaceAll("\\\\", "/");
+//        System.out.println("testFile:   " + testFile.getAbsolutePath());
+//        System.out.println("testFolder: " + testFolder.getAbsolutePath());
+//        System.out.println(sqlURL);
+        File file = new File(testFolder.getAbsolutePath() + "\\testbase.db");
+//        dbDao = new DBDao(sqlURL);
+        sqliteSettings = new AppSettings(sqlURL, "", "");
+        mainController = new MainController(sqliteSettings);
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setProjectName("Lite Test");
+        projectInfo.setDescription("SQLiteä tässä testeillaan.");
+        mainController.setProjectInfo(projectInfo);
+        String name = mainController.getProjectName();
+        System.out.println("Desc: " + name);
+        System.out.println("File exists: " + file.exists());
+        mainController.endStatement("Eka.");
+        mainController.set("Toka.");
+        textFilePath = liteFolder + "\\testfile.txt";
+        System.out.println("TXT file: " + textFilePath);
+        boolean saved = mainController.saveProject(textFilePath);
+        assertEquals("Lite Test", name);
+        assertTrue(saved);
+    }
+    
+//    @Test
+//    public void testLoadMadeByHasteProduction() {
+//        mainController = new MainController(sqliteSettings);
+//        boolean result = mainController.loadProject(textFilePath);
+//        System.out.println(sqliteSettings.getDatabaseURL());
+////        String name = mainController.getProjectName();
+////        assertEquals("Lite Test", name);
+//        File file = new File(textFilePath);
+//        assertTrue(file.exists());
+////        assertTrue(result);
+//    }
+    
+    @Test
+    public void testDeleteFile() throws IOException{
+        System.out.println("deleting lite: " + liteFolder);
+        testFolder = new File(liteFolder);
+        testFolder.delete();
+        assertFalse(testFolder.exists());
+    }
 }
