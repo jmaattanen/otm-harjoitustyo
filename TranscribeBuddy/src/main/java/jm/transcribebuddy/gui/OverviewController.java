@@ -199,5 +199,6 @@ public class OverviewController implements Initializable {
             setUpSubcategories();
             subCategoryComboBox.setValue(subcategory);
         }
+//        System.out.println("DEBUG\n" + classifier);
     }
 }

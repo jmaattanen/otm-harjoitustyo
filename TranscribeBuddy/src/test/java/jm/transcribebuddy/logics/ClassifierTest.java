@@ -30,7 +30,8 @@ public class ClassifierTest {
     
     @Before
     public void setUp() {
-        classifier = new Classifier();
+        // Set the height of the tree to 2
+        classifier = new Classifier(2);
         highestUndefined = classifier.getUndefinedSubcategory();
     }
     
@@ -89,11 +90,12 @@ public class ClassifierTest {
     
     @Test
     public void realCategoriesCanBeRemoved() {
-        final String className = "Luokka";
-        Category subcategory = classifier.addSubcategory(className);
+        final String categoryName = "Luokka";
+        Category subcategory = classifier.addSubcategory(categoryName);
+        assertNotEquals(highestUndefined, subcategory);
         classifier.removeIfEmpty(subcategory);
         subcategory = null;
-        subcategory = classifier.getSubcategory(className);
+        subcategory = classifier.getSubcategory(categoryName);
         assertEquals(highestUndefined, subcategory);
     }
     
@@ -106,10 +108,10 @@ public class ClassifierTest {
     
     @Test
     public void classifierReturnsSubcategoryCalledByName() {
-        final String className = "Tekoälylliset";
-        classifier.addSubcategory(className);
-        Category subcategory = classifier.getSubcategory(className);
-        assertEquals(className, subcategory.toString());
+        final String categoryName = "Tekoälylliset";
+        classifier.addSubcategory(categoryName);
+        Category subcategory = classifier.getSubcategory(categoryName);
+        assertEquals(categoryName, subcategory.toString());
     }
     
     @Test
@@ -162,10 +164,49 @@ public class ClassifierTest {
         Iterator<Category> cat = subcategories.iterator();
         int matchCounter = 0;
         while (cat.hasNext() && name.hasNext()) {
-            if (cat.next().toString().equals(name.next())) {
-                matchCounter++;
-            }
+            assertTrue(cat.next().toString().equals(name.next()));
+            matchCounter++;
         }
         assertEquals(total, matchCounter);
     }
+    
+    @Test
+    public void headcategoriesCanBeAdded() {
+        final String scName = "Uusi alaluokka";
+        final String hcName = "Uusi yläluokka";
+        ArrayList<Category> categories;
+        Category subcategory = classifier.addSubcategory(scName);
+        categories = classifier.getSubcategories();
+        // Contains "Undefined" and "Uusi alaluokka"
+        assertEquals(2, categories.size());
+        Category headcategory = classifier.addHeadcategory(hcName, subcategory);
+        assertEquals(hcName, headcategory.toString());
+        categories = classifier.getHeadcategories();
+        // Contains "Undefined" and "Uusi yläluokka"
+        assertEquals(2, categories.size());
+        
+    }
+    
+    @Test
+    public void testClassifierToString() {
+        String printed = classifier.toString();
+        String expected =
+                "[ ]\n" +
+                "[ Undefined | ]\n" +
+                "[ Undefined | ]\n";
+        assertEquals(expected, printed);
+    }
+    
+    @Test
+    public void testClassifierToString2() {
+        Category sc = classifier.addSubcategory("Ala");
+        classifier.addHeadcategory("Ylä", sc);
+        String printed = classifier.toString();
+        String expected =
+                "[ ]\n" +
+                "[ Undefined | Ylä | ]\n" +
+                "[ Undefined | Ala | ]\n";
+        assertEquals(expected, printed);
+    }
+    
 }

@@ -89,6 +89,10 @@ public class Category implements Comparable {
         return statementCounter;
     }
     
+    public boolean hasChildren() {
+        return !children.isEmpty();
+    }
+    
     public Category getParent() {
         return parent;
     }
@@ -110,20 +114,15 @@ public class Category implements Comparable {
     }
     
     /**
-     * Removes the child node from the tree if it doesn't have any
-     * children or statements.
+     * Removes the child node from the children of this node.
      * 
      * @see jm.transcribebuddy.logics.storage.Statement
      * @param child The node to be removed.
      * @return True if the child was removed.
      */
     public boolean removeChild(Category child) {
-        if (child.children.isEmpty() && child.statementCounter == 0) {
-            child.parent = null;
-            children.remove(child);
-            return true;
-        }
-        return false;
+        child.parent = null;
+        return children.remove(child);
     }
     
     /**

@@ -10,6 +10,7 @@
     <suppress files="jm.transcribebuddy.gui.OverviewController.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.MainApp.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.popups.AlertBox.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="jm.transcribebuddy.gui.popups.CategoryForm.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.popups.GuiHelper.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="jm.transcribebuddy.gui.popups.ProjectForm.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

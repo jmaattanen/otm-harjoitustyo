@@ -52,7 +52,12 @@ public class CategoryForm {
             public void handle(ActionEvent event) {
                 String newName = categoryNameField.getText();
                 // Check if isn't unique!!
-                category.rename(newName);
+                Category subcategory = classifier.getSubcategory(newName);
+                if (classifier.isRealCategory(subcategory)) {
+                    // Combine categories
+                } else {
+                    category.rename(newName);
+                }
                 String newParentName = parentNameField.getText();
                 classifier.addHeadcategory(newParentName, category);
                 window.close();

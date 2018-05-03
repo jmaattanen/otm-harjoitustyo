@@ -1,21 +1,35 @@
 package jm.transcribebuddy.logics;
 
-/***   A tree structure for classification of statements   ***/
-
 import java.util.ArrayList;
 import jm.transcribebuddy.logics.storage.Category;
 
+/**
+ * A tree structure for statement classification.
+ * 
+ * @author juham
+ */
 public class Classifier {
     final private Category root;
     final private Category highestUndefined;
     
     // Max depth should have value 1 or greater
-    final private int maxDepth = 2;
+    final private int maxDepth;
     final String undefinedName = "Undefined";
     
     public Classifier() {
+        this(2);
+    }
+    
+    // Heigtht limited between 1 and 6
+    public Classifier(int heightOfTree) {
         root = new Category("*ROOT*");
-        
+        if (heightOfTree < 1) {
+            maxDepth = 1;
+        } else if (heightOfTree > 6) {
+            maxDepth = 6;
+        } else {
+            maxDepth = heightOfTree;
+        }
         // Create one undefined category for each depth
         Category parent = root;
         for (int i = 0; i < maxDepth; i++) {
@@ -42,6 +56,14 @@ public class Classifier {
         return maxDepth;
     }
     
+    public ArrayList<Category> getSubcategories() {
+        return getCategories(maxDepth);
+    }
+    
+    public ArrayList<Category> getHeadcategories() {
+        return getCategories(maxDepth - 1);
+    }
+    
     public ArrayList<Category> getCategories(final int depth) {
         if (depth < 1 || depth > maxDepth) {
             return new ArrayList<>();
@@ -51,38 +73,31 @@ public class Classifier {
         return categories;
     }
     
-    public ArrayList<Category> getSubcategories() {
-        return getCategories(maxDepth);
-    }
-    
-    public ArrayList<Category> getHeadcategories() {
-        return getCategories(maxDepth - 1);
-    }
-    
     private void addChildren(
-            ArrayList<Category> result, Category node,
+            ArrayList<Category> generation, Category node,
             final int requestedDepth, int depth
     ) {
         ArrayList<Category> children = node.getChildren();
         if (depth >= requestedDepth) {
-            result.addAll(children);
+            generation.addAll(children);
             return;
         }
         for (Category c : children) {
-            addChildren(result, c, requestedDepth, depth + 1);
+            addChildren(generation, c, requestedDepth, depth + 1);
         }
     }
     
-    private int getDepth(Category category) {
+    private int getDepth(final Category category) {
         int depth = 0;
-        while (category != root) {
-            category = category.getParent();
+        Category node = category;
+        while (node != root) {
+            node = node.getParent();
             depth++;
         }
         return depth;
     }
     
-    private boolean replaceParent(final Category category, Category newParent) {
+    private boolean replaceParent(final Category category, final Category newParent) {
         if (!isRealCategory(category) || newParent == null) {
             return false;
         }
@@ -91,7 +106,7 @@ public class Classifier {
         }
         Category oldParent = category.getParent();
         oldParent.removeChild(category);
-        // should check if was only child
+        removeCategoryIfIsLonely(oldParent);
         category.setParent(newParent);
         newParent.addChild(category);
         return true;
@@ -119,25 +134,21 @@ public class Classifier {
     }
     
     public Category addHeadcategory(String name, final Category subcategory) {
-//System.out.println("DEBUG addHeadcategory");
         if (name == null || name.isEmpty() || name.equals(undefinedName)
                 || maxDepth < 2 || getDepth(subcategory) != maxDepth
         ) {
             return highestUndefined.getParent();
         }
-//System.out.println("still going");
         name = Category.getValidName(name);
         ArrayList<Category> headcategories = getCategories(maxDepth - 1);
         for (Category hc : headcategories) {
             if (name.equals(hc.toString())) {
                 // Name exists so no addition needed
-//System.out.println("found one");
                 replaceParent(subcategory, hc);
                 return hc;
             }
         }
         // Create a new headcategory
-//System.out.println("creating");
         Category parent = highestUndefined.getParent().getParent();
         Category headcategory = new Category(name, parent);
         parent.addChild(headcategory);
@@ -145,24 +156,23 @@ public class Classifier {
         return headcategory;
     }
     
-    private void removeCategory(Category category) {
-        if (isRealCategory(category)) {
+    private void removeCategoryIfIsLonely(Category category) {
+        if (isRealCategory(category) && category.hasChildren() == false) {
             Category parent = category.getParent();
             parent.removeChild(category);
-            if (parent.getChildren().isEmpty()) {
-                removeCategory(parent);
-            }
+            removeCategoryIfIsLonely(parent);
         }
     }
     
     public void removeIfEmpty(Category subcategory) {
         if (isRealCategory(subcategory) && subcategory.getSize() == 0) {
-            removeCategory(subcategory);
+            removeCategoryIfIsLonely(subcategory);
         }
     }
     
-    public Category getSubcategory(final String name) {
-        if (name == null || name.isEmpty() || name.equals(undefinedName)) {
+    public Category getSubcategory(String name) {
+        name = Category.getValidName(name);
+        if (name.equals(undefinedName)) {
             return highestUndefined;
         }
         ArrayList<Category> subcategories = getCategories(maxDepth);
@@ -194,4 +204,17 @@ public class Classifier {
         return undefinedName;
     }
     
+    @Override
+    public String toString() {
+        String categoryTree = "";
+        for (int depth = 0; depth <= maxDepth; depth++) {
+            categoryTree += "[ ";
+            ArrayList<Category> categories = getCategories(depth);
+            for (Category c : categories) {
+                categoryTree += c.toString() + " | ";
+            }
+            categoryTree += "]\n";
+        }
+        return categoryTree;
+    }
 }
