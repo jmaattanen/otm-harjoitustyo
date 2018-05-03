@@ -26,11 +26,16 @@ public class Classifier {
         highestUndefined = parent;
     }
     
-    private boolean isRealCategory(Category category) {
+    public boolean isRealCategory(Category category) {
         if (category == null || category == root) {
             return false;
         }
         return !undefinedName.equals(category.toString());
+    }
+    
+    public boolean isRoot(Category category) {
+        // compares only names atm!
+        return category == root;
     }
     
     public int getHeightOfTree() {
@@ -50,6 +55,10 @@ public class Classifier {
         return getCategories(maxDepth);
     }
     
+    public ArrayList<Category> getHeadcategories() {
+        return getCategories(maxDepth - 1);
+    }
+    
     private void addChildren(
             ArrayList<Category> result, Category node,
             final int requestedDepth, int depth
@@ -62,6 +71,30 @@ public class Classifier {
         for (Category c : children) {
             addChildren(result, c, requestedDepth, depth + 1);
         }
+    }
+    
+    private int getDepth(Category category) {
+        int depth = 0;
+        while (category != root) {
+            category = category.getParent();
+            depth++;
+        }
+        return depth;
+    }
+    
+    private boolean replaceParent(final Category category, Category newParent) {
+        if (!isRealCategory(category) || newParent == null) {
+            return false;
+        }
+        if (getDepth(category) != getDepth(newParent) + 1) {
+            return false;
+        }
+        Category oldParent = category.getParent();
+        oldParent.removeChild(category);
+        // should check if was only child
+        category.setParent(newParent);
+        newParent.addChild(category);
+        return true;
     }
     
     public Category addSubcategory(String name) {
@@ -78,11 +111,38 @@ public class Classifier {
                 return sc;
             }
         }
-        // Create a new category
+        // Create a new subcategory
         Category parent = highestUndefined.getParent();
         Category subcategory = new Category(name, parent);
         parent.addChild(subcategory);
         return subcategory;
+    }
+    
+    public Category addHeadcategory(String name, final Category subcategory) {
+//System.out.println("DEBUG addHeadcategory");
+        if (name == null || name.isEmpty() || name.equals(undefinedName)
+                || maxDepth < 2 || getDepth(subcategory) != maxDepth
+        ) {
+            return highestUndefined.getParent();
+        }
+//System.out.println("still going");
+        name = Category.getValidName(name);
+        ArrayList<Category> headcategories = getCategories(maxDepth - 1);
+        for (Category hc : headcategories) {
+            if (name.equals(hc.toString())) {
+                // Name exists so no addition needed
+//System.out.println("found one");
+                replaceParent(subcategory, hc);
+                return hc;
+            }
+        }
+        // Create a new headcategory
+//System.out.println("creating");
+        Category parent = highestUndefined.getParent().getParent();
+        Category headcategory = new Category(name, parent);
+        parent.addChild(headcategory);
+        replaceParent(subcategory, headcategory);
+        return headcategory;
     }
     
     private void removeCategory(Category category) {

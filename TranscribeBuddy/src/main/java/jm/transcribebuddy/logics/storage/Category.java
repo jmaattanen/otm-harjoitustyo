@@ -104,7 +104,7 @@ public class Category implements Comparable {
     }
     
     public void addChild(Category child) {
-        if (child != null) {
+        if (child != null && !children.contains(child)) {
             children.add(child);
         }
     }

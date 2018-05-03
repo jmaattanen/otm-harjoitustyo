@@ -38,7 +38,7 @@ public class DBDao {
         if (databaseURL.contains("jdbc:postgresql:")) {
             sqlHelper = new PostgresHelper();
             dbType = DatabaseType.POSTGRES;
-        } else if(databaseURL.contains("jdbc:sqlite:")) {
+        } else if (databaseURL.contains("jdbc:sqlite:")) {
             sqlHelper = new SQLiteHelper();
             dbType = DatabaseType.SQLITE;
         } else {
