@@ -11,17 +11,20 @@ public class DBDao {
     
     protected Connection dbConnection;
     final DatabaseType dbType;
+    SQLHelper sqlHelper;
     final protected String databaseURL;
     final protected String databaseUser;
     final protected String databasePass;
     
     
-    public DBDao(String sqliteDBName) {
-        if (sqliteDBName != null && sqliteDBName.contains(".db")) {
-            this.databaseURL = "jdbc:sqlite:" + sqliteDBName;
+    public DBDao(String sqliteDBPath) {
+        if (sqliteDBPath != null && sqliteDBPath.contains(".db")) {
+            this.databaseURL = "jdbc:sqlite:" + sqliteDBPath;
+            sqlHelper = new SQLiteHelper();
             dbType = DatabaseType.SQLITE;
         } else {
             this.databaseURL = "";
+            sqlHelper = null;
             dbType = DatabaseType.UNKNOWN;
         }
         this.databaseUser = "";
@@ -32,15 +35,17 @@ public class DBDao {
         this.databaseURL = databaseURL;
         this.databaseUser = databaseUser;
         this.databasePass = databasePass;
-        if (databaseURL.contains("jdbc:postgresql")) {
+        if (databaseURL.contains("jdbc:postgresql:")) {
+            sqlHelper = new PostgresHelper();
             dbType = DatabaseType.POSTGRES;
-        } else if(databaseURL.contains("jdbc:sqlite")) {
+        } else if(databaseURL.contains("jdbc:sqlite:")) {
+            sqlHelper = new SQLiteHelper();
             dbType = DatabaseType.SQLITE;
         } else {
+            sqlHelper = null;
             dbType = DatabaseType.UNKNOWN;
         }
     }
-    
     
     public boolean testConnection() {
         boolean result = connectDatabase();
@@ -52,15 +57,10 @@ public class DBDao {
         if (dbConnection != null) {
             return true;
         }
-        switch (dbType) {
-            case POSTGRES:
-                dbConnection = PostgresHelper.connectPostgres(databaseURL, databaseUser, databasePass);
-                break;
-            case SQLITE:
-                dbConnection = SQLiteHelper.connectSQLite(databaseURL);
-                break;
-            default:
+        if (sqlHelper == null) {
+            return false;
         }
+        dbConnection = sqlHelper.connect(databaseURL, databaseUser, databasePass);
         return dbConnection != null;
     }
     
@@ -88,77 +88,42 @@ public class DBDao {
     }
     
     protected String getCreateProjectsTableQuery() {
-        String sqlQuery;
-        switch (dbType) {
-            case POSTGRES:
-                sqlQuery = PostgresHelper.getCreateProjectsTableQuery();
-                break;
-            case SQLITE:
-                sqlQuery = SQLiteHelper.getCreateProjectsTableQuery();
-                break;
-            default:
-                sqlQuery = "";
+        if (sqlHelper == null) {
+            return "";
         }
+        String sqlQuery = sqlHelper.getCreateProjectsTableQuery();
         return sqlQuery;
     }
     
     protected String getInsertProjectQuery() {
-        String sqlQuery;
-        switch (dbType) {
-            case POSTGRES:
-                sqlQuery = PostgresHelper.getInsertProjectQuery();
-                break;
-            case SQLITE:
-                sqlQuery = SQLiteHelper.getInsertProjectQuery();
-                break;
-            default:
-                sqlQuery = "";
+        if (sqlHelper == null) {
+            return "";
         }
+        String sqlQuery = sqlHelper.getInsertProjectQuery();
         return sqlQuery;
     }
     
     protected String getCreateStatementsTableQuery() {
-        String sqlQuery;
-        switch (dbType) {
-            case POSTGRES:
-                sqlQuery = PostgresHelper.getCreateStatementsTableQuery();
-                break;
-            case SQLITE:
-                sqlQuery = SQLiteHelper.getCreateStatementsTableQuery();
-                break;
-            default:
-                sqlQuery = "";
+        if (sqlHelper == null) {
+            return "";
         }
+        String sqlQuery = sqlHelper.getCreateStatementsTableQuery();
         return sqlQuery;
     }
     
     protected String getInsertStatementQuery() {
-        String sqlQuery;
-        switch (dbType) {
-            case POSTGRES:
-                sqlQuery = PostgresHelper.getInsertStatementQuery();
-                break;
-            case SQLITE:
-                sqlQuery = SQLiteHelper.getInsertStatementQuery();
-                break;
-            default:
-                sqlQuery = "";
+        if (sqlHelper == null) {
+            return "";
         }
+        String sqlQuery = sqlHelper.getInsertStatementQuery();
         return sqlQuery;
     }
     
     protected String getLoadStatementQuery() {
-        String sqlQuery;
-        switch (dbType) {
-            case POSTGRES:
-                sqlQuery = PostgresHelper.getLoadStatementQuery();
-                break;
-            case SQLITE:
-                sqlQuery = SQLiteHelper.getLoadStatementQuery();
-                break;
-            default:
-                sqlQuery = "";
+        if (sqlHelper == null) {
+            return "";
         }
+        String sqlQuery = sqlHelper.getLoadStatementQuery();
         return sqlQuery;
     }
     

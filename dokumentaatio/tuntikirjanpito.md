@@ -51,4 +51,5 @@
 | 2.5.  | 7    | Koodin refaktorointia |
 |       |      | Sovelluksen muokkaaminen SQLite-yhteensopivaksi |
 |       |      | JavaDoc-dokumentointia |
-| yht   | 86   | | 
+| 3.5.  | 1    | Uusi rajapinta SQL-kyselyiden generointiin |
+| yht   | 87   | | 
