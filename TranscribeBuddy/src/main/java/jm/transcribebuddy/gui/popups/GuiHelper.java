@@ -32,7 +32,10 @@ public class GuiHelper {
         FileChooser.ExtensionFilter filter =
                 new FileChooser.ExtensionFilter("Select a TXT file (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setInitialDirectory(new File(home));
+        File homeDir = new File(home);
+        if (homeDir.exists()) {
+            fileChooser.setInitialDirectory(homeDir);
+        }
         File file = fileChooser.showOpenDialog(null);
         if (file == null) {
             // Load canceled
@@ -50,7 +53,10 @@ public class GuiHelper {
         FileChooser.ExtensionFilter filter =
                 new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setInitialDirectory(new File(home));
+        File homeDir = new File(home);
+        if (homeDir.exists()) {
+            fileChooser.setInitialDirectory(homeDir);
+        }
         fileChooser.setInitialFileName(initialFileName);
         File file = fileChooser.showSaveDialog(null);
         if (file == null) {

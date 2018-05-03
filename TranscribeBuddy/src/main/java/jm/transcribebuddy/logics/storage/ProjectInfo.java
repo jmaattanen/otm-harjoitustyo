@@ -24,7 +24,7 @@ public class ProjectInfo {
         description = "Created " + dateFormat.format(today);
         textFileName = null;
         audioFilePath = "";
-        saveDirectory = "\\";
+        saveDirectory = File.separator;
     }
     
     public ProjectInfo(ProjectInfo other) {
@@ -56,7 +56,7 @@ public class ProjectInfo {
         if (textFileName == null) {
             return "";
         }
-        String textFilePath = saveDirectory + "\\" + textFileName;
+        String textFilePath = saveDirectory + File.separator + textFileName;
         return textFilePath;
     }
     

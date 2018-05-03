@@ -53,8 +53,8 @@ public class ProjectDaoTest {
     
     public void setUpTestConditions() throws IOException {
         testFolder = tempFolder.newFolder("testfolder");
-        databasePath = testFolder.getAbsolutePath() + "\\testbase.db";
-        textFilePath = testFolder.getAbsolutePath() + "\\testfile.txt";
+        databasePath = testFolder.getAbsolutePath() + File.separator + "testbase.db";
+        textFilePath = testFolder.getAbsolutePath() + File.separator + "testfile.txt";
         sqliteURL = "jdbc:sqlite:" + databasePath;
         sqliteURL = sqliteURL.replaceAll("\\\\", "/");
     }
