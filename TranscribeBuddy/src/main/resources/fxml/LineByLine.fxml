@@ -107,7 +107,7 @@
                         <Insets top="10.0" />
                      </VBox.margin></Button>
                   <Region prefHeight="300.0" prefWidth="140.0" />
-                  <Button mnemonicParsing="false" onAction="#switchToCTS" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                  <Button mnemonicParsing="false" onAction="#switchToCTS" prefWidth="100.0" prefHeight="28.0" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin>
@@ -115,7 +115,7 @@
                         <Insets bottom="4.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#switchToOS" text="Hakunäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                  <Button mnemonicParsing="false" onAction="#switchToOS" prefWidth="100.0" prefHeight="28.0" text="Hakunäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin>

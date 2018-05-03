@@ -55,7 +55,7 @@
                               <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                            </padding>
                         </Button>
-                        <Button mnemonicParsing="false" text="Muokkaa" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#editHeadcategory" text="Muokkaa" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                            </padding>
@@ -96,7 +96,7 @@
              <VBox prefHeight="600.0" prefWidth="140.0" BorderPane.alignment="BOTTOM_RIGHT">
                  <children>
                  <Region prefHeight="350.0" prefWidth="140.0" />
-                 <Button mnemonicParsing="false" onAction="#switchToCTS" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                 <Button mnemonicParsing="false" onAction="#switchToCTS" prefWidth="100.0" prefHeight="28.0" text="Tekstinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>
                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin>
@@ -104,7 +104,7 @@
                         <Insets bottom="4.0" />
                      </VBox.margin>
                  </Button>
-                 <Button mnemonicParsing="false" onAction="#switchToLBLS" text="Rivinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
+                 <Button mnemonicParsing="false" onAction="#switchToLBLS" prefWidth="100.0" prefHeight="28.0" text="Rivinäkymä" BorderPane.alignment="BOTTOM_RIGHT">
                      <BorderPane.margin>
                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </BorderPane.margin>

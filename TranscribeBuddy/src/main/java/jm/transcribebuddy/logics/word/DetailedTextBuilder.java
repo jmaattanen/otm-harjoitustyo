@@ -1,5 +1,6 @@
 package jm.transcribebuddy.logics.word;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.util.Duration;
 import jm.transcribebuddy.logics.Classifier;
@@ -79,6 +80,24 @@ public class DetailedTextBuilder extends TextBuilder {
         }
         return resultMap;
     }
+    
+//    public HashMap<Integer, String> getStatementsIn(ArrayList<Category> subcategories) {
+//        HashMap<Integer, String> resultMap = new HashMap<>();
+//        if (subcategories == null || subcategories.isEmpty()) {
+//            return resultMap;
+//        }
+//        int index = 0;
+//        for (Statement s : statements) {
+//            for (Category sc : subcategories) {
+//                if (s.isInSubcategory(sc)) {
+//                    resultMap.put(index, s.toString());
+//                    break;
+//                }
+//            }
+//            index++;
+//        }
+//        return resultMap;
+//    }
     
     /**
      * Puts currently active Statement into given sub category. If

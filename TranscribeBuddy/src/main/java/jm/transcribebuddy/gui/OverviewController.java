@@ -80,17 +80,18 @@ public class OverviewController implements Initializable {
         projectNameLabel.setText(mainController.getProjectName());
         setUpHeadcategories();
         setUpSubcategories();
-//        ArrayList<Category> subcategories = classifier.getSubcategories();
-//        Collections.sort(subcategories);
-//        for (Category c : subcategories) {
-//            subCategoryComboBox.getItems().add(c);
-//        }
         
         // Update the table view every time the combo box value changes
+        headCategoryComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleHeadChoice();
+            }
+        });
         subCategoryComboBox.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                updateTable();
+                handleSubChoice();
             }
         });
         
@@ -170,30 +171,56 @@ public class OverviewController implements Initializable {
         projectNameLabel.setText(mainController.getProjectName());
     }
     
-    private void updateTable() {
+    private void handleHeadChoice() {
+        final Category headcategory = (Category) headCategoryComboBox.getValue();
+        if (headcategory == null) {
+            return;
+        }
+        ArrayList<Category> children = headcategory.getChildren();
+        subCategoryComboBox.getItems().clear();
+        subCategoryComboBox.getItems().addAll(children);
+        statementsTableView.getItems().clear();
+        Collections.sort(children);
+        int statementCounter = 0;
+        for (Category subcategory : children) {
+            HashMap<Integer, String> statements = textBuilder.getStatementsIn(subcategory);
+            addTableRows(subcategory.toString(), statements);
+            statementCounter += subcategory.getSize();
+        }
+        subcategorySizeLabel.setText(Integer.toString(statementCounter));
+    }
+    
+    private void handleSubChoice() {
         final Category subcategory = (Category) subCategoryComboBox.getValue();
         if (subcategory == null) {
             return;
         }
         subcategorySizeLabel.setText(Integer.toString(subcategory.getSize()));
-        ObservableList<TableRow> tableContent = statementsTableView.getItems();
-        tableContent.clear();
+        statementsTableView.getItems().clear();
         HashMap<Integer, String> statements = textBuilder.getStatementsIn(subcategory);
-        final String categoryName = subcategory.toString();
+        addTableRows(subcategory.toString(), statements);
+    }
+    
+    private void addTableRows(String subcategoryName, HashMap<Integer, String> statements) {
+        ObservableList<TableRow> tableContent = statementsTableView.getItems();
         for (HashMap.Entry<Integer, String> entry : statements.entrySet()) {
             Integer index = entry.getKey();
             String statement = entry.getValue();
             if (!statement.isEmpty()) {
-                tableContent.add(new TableRow(categoryName, statement, index));
+                tableContent.add(new TableRow(subcategoryName, statement, index));
             }
         }
     }
     
     @FXML
+    private void editHeadcategory(ActionEvent event) {
+        setUpHeadcategories();
+        // TODO
+    }
+    @FXML
     private void editSubcategory(ActionEvent event) {
         final Category subcategory = (Category) subCategoryComboBox.getValue();
         if (classifier.isRealCategory(subcategory)) {
-            // BUG HERE
             CategoryForm.show(classifier, subcategory);
             setUpHeadcategories();
             setUpSubcategories();

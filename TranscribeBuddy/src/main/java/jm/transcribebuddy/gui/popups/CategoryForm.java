@@ -23,8 +23,8 @@ public class CategoryForm {
         final Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Edit category");
-        window.setMinWidth(400);
-        window.setMinHeight(300);
+        window.setMinWidth(320);
+        window.setMinHeight(200);
         
         Label categoryNameHeader = new Label();
         Label parentNameHeader = new Label();
