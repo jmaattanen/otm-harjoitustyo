@@ -38,7 +38,7 @@ public class ProjectForm {
         projectNameHeader.setText("Project name:");
         projectDescriptionHeader.setText("Description:");
         textFileHeader.setText("TXT File path:");
-        audioFileHeader.setText("Audio file path:");
+        audioFileHeader.setText("Audio file URI:");
         
         final TextField projectNameField = new TextField();
         final TextArea projectDescriptionArea = new TextArea();
@@ -72,7 +72,7 @@ public class ProjectForm {
                 String description = projectDescriptionArea.getText();
                 projectInfo.setDescription(description);
                 final String audioFileURI = audioFileLabel.getText();
-                projectInfo.setAudioFilePath(audioFileURI);
+                projectInfo.setAudioFileURI(audioFileURI);
                 mainController.openAudioFile(audioFileURI);
                 window.close();
             }

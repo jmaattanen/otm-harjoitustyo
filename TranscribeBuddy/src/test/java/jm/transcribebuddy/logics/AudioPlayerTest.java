@@ -31,13 +31,17 @@ public class AudioPlayerTest {
     @Test
     public void incorrectParameterInitializesFilePathRight() {
         AudioPlayer audioPlayer = new AudioPlayer(null);
-        assertEquals("Ei audiota", audioPlayer.getFilePath());
+        assertEquals("No audio", audioPlayer.getFilePath());
     }
     
     @Test
-    public void openMethodCanBeCalledWithEmptyString() {
+    public void fooOpensWontThrowExceptions() {
         AudioPlayer audioPlayer = new AudioPlayer(null);
+        audioPlayer.openAudioFile(null);
+        assertFalse(audioPlayer.isSet());
         audioPlayer.openAudioFile("");
-        assertEquals(false, audioPlayer.isSet());
+        assertFalse(audioPlayer.isSet());
+        audioPlayer.openAudioFile("file:/player/foo.mp3");
+        assertFalse(audioPlayer.isSet());
     }
 }

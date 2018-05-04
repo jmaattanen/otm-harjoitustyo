@@ -151,7 +151,7 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
                     projectInfo.setId(results.getInt(1));
                     projectInfo.setProjectName(results.getString(2));
                     projectInfo.setDescription(results.getString(3));
-                    projectInfo.setAudioFilePath(results.getString(4));
+                    projectInfo.setAudioFileURI(results.getString(4));
                 }
             } catch (SQLException ex) { }
         }

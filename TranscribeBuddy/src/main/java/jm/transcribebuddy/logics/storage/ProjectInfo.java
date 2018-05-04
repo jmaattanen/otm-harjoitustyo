@@ -1,16 +1,19 @@
 package jm.transcribebuddy.logics.storage;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import jm.transcribebuddy.logics.AudioPlayer;
 
 public class ProjectInfo {
     private int id;
     private String name;
     private String description;
     private String textFileName;
-    private String audioFilePath;
+    private String audioFileURI;
     private String saveDirectory;
     
     final private int maxNameLength = 30;
@@ -23,7 +26,7 @@ public class ProjectInfo {
         Date today = new Date();
         description = "Created " + dateFormat.format(today);
         textFileName = null;
-        audioFilePath = "";
+        audioFileURI = "";
         saveDirectory = File.separator;
     }
     
@@ -32,7 +35,7 @@ public class ProjectInfo {
         name = other.name;
         description = other.description;
         textFileName = other.textFileName;
-        audioFilePath = other.audioFilePath;
+        audioFileURI = other.audioFileURI;
         saveDirectory = other.saveDirectory;
     }
     
@@ -61,7 +64,7 @@ public class ProjectInfo {
     }
     
     public String getAudioFilePath() {
-        return audioFilePath;
+        return audioFileURI;
     }
     
     public String getInitialFileName() {
@@ -128,18 +131,18 @@ public class ProjectInfo {
     }
     
     public boolean setUpFilePaths(final String textFilePath) {
-        if (textFilePath == null || textFilePath.lastIndexOf(".txt") == -1) {
+        if (textFilePath == null || textFilePath.contains(".txt") == false) {
             return false;
         }
         File file = new File(textFilePath);
         return setUpFilePaths(file);
     }
     
-    public boolean setAudioFilePath(final String audioFilePath) {
-        if (audioFilePath == null) {
+    public boolean setAudioFileURI(final String audioFileURI) {
+        if (AudioPlayer.isSupportedURI(audioFileURI) == false) {
             return false;
         }
-        this.audioFilePath = audioFilePath;
+        this.audioFileURI = audioFileURI;
         return true;
     }
 }

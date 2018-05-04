@@ -38,9 +38,9 @@ public class MainController {
         return workSaved;
     }
     
-    public void cleanProject(String audioFilePath) {
+    public void cleanProject(String audioFileURI) {
         projectInfo = new ProjectInfo();
-        projectInfo.setAudioFilePath(audioFilePath);
+        projectInfo.setAudioFileURI(audioFileURI);
         textBuilder = new DetailedTextBuilder();
         workSaved = true;
     }
@@ -216,7 +216,7 @@ public class MainController {
             return false;
         }
         audioPlayer.openAudioFile(audioFileURI);
-        projectInfo.setAudioFilePath(audioFileURI);
+        projectInfo.setAudioFileURI(audioFileURI);
         return true;
     }
     

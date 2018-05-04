@@ -1,5 +1,8 @@
 package jm.transcribebuddy.logics;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -11,34 +14,51 @@ public class AudioPlayer {
     private Duration skipTime, longerSkipTime;
     
     public AudioPlayer() {
-        audioFilePath = "Ei audiota";
+        audioFilePath = "No audio";
         skipTime = Duration.seconds(5);
         longerSkipTime = Duration.seconds(30);
     }
     
-    public AudioPlayer(String audioFilePath) {
-        if (audioFilePath != null && !audioFilePath.isEmpty()) {
-            Media media = new Media(audioFilePath);
-            mediaPlayer = new MediaPlayer(media);
-            this.audioFilePath = audioFilePath;
-        } else {
-            this.audioFilePath = "Ei audiota";
-        }
-        skipTime = Duration.seconds(5);
-        longerSkipTime = Duration.seconds(30);
+    public AudioPlayer(String audioFileURI) {
+        this();
+        mediaPlayer = null;
+        openAudioFile(audioFileURI);
     }
     
     public boolean isSet() {
         return mediaPlayer != null;
     }
     
-    public void openAudioFile(String audioFilePath) {
-        this.stop();
-        if (audioFilePath != null && !audioFilePath.isEmpty()) {
-            Media media = new Media(audioFilePath);
-            mediaPlayer = new MediaPlayer(media);
-            this.audioFilePath = audioFilePath;
+    public final void openAudioFile(String audioFileURI) {
+        if (isSupportedURI(audioFileURI) == false) {
+            return;
         }
+        this.stop();
+        URI uri;
+        try {
+            uri = new URI(audioFileURI);
+        } catch (URISyntaxException e) {
+            return;
+        }
+        File audioFile = new File(uri);
+        if (audioFile.exists()) {
+            Media media = new Media(audioFileURI);
+            mediaPlayer = new MediaPlayer(media);
+            this.audioFilePath = audioFileURI;
+        }
+    }
+    
+    public static boolean isSupportedURI(String audioFileURI) {
+        if (audioFileURI == null) {
+            return false;
+        }
+        if (audioFileURI.contains("file:") == false) {
+            return false;
+        }
+        if (audioFileURI.contains(".wav") || audioFileURI.contains(".mp3") | audioFileURI.contains(".m4a")) {
+            return true;
+        }
+        return false;
     }
     
     public String getFilePath() {
