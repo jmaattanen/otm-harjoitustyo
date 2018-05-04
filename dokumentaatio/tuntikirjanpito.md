@@ -54,4 +54,5 @@
 | 3.5.  | 7,5  | Uusi rajapinta SQL-kyselyiden generointiin |
 |       |      | Pysyväistallennuksen testejä |
 |       |      | Aloin toteuttamaan lausumien hierarkista luokittelua |
-| yht   | 93,5 | | 
+| 4.5.  | ,5   | Pieniä muutoksia käyttöliittymään |
+| yht   | 94   | | 

@@ -36,6 +36,7 @@ public class OverviewController implements Initializable {
     // NOTE TO MYSELF: create a new class for handling overview logics
     private Classifier classifier;
     private DetailedTextBuilder textBuilder;
+    private Category allSubcategories = new Category("all");
     
     @FXML
     private Label projectNameLabel, subcategorySizeLabel;
@@ -56,9 +57,11 @@ public class OverviewController implements Initializable {
         headCategoryComboBox.getItems().clear();
         ArrayList<Category> headcategories = classifier.getHeadcategories();
         Collections.sort(headcategories);
+        headcategories.add(0, allSubcategories);
         for (Category c : headcategories) {
             headCategoryComboBox.getItems().add(c);
         }
+        headCategoryComboBox.setValue(allSubcategories);
     }
     
     private void setUpSubcategories() {
@@ -80,6 +83,7 @@ public class OverviewController implements Initializable {
         projectNameLabel.setText(mainController.getProjectName());
         setUpHeadcategories();
         setUpSubcategories();
+        handleHeadChoice();
         
         // Update the table view every time the combo box value changes
         headCategoryComboBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -176,13 +180,18 @@ public class OverviewController implements Initializable {
         if (headcategory == null) {
             return;
         }
-        ArrayList<Category> children = headcategory.getChildren();
+        ArrayList<Category> subcategories;
+        if (headcategory.equals(allSubcategories)) {
+            subcategories = classifier.getSubcategories();
+        } else {
+            subcategories = headcategory.getChildren();
+        }
         subCategoryComboBox.getItems().clear();
-        subCategoryComboBox.getItems().addAll(children);
+        subCategoryComboBox.getItems().addAll(subcategories);
         statementsTableView.getItems().clear();
-        Collections.sort(children);
+        Collections.sort(subcategories);
         int statementCounter = 0;
-        for (Category subcategory : children) {
+        for (Category subcategory : subcategories) {
             HashMap<Integer, String> statements = textBuilder.getStatementsIn(subcategory);
             addTableRows(subcategory.toString(), statements);
             statementCounter += subcategory.getSize();
@@ -214,7 +223,7 @@ public class OverviewController implements Initializable {
     
     @FXML
     private void editHeadcategory(ActionEvent event) {
-        setUpHeadcategories();
+        //setUpHeadcategories();
         // TODO
     }
     @FXML
