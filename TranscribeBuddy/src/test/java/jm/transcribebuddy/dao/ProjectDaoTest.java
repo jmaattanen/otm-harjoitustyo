@@ -76,8 +76,10 @@ public class ProjectDaoTest {
         projectInfo.setDescription(testDesc);
         mainController.setProjectInfo(projectInfo);
         assertEquals(testName, mainController.getProjectName());
+        assertTrue(mainController.getProjectInfo().isNewProject());
         boolean saveOk = mainController.saveProject(textFilePath);
         assertTrue(saveOk);
+        assertFalse(mainController.getProjectInfo().isNewProject());
     }
     
     public void testLoadProject() {
@@ -86,6 +88,7 @@ public class ProjectDaoTest {
         assertEquals("New Project", mainController.getProjectName());
         boolean loadOk = mainController.loadProject(textFilePath);
         assertTrue(loadOk);
+        assertFalse(mainController.getProjectInfo().isNewProject());
         assertEquals(testName, mainController.getProjectName());
         ProjectInfo projectInfo = mainController.getProjectInfo();
         assertEquals(testDesc, projectInfo.getDescription());

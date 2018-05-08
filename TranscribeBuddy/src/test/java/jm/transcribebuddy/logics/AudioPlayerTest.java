@@ -41,6 +41,8 @@ public class AudioPlayerTest {
         assertFalse(audioPlayer.isSet());
         audioPlayer.openAudioFile("");
         assertFalse(audioPlayer.isSet());
+        audioPlayer.openAudioFile("file:/player");
+        assertFalse(audioPlayer.isSet());
         audioPlayer.openAudioFile("file:/player/foo.mp3");
         assertFalse(audioPlayer.isSet());
     }
