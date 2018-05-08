@@ -1,6 +1,5 @@
 package jm.transcribebuddy.logics.word;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.util.Duration;
 import jm.transcribebuddy.logics.Classifier;
@@ -21,7 +20,7 @@ public class DetailedTextBuilder extends TextBuilder {
     
     
     /**
-     * Creates a new DetailedTextBuilder object and initializes its
+     * Creates a new DetailedTextBuilder instance and initializes its
      * classifier and first statement. The first statement is classified
      * in "Undefined" sub category.
      * 

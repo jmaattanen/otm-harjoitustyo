@@ -84,8 +84,8 @@ public class ProjectDao {
      * @see jm.transcribebuddy.logics.storage.ProjectInfo
      * @see jm.transcribebuddy.logics.word.DetailedTextBuilder
      * @param projectInfo The project information of target project.
-     * @return DetailedTextBuilder with loaded data or a new object
-     * if the opening failed.
+     * @return DetailedTextBuilder with loaded data or a new
+     * DetailedTextBuilder instance if the opening failed.
      */
     public DetailedTextBuilder load(ProjectInfo projectInfo) {
         // read text content from TXT file

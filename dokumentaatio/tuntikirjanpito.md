@@ -55,4 +55,5 @@
 |       |      | Pysyväistallennuksen testejä |
 |       |      | Aloin toteuttamaan lausumien hierarkista luokittelua |
 | 4.5.  | ,5   | Pieniä muutoksia käyttöliittymään |
-| yht   | 94   | | 
+| 8.5.  | 1    | Pientä ehostusta |
+| yht   | 95   | | 

@@ -20,22 +20,11 @@ public class Statement {
      * Can be null.
      */
     public Statement(Category subcategory) {
-        statement = "";
-        startTime = Duration.seconds(0);
-        this.subcategory = subcategory;
-        if (subcategory != null) {
-            subcategory.addStatement();
-        }
+        this("", Duration.ZERO, subcategory);
     }
     
     public Statement(Duration startTime, Category subcategory) {
-        statement = "";
-        this.startTime = startTime;
-        checkStartTime();
-        this.subcategory = subcategory;
-        if (subcategory != null) {
-            subcategory.addStatement();
-        }
+        this("", startTime, subcategory);
     }
     
     public Statement(String statement, Duration startTime, Category subcategory) {

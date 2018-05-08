@@ -1,10 +1,13 @@
 package jm.transcribebuddy.logics.word;
 
-/***   This class is responsible for word processing   ***/
-
 import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for word processing
+ * 
+ * @author Juha
+ */
 public class TextBuilder {
     final protected ArrayList<Statement> statements;
     protected int workingIndex;
@@ -64,7 +67,7 @@ public class TextBuilder {
             text += str + " ";
             count++;
         }
-        text = removeTheLastWhitespace(text);
+        text = text.trim();
         return text;
     }
     
@@ -130,7 +133,7 @@ public class TextBuilder {
         // ignore the last statement
         final int beginIndexOfLastStatement = savedText.length() - this.getLast().length();
         savedText = savedText.substring(0, beginIndexOfLastStatement);
-        savedText = removeTheLastWhitespace(savedText);
+        savedText = savedText.trim();
         
         if (text.length() < savedText.length()) {
             // Something is missing!!
@@ -183,13 +186,5 @@ public class TextBuilder {
         if (workingIndex < statements.size() - 1) {
             workingIndex++;
         }
-    }
-    
-    private String removeTheLastWhitespace(String text) {
-        int lastIndex = text.length() - 1;
-        if (lastIndex >= 0 && text.charAt(lastIndex) == ' ') {
-            text = text.substring(0, text.length() - 1);
-        }
-        return text;
     }
 }

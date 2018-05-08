@@ -1,8 +1,6 @@
 package jm.transcribebuddy.logics.storage;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

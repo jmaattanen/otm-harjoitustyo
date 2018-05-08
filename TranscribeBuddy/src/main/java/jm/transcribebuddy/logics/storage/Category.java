@@ -48,7 +48,7 @@ public class Category implements Comparable {
     }
     
     /**
-     * This method edits the name in the desired format. 
+     * This method edits the name to match the desired format. 
      * 
      * @param name Category name. Name should have up to 30 characters.
      * @return "Undefined" if name is NULL or empty string. Otherwise the
