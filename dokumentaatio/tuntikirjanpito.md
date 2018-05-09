@@ -57,5 +57,5 @@
 | 4.5.  | ,5   | Pieniä muutoksia käyttöliittymään |
 | 8.5.  | 2    | Pientä ehostusta |
 |       |      | Testejä |
-| 9.5.  | 3    | Dokumentointia |
-| yht   | 99   | | 
+| 9.5.  | 4    | Dokumentointia |
+| yht   | 100  | | 
