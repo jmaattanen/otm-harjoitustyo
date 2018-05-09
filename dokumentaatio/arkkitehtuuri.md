@@ -10,19 +10,25 @@ Sovelluksen rakenne jakaantuu kolmeen tasoon. Ylimmällä tasolla pakkauksen _jm.t
 
 Yllä on sovelluksen tämänhetkinen pakkauskaavio. Kukin kolmesta suuresta paketista eriytyy yhä pienempiin pakkauksiin.
 
-### Luokkakaaviot
+## GUI - graafinen käyttöliittymä
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_gui.png "Gui")
 
-Käyttöliittymää _jm.transcribebuddy.gui_ hallitseva luokka on _MainApp.java_. Se on myöskin javan main-metodin sisältävä luokka.
+Käyttöliittymää [jm.transcribebuddy.gui](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/gui) hallitseva luokka on _MainApp.java_. Se on myöskin javan main-metodin sisältävä luokka.
+Käyttöliittymä koostuu kolmesta näkymästä, joista käyttäjälle näkyy aina yksi kerrallaan. Ohjelman käynnistyttyä käyttäjälle aukeaa _tekstinäkymä_, jossa ohjelmalla kirjoitettu teksti näkyy kokonaisuudessaan. Toinen näkymä nimeltään _rivinäkymä_ näyttää pienemmän osan tekstistä mutta antaa käyttöön enemmän työkaluja asiakirjan muokkaukseen. Vielä kolmantena on _hakunäkymä_, joka taulukoi asiakirjan osia luokitteluominaisuuteen perustuen. Kunkin näkymän layout on kuvattu omassa [fxml-tiedostossaan](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/resources/fxml) ja toiminnallisuuksia ohjaa _gui_-paketin fxml-kontrolleriluokat.
+Lisäksi joitain ilmoituksia ja dialogeja näytetään erillisten ponnahdusikkunoiden avulla.
+
+## Logics - sovelluslogiikka
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_logics.png "Logics")
 
-Sovelluslogiikan _jm.transcribebuddy.logics_ johtava luokka on _MainController.java_. Sen voi mieltää abstraktiona gui:n ja sovelluslogiikan välissä.
+Sovelluslogiikan [jm.transcribebuddy.logics](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics) johtava luokka on _MainController.java_. Sen voi mieltää abstraktiona gui:n ja sovelluslogiikan välissä.
+
+## DAO - pysyväistallennus
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_dao.png "Dao")
 
-Paketin _jm.transcribebuddy.dao_ palveluja tarjoaa korkeimmalla tasolla luokka _ProjectDao.java_. _file_-paketti keskittyy (*.txt)-tiedostomuotoiseen levytallennukseen ja _db_-paketti puolestaan tietokantatallennukseen.
+Paketin [jm.transcribebuddy.dao](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/dao) palveluja tarjoaa korkeimmalla tasolla luokka _ProjectDao.java_. _file_-paketti keskittyy (*.txt)-tiedostomuotoiseen levytallennukseen ja _db_-paketti puolestaan tietokantatallennukseen.
 
 ## Päätoiminnallisuudet
 
