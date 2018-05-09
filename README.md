@@ -1,6 +1,6 @@
 ﻿# TranscribeBuddy
 
-Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018. Harjoitustyö toteutetaan maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä. Sovelluksella on riippuvuus PostgreSQL-tietokantapalvelimeen.
+Litteroitsijan apukäsi :) Tällä ohjelmalla saat kirjoitettua äänitallenteet kätevästi tekstimuotoon sekä analysoitua tuotoksen sisältöä. Sovellus on toteutettu maven-projektina käyttäen JavaFX:ää ja FXML-kuvauskieltä. Sovelluksella on riippuvuus PostgreSQL-tietokantapalvelimeen, mutta rinnalle voi myös konfiguroida SQLiten.
 
 ## Dokumentaatio
 
@@ -20,11 +20,27 @@ Tämä on harjoitustyö kurssille Ohjelmistotekniikan menetelmät kevällä 2018
 
 ## Komentorivitoiminnot
 
-Projektin voi suorittaa projektikansiossa _TranscribeBuddy_ maven-komennolla
+Seuraavat maven-komennot ovat ajettavissa projektikansiosta _TranscribeBuddy_ käsin:
+
+### JAR-paketointi
+
+Jar-tiedoston voi generoida komennolla 
+
+```
+mvn package
+```
+
+Generoitu _TranscribeBuddy-1.0-SNAPSHOT.jar_ löytyy hakemistosta _target_
+
+### Lähdekoodin kääntäminen
+
+Projektin voi suorittaa komennolla
 
 ```
 mvn compile exec:java -Dexec.mainClass=jm.transcribebuddy.gui.MainApp
 ```
+
+### Testaus
 
 Testikattavuusraportti generoidaan komennolla
 
@@ -33,6 +49,8 @@ mvn test jacoco:report
 ```
 
 Raportin voi avata selaimella polusta _/target/site/jacoco/index.html_
+
+### Checkstyle
 
 Sovelluslogiikan lähdekoodin ulkoasun voi analysoida komennolla
 
@@ -43,6 +61,8 @@ mvn jxr:jxr checkstyle:checkstyle
 Checkstyle-raportti löytyy polusta _/target/site/checkstyle.html_
 
 Checkstyle on konfiguroitu tiedostossa _checkstyle.xml_
+
+### JavaDoc
 
 JavaDocin voi generoida komennolla
 
