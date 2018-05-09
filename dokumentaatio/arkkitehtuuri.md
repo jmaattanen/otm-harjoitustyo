@@ -40,11 +40,17 @@ Paketin [jm.transcribebuddy.dao](https://github.com/jmaattanen/otm-harjoitustyo/
 
 Asiakirjan tallennus suoritetaan kolmessa vaiheessa. Ensin tallennetaan projektin yleiset tiedot, kuten projektin nimi, kuvaus ja ‰‰nitallenteen URI. Toisessa vaiheessa tallennetaan asiakirjan raakateksti. Kolmannessa vaiheessa tallennetaan viel‰ _Statement_-olioiden aikamerkit.
 Tallennuksen ensimm‰inen ja kolmas vaihe ovat t‰ll‰ hetkell‰ riippuvaisia tietokantayhteydest‰. Mik‰li tietokantayhteytt‰ ei ole konfiguroitu oikein sovellusta k‰ynnist‰ess‰, niin osa tiedoista j‰‰ tallentamatta.
+Projektin tilaa ladattaessa tietokannasta haun avaimena toimii tekstitiedoston polku.
 
 Alemman tason daot _FileTextDao_, _DBTextInfoDao_ ja _DBProjectDao_ on luotu rajapintojen taakse, jotta k‰ytt‰j‰lle voidaan tarjota vaihtoehtoinen tallennusmuoto esimerkiksi yhdeksi pakatuksi tiedostoksi, jolloin yksitt‰inen projekti olisi helposti siirrett‰viss‰ laitteelta toiselle.
+Toistaiseksi vaihtoehtoinen tallennusformaatti on vasta suunnitteluasteella ja samoin kategorisoinnin pysyv‰istallennus on viel‰ toteuttamatta.
 
 ## P‰‰toiminnallisuudet
 
+_Teksti_- ja _rivin‰kymiss‰_ k‰ytt‰j‰ voi aloittaa uuden litterointiprojektin __Aloita__-painikkeesta tai ladata aiemmin tallentamansa projektin.
+Projektin ‰‰niraidaksi valitaan levylt‰ (*.mp3), (*.m4a) tai (*.wav)-muotoinen tiedosto, jonka URI:n voi j‰lkeenp‰in muuttaa __Info__-valikosta. T‰m‰n j‰lkeen k‰ytt‰j‰ voi aloittaa luomaan asiakirjaa vapaasti kirjoittamalla n‰kymien aktiivisiin tekstikenttiin.
+Sovelluslogiikka s‰ilˆˆ tekstikenttien muuttuneen sis‰llˆn vasta, kun jotain p‰ivityksen aktivoivaa toimenpidett‰ k‰ytet‰‰n. P‰ivitt‰vi‰ toimenpiteit‰ ovat n‰kym‰nvaihto, projektin tallennus sek‰ virkkeen p‰‰tt‰minen, jakaminen, valitseminen ja poistaminen.
 K‰ytt‰j‰n tekstikentt‰‰n syˆtt‰m‰ teksti tallennetaan _textBuilder_-olion linkitettyyn listaan mm. _MainController.set_-metodilla. Alla oleva sekvenssikaavio kuvaa metodin etenemist‰ esimerkkitapauksessa.
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/set_statement.png "MainController.set")
+
