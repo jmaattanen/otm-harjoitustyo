@@ -26,17 +26,22 @@ Lis‰ksi joitain ilmoituksia ja dialogeja n‰ytet‰‰n erillisten ponnahdusikkunoide
 
 Sovelluslogiikan [jm.transcribebuddy.logics](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics) johtava luokka on _MainController.java_. Sen voi mielt‰‰ abstraktiona gui:n ja sovelluslogiikan v‰liss‰.
 
-_storage_-paketissa on logiikan k‰ytt‰mi‰ l‰hinn‰ yksinkertaisia gettereit‰ ja settereit‰ sis‰lt‰vi‰ tietorakenteenomaisia luokkia. N‰ist‰ t‰rkein lienee [Statement.java](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics/storage/Statement.java)-luokka, jonka ilmentymiin s‰ilˆt‰‰n asiakirjan tekstinpalaset, mik‰ heijastuu hyvin sovelluksen _rivin‰kym‰st‰_. _Statement_-olioiden kokonaisuutta puolestaan hallinnoi _TextBuilder_-olio. Luokassa _TextBuilder.java_ on ydinmetodit logiikan tekstink‰sittelyominaisuuksista ja sen perillisess‰ _DetailedTextBuilder.java_-luokassa ominaisuuksia on laajennettu kattamaan tekstin ja ‰‰niraidat yhteensovittaminen sek‰ _Statement_-olioiden luokittelu.
+_Storage_-paketissa on logiikan k‰ytt‰mi‰ l‰hinn‰ yksinkertaisia gettereit‰ ja settereit‰ sis‰lt‰vi‰ tietorakenteenomaisia luokkia. N‰ist‰ t‰rkein lienee [Statement.java](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics/storage/Statement.java)-luokka, jonka ilmentymiin s‰ilˆt‰‰n asiakirjan tekstinpalaset, mik‰ heijastuu hyvin sovelluksen _rivin‰kym‰st‰_. _Statement_-olioiden kokonaisuutta puolestaan hallinnoi _TextBuilder_-olio. Luokassa _TextBuilder.java_ on ydinmetodit logiikan tekstink‰sittelyominaisuuksista ja sen perillisess‰ _DetailedTextBuilder.java_-luokassa ominaisuuksia on laajennettu kattamaan tekstin ja ‰‰niraidat yhteensovittaminen sek‰ _Statement_-olioiden luokittelu.
 
 Luokitteluominaisuuden logiikasta itsess‰‰n vastaa _Classifier.java_-luokka. T‰ll‰ hetkell‰ _Statement_-olioiden kategorisointiin on k‰ytˆss‰ kahden korkuinen hakupuurakenne, jossa ensimm‰isen tason solmut kuvaavat sovelluksen termein _yl‰luokkia (headcategory)_ ja toisella tasolla _alaluokkia (subcategory)_.
-_storage_-paketin _Category.java_-luokan ilmentym‰t puolestaan vastaavat yht‰ puun solmua. _Statement_-ilmentym‰ voi olla liitettyn‰ t‰sm‰lleen yhteen puun lehteen eli _alaluokkaan_.
+_Storage_-paketin _Category.java_-luokan ilmentym‰t puolestaan vastaavat yht‰ puun solmua. _Statement_-ilmentym‰ voi olla liitettyn‰ t‰sm‰lleen yhteen puun lehteen eli _alaluokkaan_.
 
 
 ## DAO - pysyv‰istallennus
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_dao.png "Dao")
 
-Paketin [jm.transcribebuddy.dao](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/dao) palveluja tarjoaa korkeimmalla tasolla luokka _ProjectDao.java_. _file_-paketti keskittyy (*.txt)-tiedostomuotoiseen levytallennukseen ja _db_-paketti puolestaan tietokantatallennukseen.
+Paketin [jm.transcribebuddy.dao](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/dao) palveluja tarjoaa korkeimmalla tasolla luokka _ProjectDao.java_. _File_-paketti keskittyy (*.txt)-tiedostomuotoiseen levytallennukseen ja _db_-paketti puolestaan tietokantatallennukseen.
+
+Asiakirjan tallennus suoritetaan kolmessa vaiheessa. Ensin tallennetaan projektin yleiset tiedot, kuten projektin nimi, kuvaus ja ‰‰nitallenteen URI. Toisessa vaiheessa tallennetaan asiakirjan raakateksti. Kolmannessa vaiheessa tallennetaan viel‰ _Statement_-olioiden aikamerkit.
+Tallennuksen ensimm‰inen ja kolmas vaihe ovat t‰ll‰ hetkell‰ riippuvaisia tietokantayhteydest‰. Mik‰li tietokantayhteytt‰ ei ole konfiguroitu oikein sovellusta k‰ynnist‰ess‰, niin osa tiedoista j‰‰ tallentamatta.
+
+Alemman tason daot _FileTextDao_, _DBTextInfoDao_ ja _DBProjectDao_ on luotu rajapintojen taakse, jotta k‰ytt‰j‰lle voidaan tarjota vaihtoehtoinen tallennusmuoto esimerkiksi yhdeksi pakatuksi tiedostoksi, jolloin yksitt‰inen projekti olisi helposti siirrett‰viss‰ laitteelta toiselle.
 
 ## P‰‰toiminnallisuudet
 
