@@ -1,6 +1,5 @@
-package jm.transcribebuddy.logics;
+package jm.transcribebuddy.logics.storage;
 
-import jm.transcribebuddy.logics.storage.Category;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,6 +39,30 @@ public class CategoryTest {
     }
     
     @Test
+    public void equalsMethodWorksRight() {
+        assertNotEquals(null, category);
+        Category cat1 = new Category("Cat", category);
+        Category cat2 = new Category("Class", category);
+        assertNotEquals(cat1, cat2);
+        cat2.rename("Cat");
+        // Same names and parent so these are equal
+        assertEquals(cat1, cat2);
+    }
+    
+    @Test
+    public void parentNameIsNotIdentifierForChild() {
+        Category head1 = new Category("Head", category);
+        Category head2 = new Category("Head", category);
+        // Heads are equal
+        assertEquals(head1, head2);
+        Category sub1 = new Category("Sub", head1);
+        Category sub2 = new Category("Sub", head2);
+        // Subs still have different parents
+        assertNotEquals(sub1, sub2);
+    }
+    
+    
+    @Test
     public void categoryCanBeRenamed() {
         category.rename("Uusi alku");
         assertEquals("Uusi alku", category.toString());
@@ -69,14 +92,4 @@ public class CategoryTest {
         assertTrue(category.hasChildren());
     }
     
-    @Test
-    public void equalsMethodWorksRight() {
-        assertNotEquals(null, category);
-        Category cat1 = new Category("Cat", category);
-        Category cat2 = new Category("Class", category);
-        assertNotEquals(cat1, cat2);
-        cat2.rename("Cat");
-        // Same names and parent so these are equal
-        assertEquals(cat1, cat2);
-    }
 }

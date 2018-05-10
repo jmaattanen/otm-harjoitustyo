@@ -164,13 +164,6 @@ public class Category implements Comparable {
     }
     
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
-    }
-    
-    @Override
     public int compareTo(Object object) {
         if (object == null) {
             throw new NullPointerException();

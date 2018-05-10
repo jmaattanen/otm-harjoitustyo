@@ -40,6 +40,14 @@ public class ClassifierTest {
     }
     
     @Test
+    public void classifierMustHaveAcceptableDimension() {
+        Classifier tooShort = new Classifier(0);
+        assertNotEquals(0, tooShort.getHeightOfTree());
+        Classifier tooTall = new Classifier(10);
+        assertNotEquals(10, tooTall.getHeightOfTree());
+    }
+    
+    @Test
     public void undefinedSubcategoryIsNotNull() {
         Category undefined = classifier.getUndefinedSubcategory();
         assertNotNull(undefined);
@@ -78,6 +86,14 @@ public class ClassifierTest {
     public void getCategoriesWontReturnRoot() {
         ArrayList<Category> categories = classifier.getCategories(0);
         assertTrue(categories.isEmpty());
+        Category undefined = classifier.getUndefined(0);
+        assertNull(undefined);
+        undefined = classifier.getUndefined(1);
+        assertNotNull(undefined);
+        assertFalse(classifier.isRoot(undefined));
+        // You can't create a fake root
+        Category wannabeRoot = new Category("*ROOT*");
+        assertFalse(classifier.isRoot(wannabeRoot));
     }
     
     @Test
@@ -181,6 +197,13 @@ public class ClassifierTest {
         assertEquals(2, categories.size());
         Category headcategory = classifier.addHeadcategory(hcName, subcategory);
         assertEquals(hcName, headcategory.toString());
+        // Multiple additions won't affect to the state of classifier
+        classifier.addHeadcategory(hcName, subcategory);
+        headcategory = classifier.addHeadcategory(hcName, subcategory);
+        assertEquals(hcName, headcategory.toString());
+        // Foo additions won't affect
+        classifier.addHeadcategory(null, subcategory);
+        classifier.addHeadcategory("Toinen parametri on laiton.", headcategory);
         categories = classifier.getHeadcategories();
         // Contains "Undefined" and "Uusi yläluokka"
         assertEquals(2, categories.size());

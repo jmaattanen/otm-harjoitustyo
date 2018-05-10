@@ -1,4 +1,4 @@
-package jm.transcribebuddy.logics;
+package jm.transcribebuddy.logics.word;
 
 import javafx.util.Duration;
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;

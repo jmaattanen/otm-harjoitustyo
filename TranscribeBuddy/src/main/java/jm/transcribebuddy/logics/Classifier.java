@@ -48,7 +48,6 @@ public class Classifier {
     }
     
     public boolean isRoot(Category category) {
-        // compares only names atm!
         return category == root;
     }
     
@@ -105,6 +104,9 @@ public class Classifier {
             return false;
         }
         Category oldParent = category.getParent();
+        if (oldParent == newParent) {
+            return false;
+        }
         oldParent.removeChild(category);
         removeCategoryIfIsLonely(oldParent);
         category.setParent(newParent);

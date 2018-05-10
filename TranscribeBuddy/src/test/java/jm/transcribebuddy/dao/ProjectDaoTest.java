@@ -42,7 +42,7 @@ public class ProjectDaoTest {
     
     
     @Test
-    public void testProjectDao() throws IOException {
+    public void testSavingAndLoading() throws IOException {
         setUpTestConditions();
         assertTrue(testFolder.exists());
         generateAndSaveNewProject();
@@ -59,6 +59,19 @@ public class ProjectDaoTest {
         sqliteURL = sqliteURL.replaceAll("\\\\", "/");
     }
     
+    private void updateProjectInfo(MainController mainCon, String name, String desc) {
+        ProjectInfo projectInfo = mainCon.getProjectInfo();
+        projectInfo.setProjectName(name);
+        projectInfo.setDescription(desc);
+        mainCon.setProjectInfo(projectInfo);
+    }
+    
+    public void save(MainController mainController) {
+        boolean saveOk = mainController.saveProject(textFilePath);
+        assertTrue(saveOk);
+        assertFalse(mainController.getProjectInfo().isNewProject());
+    }
+    
     final String testName = "SQLite Testi";
     final String testDesc = "Testataan pysyväistallennusta.";
     final String testStr1 = "Aloitetaan projektin testaus.";
@@ -71,15 +84,10 @@ public class ProjectDaoTest {
         mainController.endStatement(testStr1);
         mainController.endStatement(testStr2);
         mainController.set(testStr3);
-        ProjectInfo projectInfo = mainController.getProjectInfo();
-        projectInfo.setProjectName(testName);
-        projectInfo.setDescription(testDesc);
-        mainController.setProjectInfo(projectInfo);
+        updateProjectInfo(mainController, testName, testDesc);
         assertEquals(testName, mainController.getProjectName());
         assertTrue(mainController.getProjectInfo().isNewProject());
-        boolean saveOk = mainController.saveProject(textFilePath);
-        assertTrue(saveOk);
-        assertFalse(mainController.getProjectInfo().isNewProject());
+        save(mainController);
     }
     
     public void testLoadProject() {
@@ -100,6 +108,44 @@ public class ProjectDaoTest {
         mainController.selectPrevStatement();
         String firstStatement = mainController.getCurrentStatement();
         assertEquals(testStr1, firstStatement);
+    }
+    
+    
+    @Test
+    public void testOverwritingProject() throws IOException {
+        setUpTestConditions();
+        assertTrue(testFolder.exists());
+        AppSettings settings = new AppSettings(sqliteURL, "", "");
+        MainController mainController = new MainController(settings);
+        updateProjectInfo(mainController, "Ylikirjoitus", "Ylikijoitettava projekti");
+        mainController.endStatement("Eka työ.");
+        mainController.endStatement("Toka lause.");
+        mainController.set("Kolmas lause.");
+        // Save first project
+        save(mainController);
+        // Start to create a new project
+        mainController.cleanProject("");
+        assertTrue(mainController.getProjectInfo().isNewProject());
+        updateProjectInfo(mainController, "Ylikirjoitus", "Korvaava projekti");
+        mainController.endStatement("Toka työ.");
+        mainController.set("Toisen lauseen korvaava lause.");
+        // Save second project and overwrite the first one
+        save(mainController);
+        // Load project and check that the first project has been overwritten
+        mainController = new MainController(settings);
+        assertTrue(mainController.getProjectInfo().isNewProject());
+        mainController.loadProject(textFilePath);
+        assertEquals("Ylikirjoitus", mainController.getProjectName());
+        String desc = mainController.getProjectInfo().getDescription();
+        assertEquals("Korvaava projekti", desc);
+        String firstStatement = mainController.getPrevStatement();
+        assertEquals("Toka työ.", firstStatement);
+        String secondStatement = mainController.getCurrentStatement();
+        assertEquals("Toisen lauseen korvaava lause.", secondStatement);
+        // Thirs statement should not exist
+        mainController.selectNextStatement();
+        String thirdStatement = mainController.getCurrentStatement();
+        assertEquals("Toisen lauseen korvaava lause.", thirdStatement);
     }
     
 }
