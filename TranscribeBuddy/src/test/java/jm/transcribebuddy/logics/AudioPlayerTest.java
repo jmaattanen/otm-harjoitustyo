@@ -31,7 +31,7 @@ public class AudioPlayerTest {
     @Test
     public void incorrectParameterInitializesFilePathRight() {
         AudioPlayer audioPlayer = new AudioPlayer(null);
-        assertEquals("No audio", audioPlayer.getFilePath());
+        assertEquals("No audio", audioPlayer.getFileURI());
     }
     
     @Test

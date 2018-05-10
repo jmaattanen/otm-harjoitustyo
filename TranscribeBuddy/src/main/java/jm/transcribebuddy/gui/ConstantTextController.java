@@ -42,7 +42,7 @@ public class ConstantTextController implements Initializable {
         
         // set up labels and text areas
         projectNameLabel.setText(mainController.getProjectName());
-        audioNameLabel.setText(mainController.getAudioFilePath());
+        audioNameLabel.setText(mainController.getAudioFileURI());
         int caretPosition = mainController.locateCaretPosition();
         int selectionEnd = caretPosition + mainController.getCurrentStatement().length();
         String text = mainController.getFullText();
@@ -167,7 +167,7 @@ public class ConstantTextController implements Initializable {
             if (mainController.openAudioFile(audioFileURI)) {
                 mainController.cleanProject(audioFileURI);
                 projectNameLabel.setText(mainController.getProjectName());
-                audioNameLabel.setText(mainController.getAudioFilePath());
+                audioNameLabel.setText(mainController.getAudioFileURI());
                 workArea.setText("");
             }
         }
@@ -188,7 +188,7 @@ public class ConstantTextController implements Initializable {
             String textFilePath = GuiHelper.openTextFileDialog(mainController);
             mainController.loadProject(textFilePath);
             projectNameLabel.setText(mainController.getProjectName());
-            audioNameLabel.setText(mainController.getAudioFilePath());
+            audioNameLabel.setText(mainController.getAudioFileURI());
             String text = mainController.getFullText();
             workArea.setText(text);
             workArea.positionCaret(text.length());
@@ -219,7 +219,7 @@ public class ConstantTextController implements Initializable {
         ProjectInfo projectInfo = ProjectForm.show(mainController);
         mainController.setProjectInfo(projectInfo);
         projectNameLabel.setText(mainController.getProjectName());
-        audioNameLabel.setText(mainController.getAudioFilePath());
+        audioNameLabel.setText(mainController.getAudioFileURI());
         workArea.requestFocus();
     }
     

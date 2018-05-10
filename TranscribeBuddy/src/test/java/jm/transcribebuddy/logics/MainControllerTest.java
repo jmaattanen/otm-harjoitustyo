@@ -118,5 +118,46 @@ public class MainControllerTest {
         assertEquals(replacement, statement);
     }
     
+    @Test
+    public void subcategoryCanBeSet() {
+        mainController.set("Uusi lause.");
+        // foo category won't affect
+        mainController.setSubcategory("");
+        String subcategory = mainController.getCurrentSubcategory();
+        assertEquals("Undefined", subcategory);
+        // this should be valid category name
+        mainController.setSubcategory("Testiryhmä");
+        subcategory = mainController.getCurrentSubcategory();
+        assertEquals("Testiryhmä", subcategory);
+    }
+    
+    @Test
+    public void timeMarksCanBeSet() {
+        MockPlayer mockplayer = new MockPlayer();
+        mainController = new MainController(settings, mockplayer);
+        assertEquals("No audio", mainController.getAudioFileURI());
+        mainController.openAudioFile("file:mock.mp3");
+        assertEquals("file:mock.mp3", mainController.getAudioFileURI());
+        mainController.playAudio();
+        mainController.endStatement("Eka lause.");
+        mainController.endStatement("Toka lause.");
+        mainController.set("Kolmas lause.");
+        mainController.stopAudio();
+        String mark3 = mainController.startTimeToString();
+        mainController.selectPrevStatement();
+        String mark2 = mainController.startTimeToString();
+        mainController.selectPrevStatement();
+        String mark1 = mainController.startTimeToString();
+        assertEquals("00:00", mark1);
+        assertEquals("00:01", mark2);
+        assertEquals("00:02", mark3);
+        mainController.selectNextStatement();
+        mainController.selectNextStatement();
+        mainController.seekBeginningOfCurrentStatement();
+        mainController.skipForward();
+        mainController.setStartTime();
+        mark3 = mainController.startTimeToString();
+        assertEquals("00:07", mark3);
+    }
     
 }

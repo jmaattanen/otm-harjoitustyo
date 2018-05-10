@@ -15,7 +15,7 @@ public class MainController {
     final private AppSettings appSettings;
     private ProjectInfo projectInfo;
     private DetailedTextBuilder textBuilder;
-    static private AudioPlayer audioPlayer;
+    static private Player audioPlayer;
     final private ProjectDao projectDao;
     
     private boolean workSaved;
@@ -33,6 +33,12 @@ public class MainController {
         
         workSaved = true;
     }
+    
+    public MainController(AppSettings settings, Player player) {
+        this(settings);
+        audioPlayer = player;
+    }
+    
     
     public boolean isWorkSaved() {
         return workSaved;
@@ -224,8 +230,8 @@ public class MainController {
         return true;
     }
     
-    public String getAudioFilePath() {
-        return audioPlayer.getFilePath();
+    public String getAudioFileURI() {
+        return audioPlayer.getFileURI();
     }
     
     public void skipBackward() {

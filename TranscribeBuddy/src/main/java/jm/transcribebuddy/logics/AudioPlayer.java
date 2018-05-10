@@ -7,14 +7,14 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class AudioPlayer {
+public class AudioPlayer implements Player {
     
-    private String audioFilePath;
+    private String audioFileURI;
     private MediaPlayer mediaPlayer;
     private Duration skipTime, longerSkipTime;
     
     public AudioPlayer() {
-        audioFilePath = "No audio";
+        audioFileURI = "No audio";
         skipTime = Duration.seconds(5);
         longerSkipTime = Duration.seconds(30);
     }
@@ -25,10 +25,12 @@ public class AudioPlayer {
         openAudioFile(audioFileURI);
     }
     
+    @Override
     public boolean isSet() {
         return mediaPlayer != null;
     }
     
+    @Override
     public final void openAudioFile(String audioFileURI) {
         if (isSupportedURI(audioFileURI) == false) {
             return;
@@ -44,7 +46,7 @@ public class AudioPlayer {
         if (audioFile.exists()) {
             Media media = new Media(audioFileURI);
             mediaPlayer = new MediaPlayer(media);
-            this.audioFilePath = audioFileURI;
+            this.audioFileURI = audioFileURI;
         }
     }
     
@@ -61,10 +63,12 @@ public class AudioPlayer {
         return false;
     }
     
-    public String getFilePath() {
-        return audioFilePath;
+    @Override
+    public String getFileURI() {
+        return audioFileURI;
     }
     
+    @Override
     public Duration getCurrentTime() {
         if (mediaPlayer == null) {
             return Duration.seconds(0);
@@ -72,18 +76,21 @@ public class AudioPlayer {
         return mediaPlayer.getCurrentTime();
     }
     
+    @Override
     public void play() {
         if (mediaPlayer != null) {
             mediaPlayer.play();
         }
     }
     
+    @Override
     public void stop() {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
     
+    @Override
     public void changePlayingStatus() {
         if (mediaPlayer != null) {
             if (isPlaying()) {
@@ -94,23 +101,27 @@ public class AudioPlayer {
         }
     }
     
+    @Override
     public void seekBeginning() {
         if (mediaPlayer != null) {
             mediaPlayer.seek(Duration.seconds(0));
         }
     }
     
+    @Override
     public void seekTimeMark(Duration timeMark) {
         if (mediaPlayer != null) {
             mediaPlayer.seek(timeMark);
         }
     }
     
+    @Override
     public void skipBackward() {
         if (mediaPlayer != null) {
             skipBackward(skipTime);
         }
     }
+    @Override
     public void skipBackwardLonger() {
         if (mediaPlayer != null) {
             skipBackward(longerSkipTime);
@@ -126,11 +137,13 @@ public class AudioPlayer {
         mediaPlayer.seek(duration);
     }
     
+    @Override
     public void skipForward() {
         if (mediaPlayer != null) {
             skipForward(skipTime);
         }
     }
+    @Override
     public void skipForwardLonger() {
         if (mediaPlayer != null) {
             skipForward(longerSkipTime);
@@ -142,6 +155,7 @@ public class AudioPlayer {
         mediaPlayer.seek(duration);
     }
     
+    @Override
     public boolean isPlaying() {
         if (mediaPlayer == null) {
             return false;

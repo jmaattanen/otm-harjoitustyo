@@ -59,7 +59,7 @@ public class LineByLineController implements Initializable {
         
         // set up labels and text areas
         projectNameLabel.setText(mainController.getProjectName());
-        audioNameLabel.setText(mainController.getAudioFilePath());
+        audioNameLabel.setText(mainController.getAudioFileURI());
         setUpTextAreas();
         prevArea.setEditable(false);
         nextArea.setEditable(false);
@@ -187,7 +187,7 @@ public class LineByLineController implements Initializable {
             if (mainController.openAudioFile(audioFileURI)) {
                 mainController.cleanProject(audioFileURI);
                 projectNameLabel.setText(mainController.getProjectName());
-                audioNameLabel.setText(mainController.getAudioFilePath());
+                audioNameLabel.setText(mainController.getAudioFileURI());
                 setUpTextAreas();
             }
         }
@@ -208,7 +208,7 @@ public class LineByLineController implements Initializable {
             String textFilePath = GuiHelper.openTextFileDialog(mainController);
             mainController.loadProject(textFilePath);
             projectNameLabel.setText(mainController.getProjectName());
-            audioNameLabel.setText(mainController.getAudioFilePath());
+            audioNameLabel.setText(mainController.getAudioFileURI());
             setUpTextAreas();
         }
         workArea.requestFocus();
@@ -236,7 +236,7 @@ public class LineByLineController implements Initializable {
         ProjectInfo projectInfo = ProjectForm.show(mainController);
         mainController.setProjectInfo(projectInfo);
         projectNameLabel.setText(mainController.getProjectName());
-        audioNameLabel.setText(mainController.getAudioFilePath());
+        audioNameLabel.setText(mainController.getAudioFileURI());
         workArea.requestFocus();
     }
     
