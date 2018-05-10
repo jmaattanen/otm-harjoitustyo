@@ -56,16 +56,16 @@ public class TextBuilder {
     public String getAll() {
         workingIndex = statements.size() - 1;
         String text = "";
-        int count = 0;
+        int index = 0;
         for (Statement node : statements) {
             String str = node.toString();
-            if (str.isEmpty() && count != workingIndex) {
+            if (str.isEmpty() && index != workingIndex) {
                 // empty statements are decoded as line endings
                 // except the last statement
                 str = "\n";
             }
             text += str + " ";
-            count++;
+            index++;
         }
         text = text.trim();
         return text;
@@ -81,11 +81,6 @@ public class TextBuilder {
         }
         node.set(statement);
         return true;
-    }
-    
-    public void setLast(String statement) {
-        workingIndex = statements.size() - 1;
-        this.set(statement);
     }
     
     public void deleteStatement() {
@@ -158,13 +153,17 @@ public class TextBuilder {
         return 1;
     }
     
-    public void selectByCaretPosition(final int caretPosition) {
+    public void selectByCaretPosition(int caretPosition) {
         workingIndex = 0;
         int charCount = 0;
         for (Statement s : statements) {
-            String str = s.toString();
+            int addition = s.getLength();
+            if (addition == 0) {
+                // Empty statement is transformed to line ending
+                addition = 1;
+            }
             // Each statement is followed by a single whitespace
-            charCount += str.length() + 1;
+            charCount += addition + 1;
             if (caretPosition >= charCount) {
                 workingIndex++;
             } else {
@@ -186,5 +185,19 @@ public class TextBuilder {
         if (workingIndex < statements.size() - 1) {
             workingIndex++;
         }
+    }
+    
+    public int locateCaretPosition() {
+        int position = 0;
+        for (int i = 0; i < workingIndex; i++) {
+            Statement node = statements.get(i);
+            int addition = node.getLength();
+            if (addition == 0) {
+                // Empty statement is transformed to line ending
+                addition = 1;
+            }
+            position += addition + 1;
+        }
+        return position;
     }
 }

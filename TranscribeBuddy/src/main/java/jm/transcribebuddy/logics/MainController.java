@@ -191,6 +191,10 @@ public class MainController {
         textBuilder.selectByCaretPosition(caretPosition);
     }
     
+    public int locateCaretPosition() {
+        return textBuilder.locateCaretPosition();
+    }
+    
     public void endStatement(String statement) {
         Duration startTime = audioPlayer.getCurrentTime();
         textBuilder.endStatement(statement);

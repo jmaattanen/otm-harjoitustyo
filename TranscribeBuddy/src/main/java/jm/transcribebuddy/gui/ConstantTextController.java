@@ -5,8 +5,6 @@ package jm.transcribebuddy.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -45,9 +43,12 @@ public class ConstantTextController implements Initializable {
         // set up labels and text areas
         projectNameLabel.setText(mainController.getProjectName());
         audioNameLabel.setText(mainController.getAudioFilePath());
+        int caretPosition = mainController.locateCaretPosition();
+        int selectionEnd = caretPosition + mainController.getCurrentStatement().length();
         String text = mainController.getFullText();
         workArea.setText(text);
-        workArea.positionCaret(text.length());
+        workArea.positionCaret(caretPosition);
+        workArea.selectPositionCaret(selectionEnd);
         workArea.requestFocus();
         
         // set up hotkeys
@@ -99,8 +100,8 @@ public class ConstantTextController implements Initializable {
                     "Changes to the beginning of the text should be made in the row view."
             );
         } else {
-            int index = workArea.getCaretPosition();
-            mainController.selectStatementByCaretPosition(index);
+            int position = workArea.getCaretPosition();
+            mainController.selectStatementByCaretPosition(position);
         }
     }
     
