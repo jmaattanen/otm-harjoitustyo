@@ -25,7 +25,9 @@ Sovelluksella on vain yksi käyttäjärooli, eikä erillistä kirjautumista vaad
 
 ### Mahdollisia laajennuksia toiminnallisuuksiin
 
-- luokittelurakenteen pysyväistallennus tulisi toteutta ASAP
+Periodi hujahti niin äkkiä, että jatkokehitettävää riittää yhä pitkäksi aikaa:
+
+- luokittelurakenteen pysyväistallennus tulisi toteuttaa ASAP
 - pysyväistallennukselle voisi tarjota vaihtoehtoisen tallennusmuodon esim yhdeksi pakatuksi tiedostoksi, mikä helpottaisi projektin siirrettävyyttä
 - hakunäkymään voisi tuoda näkyville kerralla useampia sovelluksella tuotettuja projekteja (esim kokoelma haastatteluja johonkin tutkimukseen liittyen)
 - luokittelukenttiin kirjoitettaessa avautuu pikavalintalista projektissa aiemmin käytetyistä luokista
@@ -34,3 +36,4 @@ Sovelluksella on vain yksi käyttäjärooli, eikä erillistä kirjautumista vaad
 - näkymiin voi lisätä kuuntelijan, joka näyttää missä kohtaa ääniraidan toisto on
 - ääniraidan toistoa voisi hallita sliderin avulla
 - aikahyppäyksien pituudet voisi olla käyttäjän määritettävissä
+- tietokannan käyttäjätunnuksen ja salasanan tulisi pystyä määrittämään ohjelman käyttöliittymällä (ellei laiska käyttäjä halua lojuttaa tietojaan kaikkien nähtävillä)
