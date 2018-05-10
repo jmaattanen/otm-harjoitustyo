@@ -149,7 +149,7 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
                 ResultSet results = ps.executeQuery();
                 if (results.next()) {
                     projectInfo.setId(results.getInt(1));
-                    projectInfo.setProjectName(results.getString(2));
+                    projectInfo.setName(results.getString(2));
                     projectInfo.setDescription(results.getString(3));
                     projectInfo.setAudioFileURI(results.getString(4));
                 }

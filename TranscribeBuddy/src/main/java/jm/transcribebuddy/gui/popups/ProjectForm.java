@@ -68,7 +68,7 @@ public class ProjectForm {
             @Override
             public void handle(ActionEvent event) {
                 String projectName = projectNameField.getText();
-                projectInfo.setProjectName(projectName);
+                projectInfo.setName(projectName);
                 String description = projectDescriptionArea.getText();
                 projectInfo.setDescription(description);
                 final String audioFileURI = audioFileLabel.getText();

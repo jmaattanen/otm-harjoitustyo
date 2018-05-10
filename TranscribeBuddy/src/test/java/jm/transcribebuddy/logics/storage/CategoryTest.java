@@ -61,6 +61,21 @@ public class CategoryTest {
         assertNotEquals(sub1, sub2);
     }
     
+    @Test
+    public void categoryDoesNotEqualToString() {
+        String catName = category.toString();
+        assertFalse(category.equals(catName));
+    }
+    
+    @Test
+    public void compareToNullThrowsException() {
+        try {
+            category.compareTo(null);
+            fail();
+        } catch (NullPointerException e) {
+//            System.out.println("YEAH!");
+        }
+    }
     
     @Test
     public void categoryCanBeRenamed() {

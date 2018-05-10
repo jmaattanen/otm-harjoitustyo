@@ -80,7 +80,7 @@ public class ProjectInfo {
         this.id = id;
     }
     
-    public boolean setProjectName(String name) {
+    public boolean setName(String name) {
         if (name == null || name.isEmpty()) {
             return false;
         } else if (name.length() > maxNameLength) {

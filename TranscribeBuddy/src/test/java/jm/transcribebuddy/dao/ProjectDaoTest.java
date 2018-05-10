@@ -61,7 +61,7 @@ public class ProjectDaoTest {
     
     private void updateProjectInfo(MainController mainCon, String name, String desc) {
         ProjectInfo projectInfo = mainCon.getProjectInfo();
-        projectInfo.setProjectName(name);
+        projectInfo.setName(name);
         projectInfo.setDescription(desc);
         mainCon.setProjectInfo(projectInfo);
     }
