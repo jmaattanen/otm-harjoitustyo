@@ -18,7 +18,7 @@ Käyttöliittymää [jm.transcribebuddy.gui](https://github.com/jmaattanen/otm-harjo
 
 Käyttöliittymä koostuu kolmesta näkymästä, joista käyttäjälle näkyy aina yksi kerrallaan. Ohjelman käynnistyttyä käyttäjälle aukeaa _tekstinäkymä (ConstantText)_, jossa ohjelmalla kirjoitettu teksti näkyy kokonaisuudessaan. Toinen näkymä nimeltään _rivinäkymä (LineByLine)_ näyttää pienemmän osan tekstistä mutta antaa käyttöön enemmän työkaluja asiakirjan muokkaukseen. Vielä kolmantena on _hakunäkymä (Overview)_, joka taulukoi asiakirjan osia luokitteluominaisuuteen perustuen. Kunkin näkymän layout on kuvattu omassa [fxml-tiedostossaan](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/resources/fxml) ja toiminnallisuuksia ohjaa _gui_-paketin fxml-kontrolleriluokat.
 
-Lisäksi joitain ilmoituksia ja dialogeja näytetään erillisten ponnahdusikkunoiden avulla.
+Lisäksi joitain ilmoituksia ja dialogeja näytetään erillisten ponnahdusikkunoiden avulla, kuten projektin avaus- ja tallennusdialogit.
 
 ## Logics - sovelluslogiikka
 
@@ -30,7 +30,9 @@ _Storage_-paketissa on logiikan käyttämiä lähinnä yksinkertaisia gettereitä ja s
 
 Luokitteluominaisuuden logiikasta itsessään vastaa _Classifier.java_-luokka. Tällä hetkellä _Statement_-olioiden kategorisointiin on käytössä kahden korkuinen hakupuurakenne, jossa ensimmäisen tason solmut kuvaavat sovelluksen termein _yläluokkia (headcategory)_ ja toisella tasolla _alaluokkia (subcategory)_.
 _Storage_-paketin _Category.java_-luokan ilmentymät puolestaan vastaavat yhtä puun solmua. _Statement_-ilmentymä voi olla liitettynä täsmälleen yhteen puun lehteen eli _alaluokkaan_.
+Tällä hetkellä _Statement_-_Category_ -relaatio on linkitetty vain yhteen suuntaan eli _Statement_-ilmentymä tuntee oman alaluokkansa, mutta alaluokasta ei ole linkityksiä siihen kuuluviin _Statement_-ilmentymiin. Tämän linkityksen voisi ehdottomasti kehittää ajan salliessa kaksisuuntaiseksi.
 
+![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_tree.png "Classifier")
 
 ## DAO - pysyväistallennus
 
