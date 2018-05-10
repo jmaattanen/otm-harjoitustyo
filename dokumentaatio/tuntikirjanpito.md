@@ -58,6 +58,6 @@
 | 8.5.  | 2    | Pientä ehostusta |
 |       |      | Testejä |
 | 9.5.  | 5    | Dokumentointia |
-| 10.5. | 4    | Testejä |
+| 10.5. | 5    | Testejä |
 |       |      | Dokumentointia |
-| yht   | 105  | | 
+| yht   | 106  | | 

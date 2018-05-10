@@ -1,13 +1,16 @@
 package jm.transcribebuddy.dao.db;
 
-/***   DAO for storing project information like project name and resource paths    ***/
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import jm.transcribebuddy.dao.ProjectInfoDao;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
+/**
+ * DAO for storing project information like project name and resource paths
+ * 
+ * @author Juha
+ */
 public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
     
     final public static String PROJECTSTABLE = "tb_projects";
@@ -19,6 +22,12 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
         createProjectsTable();
     }
     
+    /**
+     * Saves project information to database if connection is available.
+     * 
+     * @param projectInfo The information to be saved.
+     * @return True if the information was saved successfully.
+     */
     @Override
     public boolean save(final ProjectInfo projectInfo) {
         if (connectDatabase() == false) {
@@ -41,6 +50,13 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
         return result;
     }
     
+    /**
+     * Loads project information from database if connection is available.
+     * Text file path is a key to the search.
+     * 
+     * @param projectInfo Project file path must have been set in order to search.
+     * @return Loaded project information.
+     */
     @Override
     public ProjectInfo load(ProjectInfo projectInfo) {
         if (connectDatabase() == true) {

@@ -10,6 +10,8 @@ Litteroitsijan apukäsi :) Tällä ohjelmalla saat kirjoitettua äänitallenteet
 
 [Käyttöohje](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
+[Testausdokumentti](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/testaus.md)
+
 [Työaikakirjanpito](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Julkaisut
