@@ -4,12 +4,18 @@ import jm.transcribebuddy.logics.storage.Statement;
 import java.util.ArrayList;
 
 /**
- * This class is responsible for word processing
+ * This class is responsible for word processing.
  * 
  * @author Juha
  */
 public class TextBuilder {
+    /**
+     * List of Statement objects on which the project consists.
+     */
     final protected ArrayList<Statement> statements;
+    /**
+     * The pointer of currently activated statement.
+     */
     protected int workingIndex;
     
     final static public String BEGINNINGSIGN
@@ -53,6 +59,12 @@ public class TextBuilder {
         return statements.get(index).toString();
     }
     
+    /**
+     * Puts the full text together. Statements are separated by spaces.
+     * Empty statements are replaced by line endings.
+     * 
+     * @return Full project text.
+     */
     public String getAll() {
         workingIndex = statements.size() - 1;
         String text = "";
@@ -71,7 +83,16 @@ public class TextBuilder {
         return text;
     }
     
+    /**
+     * Copies the string value into currently activated Statement instance.
+     * 
+     * @param statement String to be copied.
+     * @return True if the state of Statement object changed.
+     */
     public boolean set(String statement) {
+        if (statement == null) {
+            return false;
+        }
         statement = statement.trim();
         Statement node = statements.get(workingIndex);
         String oldStatement = node.toString();

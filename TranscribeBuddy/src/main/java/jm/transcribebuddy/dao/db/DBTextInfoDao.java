@@ -1,7 +1,5 @@
 package jm.transcribebuddy.dao.db;
 
-/***   This is DAO that is responsible for storing text info like time marks    ***/
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +11,11 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.Statement;
 import jm.transcribebuddy.logics.word.TextBuilder;
 
+/**
+ * This DAO class is responsible for storing text information like time marks.
+ * 
+ * @author juham
+ */
 public class DBTextInfoDao extends DBDao implements TextInfoDao {
     
     final public static String STATEMENTSTABLE = "tb_statements";
@@ -24,6 +27,13 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         createStatementsTable();
     }
     
+    /**
+     * Saves text information to database if connection is available.
+     * 
+     * @param projectInfo This determines to which project the text refers.
+     * @param textBuilder The object whose data is stored.
+     * @return True if save was successful.
+     */
     @Override
     public boolean save(final ProjectInfo projectInfo, final TextBuilder textBuilder) {
         if (connectDatabase() == false) {
@@ -48,6 +58,14 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         return result;
     }
     
+    /**
+     * Loads text information from database if connection is available.
+     * 
+     * @param projectInfo This determines to which project the text refers.
+     * @param textBuilder This object will be updated if the load was successful.
+     * @return Updated DetailedTextBuilder object if the load was successful.
+     * Otherwise the given TextBuilder instance.
+     */
     @Override
     public DetailedTextBuilder load(final ProjectInfo projectInfo, final DetailedTextBuilder textBuilder) {
         if (connectDatabase() == false) {
@@ -73,6 +91,12 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         return textBuilder;
     }
     
+    /**
+     * This method removes the project information from database.
+     * 
+     * @param projectId The identifier that determines the project to be deleted.
+     * @return The number of deleted projects.
+     */
     public int delete(final int projectId) {
         if (connectDatabase()) {
             int result = deleteAllProjectStatements(projectId);

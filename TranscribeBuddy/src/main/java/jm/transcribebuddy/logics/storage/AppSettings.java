@@ -1,9 +1,13 @@
 package jm.transcribebuddy.logics.storage;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.Properties;
 
+/**
+ * Data structure for storing important application data.
+ * 
+ * @author juham
+ */
 public class AppSettings {
     final private String databaseURL;
     final private String databaseUser;

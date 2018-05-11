@@ -1,7 +1,5 @@
 package jm.transcribebuddy.dao.file;
 
-/***   This is DAO for saving and loading pure text using TXT files   ***/
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -14,12 +12,24 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.Statement;
 import jm.transcribebuddy.logics.word.TextBuilder;
 
+/**
+ * This is DAO for saving and loading pure text using TXT files
+ * 
+ * @author juham
+ */
 public class FileTextDao implements TextDao {
     
     public FileTextDao() {
         
     }
     
+    /**
+     * Saves the state of TextBuilder object to a text file.
+     * 
+     * @param projectInfo Project information that determines the location of the text file.
+     * @param textBuilder The object to be saved.
+     * @return True if save was successful.
+     */
     @Override
     public boolean save(final ProjectInfo projectInfo, TextBuilder textBuilder) {
         try {
@@ -41,6 +51,12 @@ public class FileTextDao implements TextDao {
         return true;
     }
     
+    /**
+     * Loads saved state of DetailedTextBuilder object from a text file.
+     * 
+     * @param projectInfo Project information that determines the location of the text file.
+     * @return DetailedTextBuilder with loaded data.
+     */
     @Override
     public DetailedTextBuilder load(final ProjectInfo projectInfo) {
         final String textFilePath = projectInfo.getTextFilePath();

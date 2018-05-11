@@ -6,6 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import jm.transcribebuddy.logics.AudioPlayer;
 
+/**
+ * Data structure for storing general information about TranscribeBuddy project.
+ * 
+ * @author juham
+ */
 public class ProjectInfo {
     private int id;
     private String name;

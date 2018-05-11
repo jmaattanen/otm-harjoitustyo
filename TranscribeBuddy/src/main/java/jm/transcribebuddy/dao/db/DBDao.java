@@ -5,6 +5,11 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Abstract DAO class to communicate with database.
+ * 
+ * @author juham
+ */
 public class DBDao {
     
     private enum DatabaseType { POSTGRES, SQLITE, UNKNOWN }
@@ -47,6 +52,10 @@ public class DBDao {
         }
     }
     
+    /**
+     * Method tries to connect to database and after that closes the connection.
+     * @return True if the connection was successfully opened.
+     */
     public boolean testConnection() {
         boolean result = connectDatabase();
         closeConnection();

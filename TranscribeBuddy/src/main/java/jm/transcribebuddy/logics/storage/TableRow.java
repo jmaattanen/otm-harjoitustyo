@@ -2,8 +2,11 @@ package jm.transcribebuddy.logics.storage;
 
 import javafx.beans.property.SimpleStringProperty;
 
-/***   Data structure for the table contents in Overview scene   ***/
-
+/**
+ * Data structure for the table contents in Overview scene.
+ * 
+ * @author juham
+ */
 public class TableRow {
     private final SimpleStringProperty subcategory = new SimpleStringProperty("");
     private final SimpleStringProperty statement = new SimpleStringProperty("");
