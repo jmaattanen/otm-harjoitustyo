@@ -22,7 +22,7 @@ public class MainController {
     
     public MainController(AppSettings settings) {
         appSettings = settings;
-        projectInfo = new ProjectInfo();
+        projectInfo = new ProjectInfo(settings.getDocumentHomePath());
         textBuilder = new DetailedTextBuilder();
         audioPlayer = new AudioPlayer();
         
@@ -45,7 +45,7 @@ public class MainController {
     }
     
     public void cleanProject(String audioFileURI) {
-        projectInfo = new ProjectInfo();
+        projectInfo = new ProjectInfo(appSettings.getDocumentHomePath());
         projectInfo.setAudioFileURI(audioFileURI);
         textBuilder = new DetailedTextBuilder();
         workSaved = true;

@@ -18,6 +18,10 @@ public class ProjectInfo {
     final private int maxDescriptionLength = 512;
     
     public ProjectInfo() {
+        this(File.separator);
+    }
+    
+    public ProjectInfo(String saveDirectory) {
         id = 0;
         name = "New Project";
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -25,7 +29,7 @@ public class ProjectInfo {
         description = "Created " + dateFormat.format(today);
         textFileName = null;
         audioFileURI = "";
-        saveDirectory = File.separator;
+        this.saveDirectory = saveDirectory;
     }
     
     public ProjectInfo(ProjectInfo other) {

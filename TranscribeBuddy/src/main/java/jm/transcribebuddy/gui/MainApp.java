@@ -28,20 +28,16 @@ public class MainApp extends Application {
     
     @Override
     public void init() throws IOException {
-        String databaseURL = "";
-        String databaseUser = "";
-        String databasePass = "";
+        AppSettings settings;
         
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(configFileName));
-            databaseURL = properties.getProperty("databaseURL");
-            databaseUser = properties.getProperty("postgresUser");
-            databasePass = properties.getProperty("postgresPass");
+            settings = new AppSettings(properties);
         } catch (FileNotFoundException ex) {
             createConfigFile();
+            settings = new AppSettings("", "", "");
         }
-        AppSettings settings = new AppSettings(databaseURL, databaseUser, databasePass);
         
         mainController = new MainController(settings);
     }
@@ -107,6 +103,7 @@ public class MainApp extends Application {
             properties.setProperty("databaseURL", "");
             properties.setProperty("postgresUser", "");
             properties.setProperty("postgresPass", "");
+            properties.setProperty("documentHome", "");
             properties.store(output, null);
             
         } catch (IOException ex) {
@@ -117,7 +114,6 @@ public class MainApp extends Application {
                     output.close();
                 } catch (IOException e) { }
             }
-
 	}
         return true;
     }
