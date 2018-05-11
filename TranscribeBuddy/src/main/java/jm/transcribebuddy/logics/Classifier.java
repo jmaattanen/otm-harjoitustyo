@@ -159,6 +159,15 @@ public class Classifier {
         return subcategory;
     }
     
+    /**
+     * Adds a new head category to the tree or returns existing Category
+     * with given name. A new head category becomes a child of Undefined
+     * parent.
+     * @param name Category name
+     * @param subcategory Child to this head category
+     * @return The added head category or undefined sub category if
+     * an error occurred
+     */
     public Category addHeadcategory(String name, final Category subcategory) {
         if (name == null || name.isEmpty() || name.equals(undefinedName)
                 || maxDepth < 2 || getDepth(subcategory) != maxDepth
