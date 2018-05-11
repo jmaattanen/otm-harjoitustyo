@@ -1,7 +1,5 @@
 package jm.transcribebuddy.gui;
 
-/***   This is the main class of TranscribeBuddy   ***/
-
 import jm.transcribebuddy.gui.popups.AlertBox;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +19,11 @@ import javafx.stage.WindowEvent;
 import jm.transcribebuddy.logics.storage.AppSettings;
 import jm.transcribebuddy.logics.MainController;
 
+/**
+ * This is the main class of TranscribeBuddy
+ * 
+ * @author Juha
+ */
 public class MainApp extends Application {
 
     private MainController mainController;
