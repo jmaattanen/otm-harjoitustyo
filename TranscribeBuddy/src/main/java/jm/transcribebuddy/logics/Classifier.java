@@ -55,14 +55,30 @@ public class Classifier {
         return maxDepth;
     }
     
+    /**
+     * Method returns all tree leaves.
+     * 
+     * @return List of Categories at the highest level.
+     */
     public ArrayList<Category> getSubcategories() {
         return getCategories(maxDepth);
     }
     
+    /**
+     * Method returns all parents of tree leaves.
+     * 
+     * @return List of Categories at the second highest level.
+     */
     public ArrayList<Category> getHeadcategories() {
         return getCategories(maxDepth - 1);
     }
     
+    
+    /**
+     * Method returns all nodes at the requested level.
+     * @param depth The distance to the root.
+     * @return List of Categories.
+     */
     public ArrayList<Category> getCategories(final int depth) {
         if (depth < 1 || depth > maxDepth) {
             return new ArrayList<>();
@@ -114,6 +130,14 @@ public class Classifier {
         return true;
     }
     
+    /**
+     * Adds a new sub category to the tree or returns existing Category
+     * with given name. A new sub category becomes a child of Undefined
+     * parent.
+     * @param name Category name
+     * @return The added sub category or undefined sub category if
+     * an error occurred
+     */
     public Category addSubcategory(String name) {
         if (name == null || name.isEmpty() || name.equals(undefinedName)) {
             return highestUndefined;
