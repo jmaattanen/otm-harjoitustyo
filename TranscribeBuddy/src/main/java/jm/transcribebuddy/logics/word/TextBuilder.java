@@ -104,6 +104,11 @@ public class TextBuilder {
         return true;
     }
     
+    /**
+     * Removes the currently activated Statement object from the list.
+     * Method adds a new Statement object to the list if 
+     * the list was empty after removing.
+     */
     public void deleteStatement() {
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
@@ -116,6 +121,13 @@ public class TextBuilder {
         }
     }
     
+    /**
+     * Updates the string value of currently activated Statement object and
+     * inserts a new Statement object after that. WorkingIndex will be
+     * moved to point the newborn statement.
+     * 
+     * @param statement The string value to be copied.
+     */
     public void endStatement(String statement) {
         Statement node = statements.get(workingIndex);
         node.set(statement);
@@ -124,7 +136,14 @@ public class TextBuilder {
         statements.add(workingIndex, newNode);
     }
     
-    /* This method divides statement into two parts */
+    /**
+     * This method updates the string value of statement and divides 
+     * it into two parts.
+     * 
+     * @param statement The string value to be copied.
+     * @param splitIndex The split spot.
+     * @return True if the statement was split.
+     */
     public boolean splitStatement(String statement, int splitIndex) {
         set(statement);
         if (splitIndex <= 0 || splitIndex >= statement.length()) {
@@ -143,7 +162,14 @@ public class TextBuilder {
         return true;
     }
     
-    /* This method analyses text modification over the last statement */
+    /**
+     * This method analyzes text modification over the last statement.
+     * 
+     * @param text Full text.
+     * @return Negative value if an error occurred.
+     * Zero if nothing changed.
+     * Positive value on acceptable text modification.
+     */
     public int parseFromAll(final String text) {
         String savedText = this.getAll();
         // ignore the last statement
@@ -174,6 +200,12 @@ public class TextBuilder {
         return 1;
     }
     
+    /**
+     * Moves workingIndex to point to a specific location in the text
+     * based on the caret position.
+     * 
+     * @param caretPosition 
+     */
     public void selectByCaretPosition(int caretPosition) {
         workingIndex = 0;
         int charCount = 0;
