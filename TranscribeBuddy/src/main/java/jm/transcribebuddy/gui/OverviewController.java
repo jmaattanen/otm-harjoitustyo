@@ -1,7 +1,5 @@
 package jm.transcribebuddy.gui;
 
-/***   FXML controller for overview alias hakunäkymä   ***/
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,6 +28,11 @@ import jm.transcribebuddy.logics.storage.Category;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.TableRow;
 
+/**
+ * FXML controller for overview scene alias hakunäkymä
+ * 
+ * @author Juha
+ */
 public class OverviewController implements Initializable {
     
     private MainController mainController;

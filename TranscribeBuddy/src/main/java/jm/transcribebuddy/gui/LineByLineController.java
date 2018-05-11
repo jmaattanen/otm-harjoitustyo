@@ -1,7 +1,5 @@
 package jm.transcribebuddy.gui;
 
-/***   FXML controller for line by line view alias rivinäkymä   ***/
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +21,11 @@ import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
+/**
+ * FXML controller for line by line view scene alias rivinäkymä
+ * 
+ * @author Juha
+ */
 public class LineByLineController implements Initializable {
     
     private MainController mainController;

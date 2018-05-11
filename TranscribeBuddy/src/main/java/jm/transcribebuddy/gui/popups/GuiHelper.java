@@ -6,6 +6,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jm.transcribebuddy.logics.MainController;
 
+/**
+ * File chooser windows
+ * 
+ * @author Juha
+ */
 public class GuiHelper {
     
     public static String openAudioFileDialog(final MainController mainController) {

@@ -1,7 +1,5 @@
 package jm.transcribebuddy.gui.popups;
 
-/***   Project information setup window    ***/
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,6 +14,11 @@ import javafx.stage.Stage;
 import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
+/**
+ * Project information setup window
+ * 
+ * @author Juha
+ */
 public class ProjectForm {
     
     public static ProjectInfo show(final MainController mainController) {

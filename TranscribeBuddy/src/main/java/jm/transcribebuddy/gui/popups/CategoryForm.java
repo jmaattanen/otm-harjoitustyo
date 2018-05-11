@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.storage.Category;
 
+/**
+ * Category modification window
+ * 
+ * @author Juha
+ */
 public class CategoryForm {
     
     

@@ -201,10 +201,10 @@ public class TextBuilder {
     }
     
     /**
-     * Moves workingIndex to point to a specific location in the text
+     * Moves workingIndex to point a specific location in the text
      * based on the caret position.
      * 
-     * @param caretPosition 
+     * @param caretPosition Caret position throughout text
      */
     public void selectByCaretPosition(int caretPosition) {
         workingIndex = 0;
@@ -240,6 +240,12 @@ public class TextBuilder {
         }
     }
     
+    /**
+     * Calculates the beginning of the currently activated statement
+     * throughout the text.
+     * 
+     * @return Caret position by characters
+     */
     public int locateCaretPosition() {
         int position = 0;
         for (int i = 0; i < workingIndex; i++) {

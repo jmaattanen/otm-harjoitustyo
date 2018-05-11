@@ -20,7 +20,7 @@ import jm.transcribebuddy.logics.storage.AppSettings;
 import jm.transcribebuddy.logics.MainController;
 
 /**
- * This is the main class of TranscribeBuddy
+ * This is the main application class of TranscribeBuddy
  * 
  * @author Juha
  */

@@ -5,6 +5,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
+/**
+ * Pop up windows for alerts and confirmation messages
+ * 
+ * @author Juha
+ */
 public class AlertBox {
     
     public static void showWarning(String header, String content) {

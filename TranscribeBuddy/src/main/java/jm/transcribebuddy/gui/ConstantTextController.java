@@ -1,7 +1,5 @@
 package jm.transcribebuddy.gui;
 
-/***   FXML controller for constant text view alias tekstinäkymä   ***/
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +19,11 @@ import jm.transcribebuddy.gui.popups.*;
 import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 
+/**
+ * FXML controller for constant text scene alias tekstinäkymä
+ * 
+ * @author Juha
+ */
 public class ConstantTextController implements Initializable {
     
     private MainController mainController;
