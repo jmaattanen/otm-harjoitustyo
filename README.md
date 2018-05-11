@@ -22,6 +22,8 @@ Litteroitsijan apukäsi :) Tällä ohjelmalla saat kirjoitettua äänitallenteet
 
 [Release 2](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko6)
 
+[Release 3](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/loppupalautus)
+
 ## Komentorivitoiminnot
 
 Seuraavat maven-komennot ovat ajettavissa projektikansiosta _TranscribeBuddy_ käsin:

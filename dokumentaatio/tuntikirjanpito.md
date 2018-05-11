@@ -60,5 +60,5 @@
 | 9.5.  | 5    | Dokumentointia |
 | 10.5. | 5    | Testejä |
 |       |      | Dokumentointia |
-| 11.5. | 1    | Dokumentointia |
-| yht   | 107  | | 
+| 11.5. | 2    | Dokumentointia |
+| yht   | 108  | | 

@@ -2,11 +2,11 @@
 
 ## Suoritus ja konfigurointi
 
-Sovelluksen [Release 2](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko6)-version pystyy suorittamaan koneella, jolle on asennettu Java versio 1.8.
+Sovelluksen [Release 3](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/loppupalautus)-version pystyy suorittamaan koneella, jolle on asennettu Java versio 1.8.
 Ohjelman voi suorittaa polusta, jonne jar-tiedosto on kopioitu, komennolla
 
 ```
-java -jar TranscribeBuddy-2.0.jar
+java -jar TranscribeBuddy-3.0.jar
 ```
 
 Ensimmäisellä suorituskerralla ohjelman pitäisi luoda omaan kotipolkuunsa tiedosto _config.properties_. Kyseisen tiedoston avulla voidaan konfiguroida tietokantayhteys ulkoiseen PostgreSQL-tietokantapalvelimeen.
