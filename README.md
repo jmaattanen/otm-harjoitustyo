@@ -18,11 +18,11 @@ Litteroitsijan apukäsi :) Tällä ohjelmalla saat kirjoitettua äänitallenteet
 
 ## Julkaisut
 
-[Release 1](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko5)
+[Release 1](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko5) - viikko5
 
-[Release 2](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko6)
+[Release 2](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/viikko6) - viikko 6
 
-[Release 3](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/loppupalautus)
+[Release 3](https://github.com/jmaattanen/otm-harjoitustyo/releases/tag/loppupalautus) - OTM loppupalautus
 
 ## Komentorivitoiminnot
 
