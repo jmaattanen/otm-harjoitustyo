@@ -37,3 +37,5 @@ Periodi hujahti niin äkkiä, että jatkokehitettävää riittää yhä pitkäks
 - ääniraidan toistoa voisi hallita sliderin avulla
 - aikahyppäyksien pituudet voisi olla käyttäjän määritettävissä
 - tietokannan käyttäjätunnuksen ja salasanan tulisi pystyä määrittämään ohjelman käyttöliittymällä (ellei laiska käyttäjä halua lojuttaa tietojaan kaikkien nähtävillä)
+- mahdollisuus valita käyttöliittymän kieli
+- vapaa sanahaku asiakirjan tekstiin
