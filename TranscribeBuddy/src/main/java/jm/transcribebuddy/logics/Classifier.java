@@ -138,16 +138,17 @@ public class Classifier {
      * @return The added sub category or undefined sub category if
      * an error occurred
      */
-    public Category addSubcategory(String name) {
+    public Category addSubcategory(final String name) {
         if (name == null || name.isEmpty() || name.equals(undefinedName)) {
             return highestUndefined;
         }
-        // Check that name isn't too long
-        name = Category.getValidName(name);
+        // Force automatic name formatting by applying method twice
+        String formattedName = Category.getValidName(Category.getValidName(name));
         // Subcategory must have a unique name
         ArrayList<Category> subcategories = getCategories(maxDepth);
         for (Category sc : subcategories) {
-            if (name.equals(sc.toString())) {
+            String otherFormattedName = Category.getValidName(sc.toString());
+            if (formattedName.equals(otherFormattedName)) {
                 // Name exists so no addition needed
                 return sc;
             }
