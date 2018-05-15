@@ -107,4 +107,22 @@ public class CategoryTest {
         assertTrue(category.hasChildren());
     }
     
+    @Test
+    public void nameFormattingWorks() {
+        // Here automatic name formatting will be executed
+        String name = Category.getValidName("ATK-taidot");
+        assertEquals("Atk-taidot", name);
+        // !-command forces to skip the formatting
+        name = Category.getValidName("!ATK-taidot");
+        assertEquals("ATK-taidot", name);
+        name = Category.getValidName(null);
+        assertEquals("Undefined", name);
+        name = Category.getValidName("!");
+        assertEquals("Undefined", name);
+        name = Category.getValidName("!!");
+        assertEquals("!", name);
+        name = Category.getValidName("  !  Sisennetty");
+        assertEquals("  Sisennetty", name);
+    }
+    
 }

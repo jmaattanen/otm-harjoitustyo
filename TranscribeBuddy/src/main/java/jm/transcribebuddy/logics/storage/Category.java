@@ -55,14 +55,24 @@ public class Category implements Comparable {
      * name in trimmed form.
      */
     public static String getValidName(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null) {
             return "Undefined";
         }
         name = name.trim();
+        if (name.isEmpty() || name.equals("!")) {
+            return "Undefined";
+        }
+        boolean useFormatting = true;
+        if (name.charAt(0) == '!') {
+            useFormatting = false;
+            name = name.substring(1, name.length());
+        }
         if (name.length() > MAXNAMELENGTH) {
             return name.substring(0, MAXNAMELENGTH);
         }
-        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        if (useFormatting) {
+            name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        }
         return name;
     }
     
