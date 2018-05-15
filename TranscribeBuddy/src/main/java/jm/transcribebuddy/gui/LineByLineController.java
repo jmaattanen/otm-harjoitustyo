@@ -93,6 +93,10 @@ public class LineByLineController implements Initializable {
                         case ENTER:
                             endStatement();
                             break;
+                        case Q:
+                            subcategoryField.selectAll();
+                            subcategoryField.requestFocus();
+                            break;
                         case SPACE:
                             if (keyEvent.isShiftDown()) {
                                 // [ctrl+shift+space] starts playing from last mark
