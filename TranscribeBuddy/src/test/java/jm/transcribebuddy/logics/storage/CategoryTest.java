@@ -120,7 +120,7 @@ public class CategoryTest {
         name = Category.getValidName("!");
         assertEquals("Undefined", name);
         name = Category.getValidName("!!");
-        assertEquals("!", name);
+        assertEquals("Undefined", name);
         name = Category.getValidName("  !  Sisennetty");
         assertEquals("  Sisennetty", name);
     }

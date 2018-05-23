@@ -59,13 +59,13 @@ public class Category implements Comparable {
             return "Undefined";
         }
         name = name.trim();
-        if (name.isEmpty() || name.equals("!")) {
-            return "Undefined";
-        }
         boolean useFormatting = true;
-        if (name.charAt(0) == '!') {
+        while (!name.isEmpty() && name.charAt(0) == '!') {
             useFormatting = false;
             name = name.substring(1, name.length());
+        }
+        if (name.isEmpty()) {
+            return "Undefined";
         }
         if (name.length() > MAXNAMELENGTH) {
             return name.substring(0, MAXNAMELENGTH);
@@ -84,7 +84,7 @@ public class Category implements Comparable {
      * @return True if the category was renamed.
      */
     public boolean rename(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty() || name.equals(this.name)) {
             return false;
         }
         this.name = getValidName(name);
