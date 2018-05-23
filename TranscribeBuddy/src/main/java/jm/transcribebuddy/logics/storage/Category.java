@@ -1,7 +1,5 @@
 package jm.transcribebuddy.logics.storage;
 
-import java.util.ArrayList;
-
 /**
  * A tree node object for categorizing Statements.
  * The category name maximum length is set to 30. Names are unique.
@@ -10,9 +8,9 @@ import java.util.ArrayList;
  * @author Juha
  */
 public class Category implements Comparable {
-    private String name;
-    private Category parent;
-    final private ArrayList<Category> children;
+    protected String name;
+    protected Category parent;
+//    final private ArrayList<Category> children;
     private int statementCounter;
     
     final static private int MAXNAMELENGTH = 30;
@@ -26,7 +24,7 @@ public class Category implements Comparable {
     public Category(String name) {
         this.name = getValidName(name);
         parent = this;
-        children = new ArrayList<>();
+//        children = new ArrayList<>();
         statementCounter = 0;
     }
     
@@ -43,7 +41,7 @@ public class Category implements Comparable {
         } else {
             this.parent = parent;
         }
-        children = new ArrayList<>();
+//        children = new ArrayList<>();
         statementCounter = 0;
     }
     
@@ -99,40 +97,14 @@ public class Category implements Comparable {
         return statementCounter;
     }
     
-    public boolean hasChildren() {
-        return !children.isEmpty();
-    }
-    
     public Category getParent() {
         return parent;
-    }
-    
-    public ArrayList<Category> getChildren() {
-        return children;
     }
     
     public void setParent(Category parent) {
         if (parent != null) {
             this.parent = parent;
         }
-    }
-    
-    public void addChild(Category child) {
-        if (child != null && !children.contains(child)) {
-            children.add(child);
-        }
-    }
-    
-    /**
-     * Removes the child node from the children of this node.
-     * 
-     * @see jm.transcribebuddy.logics.storage.Statement
-     * @param child The node to be removed.
-     * @return True if the child was removed.
-     */
-    public boolean removeChild(Category child) {
-        child.parent = null;
-        return children.remove(child);
     }
     
     /**
@@ -153,6 +125,13 @@ public class Category implements Comparable {
     @Override
     public String toString() {
         return name;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
     }
     
     @Override

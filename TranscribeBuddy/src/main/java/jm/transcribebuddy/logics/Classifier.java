@@ -2,6 +2,8 @@ package jm.transcribebuddy.logics;
 
 import java.util.ArrayList;
 import jm.transcribebuddy.logics.storage.Category;
+import jm.transcribebuddy.logics.storage.InternalCategory;
+import jm.transcribebuddy.logics.storage.LeafCategory;
 
 /**
  * A tree structure for statement classification.
@@ -9,8 +11,8 @@ import jm.transcribebuddy.logics.storage.Category;
  * @author juham
  */
 public class Classifier {
-    final private Category root;
-    final private Category highestUndefined;
+    final private InternalCategory root;
+    final private LeafCategory highestUndefined;
     
     // Max depth should have value 1 or greater
     final private int maxDepth;
@@ -22,7 +24,7 @@ public class Classifier {
     
     // Heigtht limited between 1 and 6
     public Classifier(int heightOfTree) {
-        root = new Category("*ROOT*");
+        root = new InternalCategory("*ROOT*");
         if (heightOfTree < 1) {
             maxDepth = 1;
         } else if (heightOfTree > 6) {
@@ -32,12 +34,13 @@ public class Classifier {
         }
         // Create one undefined category for each depth
         Category parent = root;
-        for (int i = 0; i < maxDepth; i++) {
-            Category child = new Category(undefinedName, parent);
-            parent.addChild(child);
+        for (int i = 1; i < maxDepth; i++) {
+            Category child = new InternalCategory(undefinedName, parent);
+            ((InternalCategory) parent).addChild(child);
             parent = child;
         }
-        highestUndefined = parent;
+        highestUndefined = new LeafCategory(undefinedName, parent);
+        ((InternalCategory) parent).addChild(highestUndefined);
     }
     
     public boolean isRealCategory(Category category) {
@@ -89,7 +92,7 @@ public class Classifier {
     }
     
     private void addChildren(
-            ArrayList<Category> generation, Category node,
+            ArrayList<Category> generation, InternalCategory node,
             final int requestedDepth, int depth
     ) {
         ArrayList<Category> children = node.getChildren();
@@ -98,7 +101,9 @@ public class Classifier {
             return;
         }
         for (Category c : children) {
-            addChildren(generation, c, requestedDepth, depth + 1);
+            if (c instanceof InternalCategory) {
+                addChildren(generation, (InternalCategory)c, requestedDepth, depth + 1);
+            }
         }
     }
     
@@ -112,14 +117,14 @@ public class Classifier {
         return depth;
     }
     
-    private boolean replaceParent(final Category category, final Category newParent) {
+    private boolean replaceParent(final Category category, final InternalCategory newParent) {
         if (!isRealCategory(category) || newParent == null) {
             return false;
         }
         if (getDepth(category) != getDepth(newParent) + 1) {
             return false;
         }
-        Category oldParent = category.getParent();
+        InternalCategory oldParent = (InternalCategory) category.getParent();
         if (oldParent == newParent) {
             return false;
         }
@@ -154,8 +159,8 @@ public class Classifier {
             }
         }
         // Create a new subcategory
-        Category parent = highestUndefined.getParent();
-        Category subcategory = new Category(name, parent);
+        InternalCategory parent = (InternalCategory) highestUndefined.getParent();
+        Category subcategory = new LeafCategory(name, parent);
         parent.addChild(subcategory);
         return subcategory;
     }
@@ -180,21 +185,24 @@ public class Classifier {
         for (Category hc : headcategories) {
             if (name.equals(hc.toString())) {
                 // Name exists so no addition needed
-                replaceParent(subcategory, hc);
+                replaceParent(subcategory, (InternalCategory) hc);
                 return hc;
             }
         }
         // Create a new headcategory
-        Category parent = highestUndefined.getParent().getParent();
-        Category headcategory = new Category(name, parent);
+        InternalCategory parent = (InternalCategory) highestUndefined.getParent().getParent();
+        InternalCategory headcategory = new InternalCategory(name, parent);
         parent.addChild(headcategory);
         replaceParent(subcategory, headcategory);
         return headcategory;
     }
     
     private void removeCategoryIfIsLonely(Category category) {
-        if (isRealCategory(category) && category.hasChildren() == false) {
-            Category parent = category.getParent();
+        if (category instanceof InternalCategory && ((InternalCategory) category).hasChildren()) {
+            return;
+        }
+        if (isRealCategory(category)) {
+            InternalCategory parent = (InternalCategory) category.getParent();
             parent.removeChild(category);
             removeCategoryIfIsLonely(parent);
         }

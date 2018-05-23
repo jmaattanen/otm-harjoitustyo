@@ -25,6 +25,7 @@ import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.storage.Category;
+import jm.transcribebuddy.logics.storage.InternalCategory;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.TableRow;
 
@@ -39,7 +40,7 @@ public class OverviewController implements Initializable {
     // NOTE TO MYSELF: create a new class for handling overview logics
     private Classifier classifier;
     private DetailedTextBuilder textBuilder;
-    private Category allSubcategories = new Category("all");
+    private final Category allSubcategories = new Category("all");
     
     @FXML
     private Label projectNameLabel, subcategorySizeLabel;
@@ -187,7 +188,7 @@ public class OverviewController implements Initializable {
         if (headcategory.equals(allSubcategories)) {
             subcategories = classifier.getSubcategories();
         } else {
-            subcategories = headcategory.getChildren();
+            subcategories = ((InternalCategory) headcategory).getChildren();
         }
         subCategoryComboBox.getItems().clear();
         subCategoryComboBox.getItems().addAll(subcategories);
