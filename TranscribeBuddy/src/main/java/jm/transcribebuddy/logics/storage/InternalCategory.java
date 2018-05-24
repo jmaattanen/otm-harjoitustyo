@@ -25,6 +25,11 @@ public class InternalCategory extends Category {
         return !children.isEmpty();
     }
     
+    @Override
+    public boolean isEmpty() {
+        return children.isEmpty();
+    }
+    
     public ArrayList<Category> getChildren() {
         return children;
     }

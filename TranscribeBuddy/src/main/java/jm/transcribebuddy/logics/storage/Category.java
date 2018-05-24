@@ -10,8 +10,6 @@ package jm.transcribebuddy.logics.storage;
 public class Category implements Comparable {
     protected String name;
     protected Category parent;
-//    final private ArrayList<Category> children;
-    private int statementCounter;
     
     final static private int MAXNAMELENGTH = 30;
     
@@ -24,8 +22,6 @@ public class Category implements Comparable {
     public Category(String name) {
         this.name = getValidName(name);
         parent = this;
-//        children = new ArrayList<>();
-        statementCounter = 0;
     }
     
     /**
@@ -41,8 +37,6 @@ public class Category implements Comparable {
         } else {
             this.parent = parent;
         }
-//        children = new ArrayList<>();
-        statementCounter = 0;
     }
     
     /**
@@ -89,14 +83,6 @@ public class Category implements Comparable {
         return true;
     }
     
-    /**
-     * 
-     * @return The number of statements in this sub category.
-     */
-    public int getSize() {
-        return statementCounter;
-    }
-    
     public Category getParent() {
         return parent;
     }
@@ -107,19 +93,8 @@ public class Category implements Comparable {
         }
     }
     
-    /**
-     * Call this method when a Statement is added to this sub category.
-     * @see jm.transcribebuddy.logics.storage.Statement
-     */
-    public void addStatement() {
-        statementCounter++;
-    }
-    /**
-     * Call this method when a Statement is removed from this sub category.
-     * @see jm.transcribebuddy.logics.storage.Statement
-     */
-    public void removeStatement() {
-        statementCounter--;
+    public boolean isEmpty() {
+        return true;
     }
     
     @Override

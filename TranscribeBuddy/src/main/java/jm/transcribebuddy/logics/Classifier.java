@@ -63,8 +63,10 @@ public class Classifier {
      * 
      * @return List of Categories at the highest level.
      */
-    public ArrayList<Category> getSubcategories() {
-        return getCategories(maxDepth);
+    public ArrayList<LeafCategory> getSubcategories() {
+        ArrayList<LeafCategory> subcategories = new ArrayList<>();
+        addLeaves(subcategories, root, 1);
+        return subcategories;
     }
     
     /**
@@ -102,7 +104,24 @@ public class Classifier {
         }
         for (Category c : children) {
             if (c instanceof InternalCategory) {
-                addChildren(generation, (InternalCategory)c, requestedDepth, depth + 1);
+                addChildren(generation, (InternalCategory) c, requestedDepth, depth + 1);
+            }
+        }
+    }
+    
+    private void addLeaves(ArrayList<LeafCategory> leaves, InternalCategory node, int depth) {
+        ArrayList<Category> children = node.getChildren();
+        if (depth >= maxDepth) {
+            for (Category c : children) {
+                if (c instanceof LeafCategory) {
+                    leaves.add((LeafCategory) c);
+                }
+            }
+            return;
+        }
+        for (Category c : children) {
+            if (c instanceof InternalCategory) {
+                addLeaves(leaves, (InternalCategory) c, depth + 1);
             }
         }
     }
@@ -143,15 +162,15 @@ public class Classifier {
      * @return The added sub category or undefined sub category if
      * an error occurred
      */
-    public Category addSubcategory(final String name) {
+    public LeafCategory addSubcategory(final String name) {
         if (name == null || name.isEmpty() || name.equals(undefinedName)) {
             return highestUndefined;
         }
         // Force automatic name formatting by applying method twice
         String formattedName = Category.getValidName(Category.getValidName(name));
         // Subcategory must have a unique name
-        ArrayList<Category> subcategories = getCategories(maxDepth);
-        for (Category sc : subcategories) {
+        ArrayList<LeafCategory> subcategories = getSubcategories();
+        for (LeafCategory sc : subcategories) {
             String otherFormattedName = Category.getValidName(sc.toString());
             if (formattedName.equals(otherFormattedName)) {
                 // Name exists so no addition needed
@@ -160,7 +179,7 @@ public class Classifier {
         }
         // Create a new subcategory
         InternalCategory parent = (InternalCategory) highestUndefined.getParent();
-        Category subcategory = new LeafCategory(name, parent);
+        LeafCategory subcategory = new LeafCategory(name, parent);
         parent.addChild(subcategory);
         return subcategory;
     }
@@ -198,10 +217,7 @@ public class Classifier {
     }
     
     private void removeCategoryIfIsLonely(Category category) {
-        if (category instanceof InternalCategory && ((InternalCategory) category).hasChildren()) {
-            return;
-        }
-        if (isRealCategory(category)) {
+        if (isRealCategory(category) && category.isEmpty()) {
             InternalCategory parent = (InternalCategory) category.getParent();
             parent.removeChild(category);
             removeCategoryIfIsLonely(parent);
@@ -209,19 +225,21 @@ public class Classifier {
     }
     
     public void removeIfEmpty(Category subcategory) {
-        if (isRealCategory(subcategory) && subcategory.getSize() == 0) {
+        if (isRealCategory(subcategory) && subcategory instanceof LeafCategory) {
             removeCategoryIfIsLonely(subcategory);
         }
     }
     
-    public Category getSubcategory(String name) {
+    public LeafCategory getSubcategory(String name) {
         name = Category.getValidName(name);
         if (name.equals(undefinedName)) {
             return highestUndefined;
         }
-        ArrayList<Category> subcategories = getCategories(maxDepth);
-        for (Category sc : subcategories) {
-            if (name.equals(sc.toString())) {
+        String formattedName = Category.getValidName(Category.getValidName(name));
+        ArrayList<LeafCategory> subcategories = getSubcategories();
+        for (LeafCategory sc : subcategories) {
+            String otherFormattedName = Category.getValidName(sc.toString());
+            if (formattedName.equals(otherFormattedName)) {
                 return sc;
             }
         }
@@ -229,7 +247,7 @@ public class Classifier {
         return highestUndefined;
     }
     
-    public Category getUndefinedSubcategory() {
+    public LeafCategory getUndefinedSubcategory() {
         return highestUndefined;
     }
     

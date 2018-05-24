@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public class Statement {
     private String statement;
     private Duration startTime;
-    private Category subcategory;
+    private LeafCategory subcategory;
     
     /**
      * Creates a new Statement object with empty phrase and zero time mark.
@@ -19,15 +19,15 @@ public class Statement {
      * @param subcategory The sub category to which the statement is added.
      * Can be null.
      */
-    public Statement(Category subcategory) {
+    public Statement(LeafCategory subcategory) {
         this("", Duration.ZERO, subcategory);
     }
     
-    public Statement(Duration startTime, Category subcategory) {
+    public Statement(Duration startTime, LeafCategory subcategory) {
         this("", startTime, subcategory);
     }
     
-    public Statement(String statement, Duration startTime, Category subcategory) {
+    public Statement(String statement, Duration startTime, LeafCategory subcategory) {
         if (statement == null) {
             this.statement = "";
         } else {
@@ -45,7 +45,7 @@ public class Statement {
         return statement.length();
     }
     
-    public Category getSubcategory() {
+    public LeafCategory getSubcategory() {
         return subcategory;
     }
     
@@ -71,7 +71,7 @@ public class Statement {
      * @see jm.transcribebuddy.logics.storage.Category
      * @param subcategory NULL won't affect.
      */
-    public void setSubcategory(Category subcategory) {
+    public void setSubcategory(LeafCategory subcategory) {
         if (subcategory != null) {
             if (this.subcategory != null) {
                 // deduct statement from the counter of the old category
@@ -89,7 +89,7 @@ public class Statement {
      * @param subcategory Comparable sub category.
      * @return True if belongs to given sub category.
      */
-    public boolean isInSubcategory(Category subcategory) {
+    public boolean isInSubcategory(LeafCategory subcategory) {
         return this.subcategory == subcategory;
     }
     
