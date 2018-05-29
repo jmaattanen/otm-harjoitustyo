@@ -130,7 +130,7 @@ public class DetailedTextBuilder extends TextBuilder {
     public void deleteStatement() {
         Statement node = statements.get(workingIndex);
         LeafCategory subcategory = node.getSubcategory();
-        subcategory.removeStatement();
+        subcategory.removeStatement(node);
         classifier.removeIfEmpty(subcategory);
         statements.remove(workingIndex);
         if (statements.isEmpty()) {

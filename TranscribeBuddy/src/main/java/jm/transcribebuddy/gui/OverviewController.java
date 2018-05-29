@@ -189,7 +189,6 @@ public class OverviewController implements Initializable {
         if (headcategory.equals(allSubcategories)) {
             subcategories = classifier.getSubcategories();
         } else {
-//            subcategories = ((InternalCategory) headcategory).getChildren();
             ArrayList<Category> children = ((InternalCategory) headcategory).getChildren();
             for (Category c : children) {
                 if (c instanceof LeafCategory) {

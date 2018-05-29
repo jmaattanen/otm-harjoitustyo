@@ -35,10 +35,12 @@ public class Statement {
         }
         this.startTime = startTime;
         checkStartTime();
-        this.subcategory = subcategory;
-        if (subcategory != null) {
-            subcategory.addStatement();
-        }
+        this.setSubcategory(subcategory);
+//        this.subcategory = subcategory;
+//        if (subcategory != null) {
+////            subcategory.addStatement(this);
+//            setSubcategory(subcategory);
+//        }
     }
     
     public int getLength() {
@@ -71,14 +73,14 @@ public class Statement {
      * @see jm.transcribebuddy.logics.storage.Category
      * @param subcategory NULL won't affect.
      */
-    public void setSubcategory(LeafCategory subcategory) {
+    public final void setSubcategory(LeafCategory subcategory) {
         if (subcategory != null) {
             if (this.subcategory != null) {
                 // deduct statement from the counter of the old category
-                this.subcategory.removeStatement();
+                this.subcategory.removeStatement(this);
             }
             this.subcategory = subcategory;
-            this.subcategory.addStatement();
+            this.subcategory.addStatement(this);
         }
     }
     

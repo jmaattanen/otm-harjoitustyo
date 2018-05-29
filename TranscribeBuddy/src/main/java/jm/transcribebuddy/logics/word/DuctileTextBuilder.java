@@ -22,8 +22,9 @@ public class DuctileTextBuilder extends DetailedTextBuilder {
      */
     public DuctileTextBuilder() {
         // Start constructing from a blank table
+        Statement first = statements.get(0);
+        undefined.removeStatement(first);
         statements.clear();
-        undefined.removeStatement();
     }
     
     /**

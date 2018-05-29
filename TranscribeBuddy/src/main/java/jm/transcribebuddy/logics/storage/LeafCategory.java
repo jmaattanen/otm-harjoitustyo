@@ -1,20 +1,22 @@
 package jm.transcribebuddy.logics.storage;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author juham
  */
 public class LeafCategory extends Category {
-    private int statementCounter;
+    ArrayList<Statement> statements;
     
     public LeafCategory(String name) {
         super(name);
-        statementCounter = 0;
+        statements = new ArrayList<>();
     }
     
     public LeafCategory(String name, Category parent) {
         super(name, parent);
-        statementCounter = 0;
+        statements = new ArrayList<>();
     }
     
     
@@ -23,27 +25,29 @@ public class LeafCategory extends Category {
      * @return The number of statements in this sub category.
      */
     public int getSize() {
-        return statementCounter;
+        return statements.size();
     }
     
     @Override
     public boolean isEmpty() {
-        return statementCounter == 0;
+        return statements.isEmpty();
     }
     
     /**
      * Call this method when a Statement is added to this sub category.
      * @see jm.transcribebuddy.logics.storage.Statement
+     * @param statement 
      */
-    public void addStatement() {
-        statementCounter++;
+    public void addStatement(Statement statement) {
+        statements.add(statement);
     }
     /**
      * Call this method when a Statement is removed from this sub category.
      * @see jm.transcribebuddy.logics.storage.Statement
+     * @param statement 
      */
-    public void removeStatement() {
-        statementCounter--;
+    public void removeStatement(Statement statement) {
+        statements.remove(statement);
     }
     
 }
