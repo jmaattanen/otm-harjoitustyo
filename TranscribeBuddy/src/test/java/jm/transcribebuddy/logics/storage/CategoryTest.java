@@ -101,10 +101,11 @@ public class CategoryTest {
     
     @Test
     public void childCanBeAdded() {
-        assertFalse(category.hasChildren());
-        Category child = new Category("Lapsonen", category);
-        category.addChild(child);
-        assertTrue(category.hasChildren());
+        InternalCategory inCategory = new InternalCategory("");
+        assertFalse(inCategory.hasChildren());
+        Category child = new Category("Lapsonen", inCategory);
+        inCategory.addChild(child);
+        assertTrue(inCategory.hasChildren());
     }
     
     @Test

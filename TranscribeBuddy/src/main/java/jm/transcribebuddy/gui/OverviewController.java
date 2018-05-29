@@ -25,6 +25,8 @@ import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.MainController;
 import jm.transcribebuddy.logics.storage.Category;
+import jm.transcribebuddy.logics.storage.InternalCategory;
+import jm.transcribebuddy.logics.storage.LeafCategory;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.storage.TableRow;
 
@@ -39,7 +41,7 @@ public class OverviewController implements Initializable {
     // NOTE TO MYSELF: create a new class for handling overview logics
     private Classifier classifier;
     private DetailedTextBuilder textBuilder;
-    private Category allSubcategories = new Category("all");
+    private final Category allSubcategories = new Category("all");
     
     @FXML
     private Label projectNameLabel, subcategorySizeLabel;
@@ -69,9 +71,9 @@ public class OverviewController implements Initializable {
     
     private void setUpSubcategories() {
         subCategoryComboBox.getItems().clear();
-        ArrayList<Category> subcategories = classifier.getSubcategories();
+        ArrayList<LeafCategory> subcategories = classifier.getSubcategories();
         Collections.sort(subcategories);
-        for (Category c : subcategories) {
+        for (LeafCategory c : subcategories) {
             subCategoryComboBox.getItems().add(c);
         }
     }
@@ -183,18 +185,23 @@ public class OverviewController implements Initializable {
         if (headcategory == null) {
             return;
         }
-        ArrayList<Category> subcategories;
+        ArrayList<LeafCategory> subcategories = new ArrayList<>();
         if (headcategory.equals(allSubcategories)) {
             subcategories = classifier.getSubcategories();
         } else {
-            subcategories = headcategory.getChildren();
+            ArrayList<Category> children = ((InternalCategory) headcategory).getChildren();
+            for (Category c : children) {
+                if (c instanceof LeafCategory) {
+                    subcategories.add((LeafCategory) c);
+                }
+            }
         }
         subCategoryComboBox.getItems().clear();
         subCategoryComboBox.getItems().addAll(subcategories);
         statementsTableView.getItems().clear();
         Collections.sort(subcategories);
         int statementCounter = 0;
-        for (Category subcategory : subcategories) {
+        for (LeafCategory subcategory : subcategories) {
             HashMap<Integer, String> statements = textBuilder.getStatementsIn(subcategory);
             addTableRows(subcategory.toString(), statements);
             statementCounter += subcategory.getSize();
@@ -203,7 +210,7 @@ public class OverviewController implements Initializable {
     }
     
     private void handleSubChoice() {
-        final Category subcategory = (Category) subCategoryComboBox.getValue();
+        final LeafCategory subcategory = (LeafCategory) subCategoryComboBox.getValue();
         if (subcategory == null) {
             return;
         }

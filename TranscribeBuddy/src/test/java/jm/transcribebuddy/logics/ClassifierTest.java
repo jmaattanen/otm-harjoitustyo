@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import jm.transcribebuddy.logics.storage.Category;
+import jm.transcribebuddy.logics.storage.LeafCategory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -78,7 +79,7 @@ public class ClassifierTest {
         classifier.addSubcategory("Luokka2");
         // There should exist three subcategories now
         // "Luokka1", "Luokka2" and "Undefined"
-        ArrayList<Category> subcategories = classifier.getSubcategories();
+        ArrayList<LeafCategory> subcategories = classifier.getSubcategories();
         assertEquals(3, subcategories.size());
     }
     
@@ -147,7 +148,7 @@ public class ClassifierTest {
         classifier.addSubcategory("  pOtAtO ");
         // Now we should have three subcategories:
         // "Peruna", "Potato" and "Undefined"
-        ArrayList<Category> subcategories = classifier.getSubcategories();
+        ArrayList<LeafCategory> subcategories = classifier.getSubcategories();
         assertEquals(3, subcategories.size());
     }
     
@@ -173,11 +174,11 @@ public class ClassifierTest {
         for (String name : names) {
             classifier.addSubcategory(name);
         }
-        ArrayList<Category> subcategories = classifier.getSubcategories();
+        ArrayList<LeafCategory> subcategories = classifier.getSubcategories();
         Collections.sort(names);
         Collections.sort(subcategories);
         Iterator<String> name = names.iterator();
-        Iterator<Category> cat = subcategories.iterator();
+        Iterator<LeafCategory> cat = subcategories.iterator();
         int matchCounter = 0;
         while (cat.hasNext() && name.hasNext()) {
             assertTrue(cat.next().toString().equals(name.next()));
@@ -190,11 +191,11 @@ public class ClassifierTest {
     public void headcategoriesCanBeAdded() {
         final String scName = "Uusi alaluokka";
         final String hcName = "Uusi yläluokka";
-        ArrayList<Category> categories;
+        ArrayList<LeafCategory> subcategories;
         Category subcategory = classifier.addSubcategory(scName);
-        categories = classifier.getSubcategories();
+        subcategories = classifier.getSubcategories();
         // Contains "Undefined" and "Uusi alaluokka"
-        assertEquals(2, categories.size());
+        assertEquals(2, subcategories.size());
         Category headcategory = classifier.addHeadcategory(hcName, subcategory);
         assertEquals(hcName, headcategory.toString());
         // Multiple additions won't affect to the state of classifier
@@ -204,9 +205,9 @@ public class ClassifierTest {
         // Foo additions won't affect
         classifier.addHeadcategory(null, subcategory);
         classifier.addHeadcategory("Toinen parametri on laiton.", headcategory);
-        categories = classifier.getHeadcategories();
+        ArrayList<Category> headcategories = classifier.getHeadcategories();
         // Contains "Undefined" and "Uusi yläluokka"
-        assertEquals(2, categories.size());
+        assertEquals(2, headcategories.size());
         
     }
     

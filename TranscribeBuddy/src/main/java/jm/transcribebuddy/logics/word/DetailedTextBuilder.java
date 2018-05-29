@@ -4,6 +4,7 @@ import java.util.HashMap;
 import javafx.util.Duration;
 import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.storage.Category;
+import jm.transcribebuddy.logics.storage.LeafCategory;
 import jm.transcribebuddy.logics.storage.Statement;
 
 /**
@@ -16,7 +17,7 @@ import jm.transcribebuddy.logics.storage.Statement;
  */
 public class DetailedTextBuilder extends TextBuilder {
     final private Classifier classifier;
-    final protected Category undefined;
+    final protected LeafCategory undefined;
     
     
     /**
@@ -65,7 +66,7 @@ public class DetailedTextBuilder extends TextBuilder {
      * @param subcategory The filter of Statement collection.
      * @return HashMap of desired (index, statement) collection.
      */
-    public HashMap<Integer, String> getStatementsIn(Category subcategory) {
+    public HashMap<Integer, String> getStatementsIn(LeafCategory subcategory) {
         HashMap<Integer, String> resultMap = new HashMap<>();
         if (subcategory == null) {
             return resultMap;
@@ -92,9 +93,9 @@ public class DetailedTextBuilder extends TextBuilder {
      * @param categoryName Sub category name.
      */
     public void setSubcategory(String categoryName) {
-        Category subcategory = classifier.addSubcategory(categoryName);
+        LeafCategory subcategory = classifier.addSubcategory(categoryName);
         Statement node = statements.get(workingIndex);
-        Category oldCategory = node.getSubcategory();
+        LeafCategory oldCategory = node.getSubcategory();
         node.setSubcategory(subcategory);
         classifier.removeIfEmpty(oldCategory);
     }
@@ -128,8 +129,8 @@ public class DetailedTextBuilder extends TextBuilder {
     @Override
     public void deleteStatement() {
         Statement node = statements.get(workingIndex);
-        Category subcategory = node.getSubcategory();
-        subcategory.removeStatement();
+        LeafCategory subcategory = node.getSubcategory();
+        subcategory.removeStatement(node);
         classifier.removeIfEmpty(subcategory);
         statements.remove(workingIndex);
         if (statements.isEmpty()) {
