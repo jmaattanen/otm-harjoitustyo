@@ -2,57 +2,57 @@
 
 ## Rakenne
 
-Sovelluksen rakenne jakaantuu kolmeen tasoon. Ylimm‰ll‰ tasolla pakkauksen _jm.transcribebuddy.gui_ sis‰ltˆ vastaa sovelluksen graafisesta k‰yttˆliittym‰st‰. K‰yttˆliittym‰‰ palvelee _jm.transcribebuddy.logics_ -pakkaukseen sis‰llytetty sovelluslogiikka, miss‰ toteutetaan sovelluksen perustoiminnallisuudet. Kolmannen ja alimman tason pakkaus _jm.transcribebuddy.dao_ puolestaan huolehtii tietojen pysyv‰istallennuksesta.
+Sovelluksen rakenne jakaantuu kolmeen tasoon. Ylimm√§ll√§ tasolla pakkauksen _jm.transcribebuddy.gui_ sis√§lt√∂ vastaa sovelluksen graafisesta k√§ytt√∂liittym√§st√§. K√§ytt√∂liittym√§√§ palvelee _jm.transcribebuddy.logics_ -pakkaukseen sis√§llytetty sovelluslogiikka, miss√§ toteutetaan sovelluksen perustoiminnallisuudet. Kolmannen ja alimman tason pakkaus _jm.transcribebuddy.dao_ puolestaan huolehtii tietojen pysyv√§istallennuksesta.
 
 ### Pakkauskaavio
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_package.png "Pakkauskaavio")
 
-Yll‰ on sovelluksen t‰m‰nhetkinen pakkauskaavio. Kukin kolmesta suuresta paketista eriytyy yh‰ pienempiin pakkauksiin.
+Yll√§ on sovelluksen t√§m√§nhetkinen pakkauskaavio. Kukin kolmesta suuresta paketista eriytyy yh√§ pienempiin pakkauksiin.
 
-## GUI - graafinen k‰yttˆliittym‰
+## GUI - graafinen k√§ytt√∂liittym√§
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_gui.png "Gui")
 
-K‰yttˆliittym‰‰ [jm.transcribebuddy.gui](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/gui) hallitseva luokka on _MainApp.java_. Se on myˆskin javan main-metodin sis‰lt‰v‰ luokka.
+K√§ytt√∂liittym√§√§ [jm.transcribebuddy.gui](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/gui) hallitseva luokka on _MainApp.java_. Se on my√∂skin javan main-metodin sis√§lt√§v√§ luokka.
 
-K‰yttˆliittym‰ koostuu kolmesta n‰kym‰st‰, joista k‰ytt‰j‰lle n‰kyy aina yksi kerrallaan. Ohjelman k‰ynnistytty‰ k‰ytt‰j‰lle aukeaa _tekstin‰kym‰ (ConstantText)_, jossa ohjelmalla kirjoitettu teksti n‰kyy kokonaisuudessaan. Toinen n‰kym‰ nimelt‰‰n _rivin‰kym‰ (LineByLine)_ n‰ytt‰‰ pienemm‰n osan tekstist‰ mutta antaa k‰yttˆˆn enemm‰n tyˆkaluja asiakirjan muokkaukseen. Viel‰ kolmantena on _hakun‰kym‰ (Overview)_, joka taulukoi asiakirjan osia luokitteluominaisuuteen perustuen. Kunkin n‰kym‰n layout on kuvattu omassa [fxml-tiedostossaan](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/resources/fxml) ja toiminnallisuuksia ohjaa _gui_-paketin fxml-kontrolleriluokat.
+K√§ytt√∂liittym√§ koostuu kolmesta n√§kym√§st√§, joista k√§ytt√§j√§lle n√§kyy aina yksi kerrallaan. Ohjelman k√§ynnistytty√§ k√§ytt√§j√§lle aukeaa _tekstin√§kym√§ (ConstantText)_, jossa ohjelmalla kirjoitettu teksti n√§kyy kokonaisuudessaan. Toinen n√§kym√§ nimelt√§√§n _rivin√§kym√§ (LineByLine)_ n√§ytt√§√§ pienemm√§n osan tekstist√§ mutta antaa k√§ytt√∂√∂n enemm√§n ty√∂kaluja asiakirjan muokkaukseen. Viel√§ kolmantena on _hakun√§kym√§ (Overview)_, joka taulukoi asiakirjan osia luokitteluominaisuuteen perustuen. Kunkin n√§kym√§n layout on kuvattu omassa [fxml-tiedostossaan](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/resources/fxml) ja toiminnallisuuksia ohjaa _gui_-paketin fxml-kontrolleriluokat.
 
-Lis‰ksi joitain ilmoituksia ja dialogeja n‰ytet‰‰n erillisten ponnahdusikkunoiden avulla, kuten projektin avaus- ja tallennusdialogit.
+Lis√§ksi joitain ilmoituksia ja dialogeja n√§ytet√§√§n erillisten ponnahdusikkunoiden avulla, kuten projektin avaus- ja tallennusdialogit.
 
 ## Logics - sovelluslogiikka
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_logics.png "Logics")
 
-Sovelluslogiikan [jm.transcribebuddy.logics](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics) johtava luokka on _MainController.java_. Sen voi mielt‰‰ abstraktiona gui:n ja sovelluslogiikan v‰liss‰.
+Sovelluslogiikan [jm.transcribebuddy.logics](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics) johtava luokka on _MainController.java_. Sen voi mielt√§√§ abstraktiona gui:n ja sovelluslogiikan v√§liss√§.
 
-_Storage_-paketissa on logiikan k‰ytt‰mi‰ l‰hinn‰ yksinkertaisia gettereit‰ ja settereit‰ sis‰lt‰vi‰ tietorakenteenomaisia luokkia. N‰ist‰ t‰rkein lienee [Statement.java](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics/storage/Statement.java)-luokka, jonka ilmentymiin s‰ilˆt‰‰n asiakirjan tekstinpalaset, mik‰ heijastuu hyvin sovelluksen _rivin‰kym‰st‰_. _Statement_-olioiden kokonaisuutta puolestaan hallinnoi _TextBuilder_-olio. Luokassa _TextBuilder.java_ on ydinmetodit logiikan tekstink‰sittelyominaisuuksista ja sen perillisess‰ _DetailedTextBuilder.java_-luokassa ominaisuuksia on laajennettu kattamaan tekstin ja ‰‰niraidat yhteensovittaminen sek‰ _Statement_-olioiden luokittelu.
+_Storage_-paketissa on logiikan k√§ytt√§mi√§ l√§hinn√§ yksinkertaisia gettereit√§ ja settereit√§ sis√§lt√§vi√§ tietorakenteenomaisia luokkia. N√§ist√§ t√§rkein lienee [Statement.java](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/logics/storage/Statement.java)-luokka, jonka ilmentymiin s√§il√∂t√§√§n asiakirjan tekstinpalaset, mik√§ heijastuu hyvin sovelluksen _rivin√§kym√§st√§_. _Statement_-olioiden kokonaisuutta puolestaan hallinnoi _TextBuilder_-olio. Luokassa _TextBuilder.java_ on ydinmetodit logiikan tekstink√§sittelyominaisuuksista ja sen perillisess√§ _DetailedTextBuilder.java_-luokassa ominaisuuksia on laajennettu kattamaan tekstin ja √§√§niraidat yhteensovittaminen sek√§ _Statement_-olioiden luokittelu.
 
-Luokitteluominaisuuden logiikasta itsess‰‰n vastaa _Classifier.java_-luokka. T‰ll‰ hetkell‰ _Statement_-olioiden kategorisointiin on k‰ytˆss‰ kahden korkuinen hakupuurakenne, jossa ensimm‰isen tason solmut kuvaavat sovelluksen termein _yl‰luokkia (headcategory)_ ja toisella tasolla _alaluokkia (subcategory)_.
-_Storage_-paketin _Category.java_-luokan ilmentym‰t puolestaan vastaavat yht‰ puun solmua. _Statement_-ilmentym‰ voi olla liitettyn‰ t‰sm‰lleen yhteen puun lehteen eli _alaluokkaan_.
-T‰ll‰ hetkell‰ _Statement_-_Category_ -relaatio on linkitetty vain yhteen suuntaan eli _Statement_-ilmentym‰ tuntee oman alaluokkansa, mutta alaluokasta ei ole linkityksi‰ siihen kuuluviin _Statement_-ilmentymiin. T‰m‰n linkityksen voisi ehdottomasti kehitt‰‰ ajan salliessa kaksisuuntaiseksi.
+Luokitteluominaisuuden logiikasta itsess√§√§n vastaa _Classifier.java_-luokka. T√§ll√§ hetkell√§ _Statement_-olioiden kategorisointiin on k√§yt√∂ss√§ kahden korkuinen hakupuurakenne, jossa ensimm√§isen tason solmut kuvaavat sovelluksen termein _yl√§luokkia (headcategory)_ ja toisella tasolla _alaluokkia (subcategory)_.
+_Storage_-paketin _Category.java_-luokan ilmentym√§t puolestaan vastaavat yht√§ puun solmua. _Statement_-ilmentym√§ voi olla liitettyn√§ t√§sm√§lleen yhteen puun lehteen eli _alaluokkaan_.
+T√§ll√§ hetkell√§ _Statement_-_Category_ -relaatio on linkitetty vain yhteen suuntaan eli _Statement_-ilmentym√§ tuntee oman alaluokkansa, mutta alaluokasta ei ole linkityksi√§ siihen kuuluviin _Statement_-ilmentymiin. T√§m√§n linkityksen voisi ehdottomasti kehitt√§√§ ajan salliessa kaksisuuntaiseksi.
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_tree.png "Classifier")
 
-## DAO - pysyv‰istallennus
+## DAO - pysyv√§istallennus
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/tb_dao.png "Dao")
 
 Paketin [jm.transcribebuddy.dao](https://github.com/jmaattanen/otm-harjoitustyo/tree/master/TranscribeBuddy/src/main/java/jm/transcribebuddy/dao) palveluja tarjoaa korkeimmalla tasolla luokka _ProjectDao.java_. _File_-paketti keskittyy (*.txt)-tiedostomuotoiseen levytallennukseen ja _db_-paketti puolestaan tietokantatallennukseen.
 
-Asiakirjan tallennus suoritetaan kolmessa vaiheessa. Ensin tallennetaan projektin yleiset tiedot, kuten projektin nimi, kuvaus ja ‰‰nitallenteen URI. Toisessa vaiheessa tallennetaan asiakirjan raakateksti. Kolmannessa vaiheessa tallennetaan viel‰ _Statement_-olioiden aikamerkit.
-Tallennuksen ensimm‰inen ja kolmas vaihe ovat t‰ll‰ hetkell‰ riippuvaisia tietokantayhteydest‰. Mik‰li tietokantayhteytt‰ ei ole konfiguroitu oikein sovellusta k‰ynnist‰ess‰, niin osa tiedoista j‰‰ tallentamatta.
+Asiakirjan tallennus suoritetaan kolmessa vaiheessa. Ensin tallennetaan projektin yleiset tiedot, kuten projektin nimi, kuvaus ja √§√§nitallenteen URI. Toisessa vaiheessa tallennetaan asiakirjan raakateksti. Kolmannessa vaiheessa tallennetaan viel√§ _Statement_-olioiden aikamerkit.
+Tallennuksen ensimm√§inen ja kolmas vaihe ovat t√§ll√§ hetkell√§ riippuvaisia tietokantayhteydest√§. Mik√§li tietokantayhteytt√§ ei ole konfiguroitu oikein sovellusta k√§ynnist√§ess√§, niin osa tiedoista j√§√§ tallentamatta.
 Projektin tilaa ladattaessa tietokannasta haun avaimena toimii tekstitiedoston polku.
 
-Alemman tason daot _FileTextDao_, _DBTextInfoDao_ ja _DBProjectDao_ on luotu rajapintojen taakse, jotta k‰ytt‰j‰lle voidaan tarjota vaihtoehtoinen tallennusmuoto esimerkiksi yhdeksi pakatuksi tiedostoksi, jolloin yksitt‰inen projekti olisi helposti siirrett‰viss‰ laitteelta toiselle.
-Toistaiseksi vaihtoehtoinen tallennusformaatti on vasta suunnitteluasteella ja samoin kategorisoinnin pysyv‰istallennus on viel‰ toteuttamatta.
+Alemman tason daot _FileTextDao_, _DBTextInfoDao_ ja _DBProjectDao_ on luotu rajapintojen taakse, jotta k√§ytt√§j√§lle voidaan tarjota vaihtoehtoinen tallennusmuoto esimerkiksi yhdeksi pakatuksi tiedostoksi, jolloin yksitt√§inen projekti olisi helposti siirrett√§viss√§ laitteelta toiselle.
+Toistaiseksi vaihtoehtoinen tallennusformaatti on vasta suunnitteluasteella.
 
-## P‰‰toiminnallisuudet
+## P√§√§toiminnallisuudet
 
-_Teksti_- ja _rivin‰kymiss‰_ k‰ytt‰j‰ voi aloittaa uuden litterointiprojektin __Aloita__-painikkeesta tai ladata aiemmin tallentamansa projektin.
-Projektin ‰‰niraidaksi valitaan levylt‰ (*.mp3), (*.m4a) tai (*.wav)-muotoinen tiedosto, jonka URI:n voi j‰lkeenp‰in muuttaa __Info__-valikosta. T‰m‰n j‰lkeen k‰ytt‰j‰ voi aloittaa luomaan asiakirjaa vapaasti kirjoittamalla n‰kymien aktiivisiin tekstikenttiin.
-Sovelluslogiikka s‰ilˆˆ tekstikenttien muuttuneen sis‰llˆn vasta, kun jotain p‰ivityksen aktivoivaa toimenpidett‰ k‰ytet‰‰n. P‰ivitt‰vi‰ toimenpiteit‰ ovat n‰kym‰nvaihto, projektin tallennus sek‰ virkkeen p‰‰tt‰minen, jakaminen, valitseminen ja poistaminen.
-K‰ytt‰j‰n tekstikentt‰‰n syˆtt‰m‰ teksti tallennetaan _textBuilder_-olion linkitettyyn listaan mm. _MainController.set_-metodilla. Alla oleva sekvenssikaavio kuvaa metodin etenemist‰ esimerkkitapauksessa.
+_Teksti_- ja _rivin√§kymiss√§_ k√§ytt√§j√§ voi aloittaa uuden litterointiprojektin __Aloita__-painikkeesta tai ladata aiemmin tallentamansa projektin.
+Projektin √§√§niraidaksi valitaan levylt√§ (*.mp3), (*.m4a) tai (*.wav)-muotoinen tiedosto, jonka URI:n voi j√§lkeenp√§in muuttaa __Info__-valikosta. T√§m√§n j√§lkeen k√§ytt√§j√§ voi aloittaa luomaan asiakirjaa vapaasti kirjoittamalla n√§kymien aktiivisiin tekstikenttiin.
+Sovelluslogiikka s√§il√∂√∂ tekstikenttien muuttuneen sis√§ll√∂n vasta, kun jotain p√§ivityksen aktivoivaa toimenpidett√§ k√§ytet√§√§n. P√§ivitt√§vi√§ toimenpiteit√§ ovat n√§kym√§nvaihto, projektin tallennus sek√§ virkkeen p√§√§tt√§minen, jakaminen, valitseminen ja poistaminen.
+K√§ytt√§j√§n tekstikentt√§√§n sy√∂tt√§m√§ teksti tallennetaan _textBuilder_-olion linkitettyyn listaan mm. _MainController.set_-metodilla. Alla oleva sekvenssikaavio kuvaa metodin etenemist√§ esimerkkitapauksessa.
 
 ![alt text](https://github.com/jmaattanen/otm-harjoitustyo/blob/master/dokumentaatio/set_statement.png "MainController.set")
 
