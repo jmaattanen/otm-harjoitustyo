@@ -27,7 +27,6 @@ Sovelluksella on vain yksi käyttäjärooli, eikä erillistä kirjautumista vaad
 
 Periodi hujahti niin äkkiä, että jatkokehitettävää riittää yhä pitkäksi aikaa:
 
-- luokittelurakenteen pysyväistallennus tulisi toteuttaa ASAP
 - pysyväistallennukselle voisi tarjota vaihtoehtoisen tallennusmuodon esim yhdeksi pakatuksi tiedostoksi, mikä helpottaisi projektin siirrettävyyttä
 - hakunäkymään voisi tuoda näkyville kerralla useampia sovelluksella tuotettuja projekteja (esim kokoelma haastatteluja johonkin tutkimukseen liittyen)
 - luokittelukenttiin kirjoitettaessa avautuu pikavalintalista projektissa aiemmin käytetyistä luokista
