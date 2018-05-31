@@ -42,9 +42,9 @@ public class SQLiteHelper implements SQLHelper {
     @Override
     public String getCreateCategoriesTableQuery() {
         String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBClassifierDao.CATEGORIESTABLE + " (\n"
-                + "id serial PRIMARY KEY, \n"
-                + "project_id serial REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + ", \n"
-                + "parent_id serial REFERENCES " + DBClassifierDao.CATEGORIESTABLE + ", \n"
+                + "id integer PRIMARY KEY, \n"
+                + "project_id integer REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + "(id), \n"
+                + "parent_id integer REFERENCES " + DBClassifierDao.CATEGORIESTABLE + "(id), \n"
                 + "name text NOT NULL, \n"
                 + "depth integer NOT NULL \n"
                 + ");";
@@ -87,9 +87,26 @@ public class SQLiteHelper implements SQLHelper {
     
     @Override
     public String getStatementIdQuery() {
-        String sqlQuery = "SELECT  id FROM " + DBTextInfoDao.STATEMENTSTABLE
+        String sqlQuery = "SELECT id FROM " + DBTextInfoDao.STATEMENTSTABLE
                     + " WHERE project_id = ? AND row = ?";
         return sqlQuery;
     }
     
+    @Override
+    public String getCreateCatsAndStatesTableQuery() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBClassifierDao.CATSANDSTATESTABLE + " (\n"
+//                + "id serial PRIMARY KEY, \n"
+                + "project_id integer REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + "(id), \n"
+                + "category_id integer REFERENCES " + DBClassifierDao.CATEGORIESTABLE + "(id), \n"
+                + "statement_id integer REFERENCES " + DBTextInfoDao.STATEMENTSTABLE + "(id) \n"
+                + ");";
+        return sqlQuery;
+    }
+    
+    @Override
+    public String getInsertIntoCatsAndStatesQuery() {
+        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATSANDSTATESTABLE
+                + " (project_id, category_id, statement_id) VALUES (?, ?, ?)";
+        return sqlQuery;
+    }
 }

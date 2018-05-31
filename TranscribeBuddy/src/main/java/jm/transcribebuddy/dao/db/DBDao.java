@@ -159,4 +159,21 @@ public class DBDao {
         String sqlQuery = sqlHelper.getStatementIdQuery();
         return sqlQuery;
     }
+    
+    protected String getCreateCatsAndStatesTableQuery() {
+        if (sqlHelper == null) {
+            return "";
+        }
+        String sqlQuery = sqlHelper.getCreateCatsAndStatesTableQuery();
+        return sqlQuery;
+    }
+    
+    protected String getInsertIntoCatsAndStatesQuery() {
+        if (sqlHelper == null) {
+            return "";
+        }
+        String sqlQuery = sqlHelper.getInsertIntoCatsAndStatesQuery();
+        return sqlQuery;
+    }
+    
 }

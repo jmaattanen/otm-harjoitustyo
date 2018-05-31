@@ -92,8 +92,28 @@ public class PostgresHelper implements SQLHelper {
     
     @Override
     public String getStatementIdQuery() {
-        String sqlQuery = "SELECT  id FROM " + DBTextInfoDao.STATEMENTSTABLE
+        String sqlQuery = "SELECT id FROM " + DBTextInfoDao.STATEMENTSTABLE
                     + " WHERE project_id = ? AND index = ?";
         return sqlQuery;
     }
+    
+    @Override
+    public String getCreateCatsAndStatesTableQuery() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBClassifierDao.CATSANDSTATESTABLE + " (\n"
+//                + "id serial PRIMARY KEY, \n"
+                + "project_id serial REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + ", \n"
+                + "category_id serial REFERENCES " + DBClassifierDao.CATEGORIESTABLE + ", \n"
+                + "statement_id serial REFERENCES " + DBTextInfoDao.STATEMENTSTABLE + " \n"
+                + ");";
+        return sqlQuery;
+    }
+    
+    @Override
+    public String getInsertIntoCatsAndStatesQuery() {
+        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATSANDSTATESTABLE
+                + " (project_id, category_id, statement_id) VALUES (?, ?, ?) "
+                + "ON CONFLICT DO NOTHING";
+        return sqlQuery;
+    }
+    
 }

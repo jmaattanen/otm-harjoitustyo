@@ -21,4 +21,7 @@ public interface SQLHelper {
     public String getInsertStatementQuery();
     public String getLoadStatementQuery();
     public String getStatementIdQuery();
+    
+    public String getCreateCatsAndStatesTableQuery();
+    public String getInsertIntoCatsAndStatesQuery();
 }

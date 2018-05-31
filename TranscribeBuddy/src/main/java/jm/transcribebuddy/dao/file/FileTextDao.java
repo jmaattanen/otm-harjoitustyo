@@ -42,7 +42,7 @@ public class FileTextDao implements TextDao {
                 for (Statement s : statements) {
                     String line = s.toString();
                     line = line.replaceAll("\n", "<endl>");
-                    writer.write(line + "\n");
+                    writer.write(line + System.getProperty("line.separator"));
                 }
             }
         } catch (IOException ex) {

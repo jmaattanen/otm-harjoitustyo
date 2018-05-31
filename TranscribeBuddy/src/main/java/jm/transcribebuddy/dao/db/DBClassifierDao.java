@@ -188,13 +188,7 @@ public class DBClassifierDao extends DBDao implements ClassifierDao {
             return;
         }
         try {
-            String sqlQuery = "CREATE TABLE IF NOT EXISTS " + CATSANDSTATESTABLE + " (\n"
-//                + "id serial PRIMARY KEY, \n"
-                + "project_id serial REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + ", \n"
-                + "category_id serial REFERENCES " + CATEGORIESTABLE + ", \n"
-                + "statement_id serial REFERENCES " + DBTextInfoDao.STATEMENTSTABLE + " \n"
-                + ");";
-        
+            String sqlQuery = getCreateCatsAndStatesTableQuery();
             PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
             ps.execute();
         } catch (SQLException ex) { }

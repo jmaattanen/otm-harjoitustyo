@@ -154,9 +154,7 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         if (statementId == 0 || categoryId == 0) {
             return false;
         }
-        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATSANDSTATESTABLE
-                + " (project_id, category_id, statement_id) VALUES (?, ?, ?) "
-                + "ON CONFLICT DO NOTHING";
+        String sqlQuery = getInsertIntoCatsAndStatesQuery();
         try {
             PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
             ps.setInt(1, projectId);
