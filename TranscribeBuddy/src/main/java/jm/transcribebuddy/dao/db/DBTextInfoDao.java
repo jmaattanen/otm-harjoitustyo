@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import jm.transcribebuddy.dao.TextInfoDao;
+import jm.transcribebuddy.logics.storage.LeafCategory;
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.word.DuctileTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
@@ -41,18 +42,19 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         }
         final int projectId = projectInfo.getId();
         
-        // Delete old text info of the project
+        // Delete old project data
+        deleteAllCatsAndStatements(projectId);
         deleteAllProjectStatements(projectId);
         
         boolean result = true;
         ArrayList<Statement> statements = textBuilder.getAllStatements();
-        int statementId = 1;
+        int statementIndex = 1;
         for (Statement s : statements) {
-            if (insertStatement(projectId, statementId, s) == false) {
+            if (insertStatement(projectId, statementIndex, s) == false) {
                 // insert failed
                 result = false;
             }
-            statementId++;
+            statementIndex++;
         }
         closeConnection();
         return result;
@@ -61,17 +63,16 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
     /**
      * Loads text information from database if connection is available.
      * 
-     * @param projectInfo This determines to which project the text refers.
+     * @param projectId This determines to which project the text refers.
      * @param textBuilder This object will be updated if the load was successful.
      * @return Updated DetailedTextBuilder object if the load was successful.
      * Otherwise the given TextBuilder instance.
      */
     @Override
-    public DetailedTextBuilder load(final ProjectInfo projectInfo, final DetailedTextBuilder textBuilder) {
+    public DetailedTextBuilder load(final int projectId, final DetailedTextBuilder textBuilder) {
         if (connectDatabase() == false) {
             return textBuilder;
         }
-        final int projectId = projectInfo.getId();
         
         // Construct a new TextBuilder with loaded text info
         DuctileTextBuilder updatedTextBuilder = new DuctileTextBuilder();
@@ -80,7 +81,8 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
         int statementIndex = 1;
         for (Statement s : statements) {
             Statement statement = loadStatement(projectId, statementIndex, s);
-            updatedTextBuilder.addNewStatement(statement);
+            String categoryName = getSubcategory(projectId, statementIndex);
+            updatedTextBuilder.addNewStatement(statement, categoryName);
             statementIndex++;
         }
         closeConnection();
@@ -99,7 +101,9 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
      */
     public int delete(final int projectId) {
         if (connectDatabase()) {
-            int result = deleteAllProjectStatements(projectId);
+            int result = 0;
+            result += deleteAllCatsAndStatements(projectId);
+            result += deleteAllProjectStatements(projectId);
             closeConnection();
             return result;
         }
@@ -130,12 +134,72 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
                 ps.setString(3, statement.toString());
                 ps.setDouble(4, statement.startTimeToDouble());
                 int result = ps.executeUpdate();
+                if (result == 1) {
+                    insertIntoCatsAndStates(projectId, statementIndex, statement.getSubcategory());
+                }
                 return result == 1;
             } catch (SQLException ex) {
-                System.out.println("insert error:\n" + ex);
+//                System.out.println("insert error:\n" + ex);
             }
         }
         return false;
+    }
+    
+    private boolean insertIntoCatsAndStates(final int projectId, int statementIndex, LeafCategory subcategory) {
+        if (subcategory == null || tableExists(DBClassifierDao.CATSANDSTATESTABLE) == false) {
+            return false;
+        }
+        final int statementId = getStatementId(projectId, statementIndex);
+        final int categoryId = getCategoryId(projectId, subcategory);
+        if (statementId == 0 || categoryId == 0) {
+            return false;
+        }
+        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATSANDSTATESTABLE
+                + " (project_id, category_id, statement_id) VALUES (?, ?, ?) "
+                + "ON CONFLICT DO NOTHING";
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+            ps.setInt(1, projectId);
+            ps.setInt(2, categoryId);
+            ps.setInt(3, statementId);
+            int result = ps.executeUpdate();
+            return result == 1;
+        } catch (SQLException ex) { }
+        return false;
+    }
+    
+    private int getStatementId(int projectId, int statementIndex) {
+        if (tableExists(STATEMENTSTABLE)) {
+            String sqlQuery = getStatementIdQuery();
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                ps.setInt(2, statementIndex);
+                ResultSet results = ps.executeQuery();
+                if (results.next()) {
+                    return results.getInt(1);
+                }
+            } catch (SQLException ex) { }
+        }
+        return 0;
+    }
+    
+    private int getCategoryId(int projectId, LeafCategory subcategory) {
+        if (tableExists(DBClassifierDao.CATEGORIESTABLE)) {
+            String sqlQuery = "SELECT id FROM " + DBClassifierDao.CATEGORIESTABLE
+                    + " WHERE project_id = ? AND name = ? AND depth = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                ps.setString(2, subcategory.toString());
+                ps.setInt(3, 2);
+                ResultSet results = ps.executeQuery();
+                if (results.next()) {
+                    return results.getInt(1);
+                }
+            } catch (SQLException ex) { }
+        }
+        return 0;
     }
     
     private int deleteAllProjectStatements(final int projectId) {
@@ -146,9 +210,20 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
                 ps.setInt(1, projectId);
                 int result = ps.executeUpdate();
                 return result;
-            } catch (SQLException ex) {
-//                System.out.println("Failed to delete from " + dbTableNameForStatements + "\n" + ex);
-            }
+            } catch (SQLException ex) { }
+        }
+        return 0;
+    }
+    
+    private int deleteAllCatsAndStatements(final int projectId) {
+        if (tableExists(DBClassifierDao.CATSANDSTATESTABLE)) {
+            String sqlQuery = "DELETE FROM " + DBClassifierDao.CATSANDSTATESTABLE + " WHERE project_id = ?";
+            try {
+                PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+                ps.setInt(1, projectId);
+                int result = ps.executeUpdate();
+                return result;
+            } catch (SQLException ex) { }
         }
         return 0;
     }
@@ -165,11 +240,45 @@ public class DBTextInfoDao extends DBDao implements TextInfoDao {
                     double startTimeInMillis = results.getDouble(1);
                     statement.setStartTime(startTimeInMillis);
                 }
-            } catch (SQLException ex) {
-//                System.out.println("Failed to select from " + dbTableNameForStatements + "\n" + ex);
-            }
+            } catch (SQLException ex) { }
         }
         return statement;
     }
     
+    private String getSubcategory(final int projectId, final int statementIndex) {
+        final int statementId = getStatementId(projectId, statementIndex);
+        final int categoryId = getCategoryId(projectId, statementId);
+        if (categoryId == 0) {
+            return "";
+        }
+        String sqlQuery = "SELECT name FROM " + DBClassifierDao.CATEGORIESTABLE + " WHERE id = ?";
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+            ps.setInt(1, categoryId);
+            ResultSet results = ps.executeQuery();
+            if (results.next()) {
+                String name = results.getString(1);
+                return name;
+            }
+        } catch (SQLException ex) { }
+        return "";
+    }
+    
+    private int getCategoryId(final int projectId, final int statementId) {
+        if (tableExists(DBClassifierDao.CATSANDSTATESTABLE) == false) {
+            return 0;
+        }
+        String sqlQuery = "SELECT category_id FROM " + DBClassifierDao.CATSANDSTATESTABLE
+                + " WHERE project_id = ? AND statement_id = ?";
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sqlQuery);
+            ps.setInt(1, projectId);
+            ps.setInt(2, statementId);
+            ResultSet results = ps.executeQuery();
+            if (results.next()) {
+                return results.getInt(1);
+            }
+        } catch (SQLException ex) { }
+        return 0;
+    }
 }

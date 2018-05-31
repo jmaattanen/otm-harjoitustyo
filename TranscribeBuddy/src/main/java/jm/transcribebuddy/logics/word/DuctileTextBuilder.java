@@ -34,10 +34,12 @@ public class DuctileTextBuilder extends DetailedTextBuilder {
      * @see jm.transcribebuddy.logics.storage.Category
      * @see jm.transcribebuddy.logics.storage.Statement
      * @param newStatement Statement to be inserted.
+     * @param categoryName The category to which the statement belongs.
      */
-    public void addNewStatement(Statement newStatement) {
-        newStatement.setSubcategory(undefined);
+    public void addNewStatement(Statement newStatement, String categoryName) {
         statements.add(newStatement);
+        workingIndex = statements.size() - 1;
+        setSubcategory(categoryName);
     }
     
     /**

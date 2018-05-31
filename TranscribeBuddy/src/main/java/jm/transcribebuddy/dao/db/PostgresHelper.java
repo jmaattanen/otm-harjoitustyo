@@ -42,6 +42,28 @@ public class PostgresHelper implements SQLHelper {
     }
     
     @Override
+    public String getCreateCategoriesTableQuery() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBClassifierDao.CATEGORIESTABLE + " (\n"
+                + "id serial PRIMARY KEY, \n"
+                + "project_id serial REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + ", \n"
+//                + "parent_id serial REFERENCES " + DBClassifierDao.CATEGORIESTABLE + ", \n"
+                + "parent_id integer, \n"
+                + "name text NOT NULL, \n"
+                + "depth integer NOT NULL \n"
+                + ");";
+        return sqlQuery;
+    }
+    
+    @Override
+    public String getInsertCategoryQuery() {
+        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATEGORIESTABLE
+                + " (project_id, parent_id, name, depth) VALUES (?, ?, ?, ?) "
+                + "ON CONFLICT DO NOTHING";
+        return sqlQuery;
+    }
+    
+    
+    @Override
     public String getCreateStatementsTableQuery() {
         String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBTextInfoDao.STATEMENTSTABLE + " (\n"
                 + "id serial PRIMARY KEY, \n"
@@ -68,4 +90,10 @@ public class PostgresHelper implements SQLHelper {
         return sqlQuery;
     }
     
+    @Override
+    public String getStatementIdQuery() {
+        String sqlQuery = "SELECT  id FROM " + DBTextInfoDao.STATEMENTSTABLE
+                    + " WHERE project_id = ? AND index = ?";
+        return sqlQuery;
+    }
 }

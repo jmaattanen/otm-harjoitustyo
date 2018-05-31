@@ -127,6 +127,9 @@ public class DBProjectInfoDao extends DBDao implements ProjectInfoDao {
             // Delete all statements first
             DBTextInfoDao textInfoDao = new DBTextInfoDao(databaseURL, databaseUser, databasePass);
             textInfoDao.delete(projectId);
+            DBClassifierDao classifierDao = new DBClassifierDao(databaseURL, databaseUser, databasePass);
+            classifierDao.delete(projectId);
+            
             // Then delete project information
             String sqlQuery = "DELETE FROM " + PROJECTSTABLE + " WHERE id = ?";
             try {

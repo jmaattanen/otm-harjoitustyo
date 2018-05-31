@@ -112,6 +112,22 @@ public class DBDao {
         return sqlQuery;
     }
     
+    protected String getCreateCategoriesTableQuery() {
+        if (sqlHelper == null) {
+            return "";
+        }
+        String sqlQuery = sqlHelper.getCreateCategoriesTableQuery();
+        return sqlQuery;
+    }
+    
+    protected String getInsertCategoryQuery() {
+        if (sqlHelper == null) {
+            return "";
+        }
+        String sqlQuery = sqlHelper.getInsertCategoryQuery();
+        return sqlQuery;
+    }
+    
     protected String getCreateStatementsTableQuery() {
         if (sqlHelper == null) {
             return "";
@@ -136,4 +152,11 @@ public class DBDao {
         return sqlQuery;
     }
     
+    protected String getStatementIdQuery() {
+        if (sqlHelper == null) {
+            return "";
+        }
+        String sqlQuery = sqlHelper.getStatementIdQuery();
+        return sqlQuery;
+    }
 }

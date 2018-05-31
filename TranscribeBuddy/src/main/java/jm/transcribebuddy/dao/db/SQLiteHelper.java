@@ -40,6 +40,26 @@ public class SQLiteHelper implements SQLHelper {
     }
     
     @Override
+    public String getCreateCategoriesTableQuery() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBClassifierDao.CATEGORIESTABLE + " (\n"
+                + "id serial PRIMARY KEY, \n"
+                + "project_id serial REFERENCES " + DBProjectInfoDao.PROJECTSTABLE + ", \n"
+                + "parent_id serial REFERENCES " + DBClassifierDao.CATEGORIESTABLE + ", \n"
+                + "name text NOT NULL, \n"
+                + "depth integer NOT NULL \n"
+                + ");";
+        return sqlQuery;
+    }
+    
+    @Override
+    public String getInsertCategoryQuery() {
+        String sqlQuery = "INSERT INTO " + DBClassifierDao.CATEGORIESTABLE
+                + " (project_id, parent_id, name, depth) VALUES (?, ?, ?, ?)";
+        return sqlQuery;
+    }
+    
+    
+    @Override
     public String getCreateStatementsTableQuery() {
         String sqlQuery = "CREATE TABLE IF NOT EXISTS " + DBTextInfoDao.STATEMENTSTABLE + " (\n"
                 + "id integer PRIMARY KEY, \n"
@@ -54,7 +74,7 @@ public class SQLiteHelper implements SQLHelper {
     @Override
     public String getInsertStatementQuery() {
         String sqlQuery = "INSERT INTO " + DBTextInfoDao.STATEMENTSTABLE
-                + " (project_id, row, text, start_time) VALUES (?, ?, ?, ?) ";
+                + " (project_id, row, text, start_time) VALUES (?, ?, ?, ?)";
         return sqlQuery;
     }
     
@@ -62,6 +82,13 @@ public class SQLiteHelper implements SQLHelper {
     public String getLoadStatementQuery() {
         String sqlQuery = "SELECT start_time FROM " + DBTextInfoDao.STATEMENTSTABLE
                 + " WHERE project_id = ? AND row = ?";
+        return sqlQuery;
+    }
+    
+    @Override
+    public String getStatementIdQuery() {
+        String sqlQuery = "SELECT  id FROM " + DBTextInfoDao.STATEMENTSTABLE
+                    + " WHERE project_id = ? AND row = ?";
         return sqlQuery;
     }
     

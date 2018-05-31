@@ -8,6 +8,6 @@ public interface TextInfoDao {
     
     public boolean save(final ProjectInfo projectInfo, final TextBuilder textBuilder);
     
-    public DetailedTextBuilder load(final ProjectInfo projectInfo, final DetailedTextBuilder textBuilder);
+    public DetailedTextBuilder load(final int projectId, final DetailedTextBuilder textBuilder);
     
 }

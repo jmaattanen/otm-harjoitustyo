@@ -10,4 +10,7 @@ import jm.transcribebuddy.logics.storage.ProjectInfo;
 public interface ClassifierDao {
     
     public boolean save(final ProjectInfo projectInfo, final Classifier classifier);
+    
+    public void load(final int projectId, final Classifier classifier);
+    
 }

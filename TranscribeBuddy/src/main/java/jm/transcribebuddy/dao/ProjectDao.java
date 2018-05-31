@@ -5,6 +5,7 @@ import java.io.IOException;
 import jm.transcribebuddy.dao.db.*;
 import jm.transcribebuddy.dao.file.*;
 import java.util.ArrayDeque;
+import jm.transcribebuddy.logics.Classifier;
 import jm.transcribebuddy.logics.word.DetailedTextBuilder;
 import jm.transcribebuddy.logics.storage.ProjectInfo;
 import jm.transcribebuddy.logics.word.TextBuilder;
@@ -15,10 +16,11 @@ import jm.transcribebuddy.logics.word.TextBuilder;
  * @author Juha
  */
 public class ProjectDao {
-    final private ArrayDeque<String> errorLog;
-    final private ProjectInfoDao projectInfoDao;
-    final private TextDao textDao;
-    final private TextInfoDao textInfoDao;
+    private final ArrayDeque<String> errorLog;
+    private final ProjectInfoDao projectInfoDao;
+    private final TextDao textDao;
+    private final TextInfoDao textInfoDao;
+    private final ClassifierDao classifierDao;
     
     /**
      * Creates a new ProjectDao object with given database configurations.
@@ -32,6 +34,7 @@ public class ProjectDao {
         errorLog = new ArrayDeque<>();
         textDao = new FileTextDao();
         projectInfoDao = new DBProjectInfoDao(databaseURL, databaseUser, databasePass);
+        classifierDao = new DBClassifierDao(databaseURL, databaseUser, databasePass);
         textInfoDao = new DBTextInfoDao(databaseURL, databaseUser, databasePass);
         if (((DBTextInfoDao) textInfoDao).testConnection() == false) {
             errorLog.add(
@@ -59,10 +62,14 @@ public class ProjectDao {
      * @param textBuilder TextBuilder contents to be saved.
      * @return True if no error occurred during saving.
      */
-    public boolean save(final ProjectInfo projectInfo, final TextBuilder textBuilder) {
+    public boolean save(final ProjectInfo projectInfo, final DetailedTextBuilder textBuilder) {
         boolean saveOk = true;
         if (projectInfoDao.save(projectInfo) == false) {
             errorLog.add("Error while saving the project information.");
+            saveOk = false;
+        }
+        if (classifierDao.save(projectInfo, textBuilder.getClassifier()) == false) {
+            errorLog.add("Error while saving classification data.");
             saveOk = false;
         }
         if (textDao.save(projectInfo, textBuilder) == false) {
@@ -94,8 +101,15 @@ public class ProjectDao {
         // load project information from db
         projectInfo = projectInfoDao.load(projectInfo);
         
+        final int projectId = projectInfo.getId();
+        
         // load text information from db
-        textBuilder = textInfoDao.load(projectInfo, textBuilder);
+        textBuilder = textInfoDao.load(projectId, textBuilder);
+        
+        // load classification data from db
+        Classifier classifier = textBuilder.getClassifier();
+        classifierDao.load(projectId, classifier);
+
         return textBuilder;
     }
     
